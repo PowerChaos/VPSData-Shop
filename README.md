@@ -70,29 +70,34 @@ een shop gebaseerd op mijn Basis CMS
 + Site is NIET kant en klaar , Aanpassen is nodig
 
 ## BESTAND DIE JE MOET AANPASSEN
-# /FUNCTIONS/
+### /FUNCTIONS/
 + /functions/email.php voor email functie
 + /functions/database.php voor Database ( PDO MariaDB/Mysql)
-# /
+
+### /
 + /ping.php Paymentwall Callback en API
 + /.htaccess FORCE SSL
 + /upload en /tmp moet schrijfbaar zijn ( 755 of 777)
-# /TEMPLATE/
+
+### /TEMPLATE/
 + /template/boot/sidebar.php heeft een apparte Category (liquids)
 + /template/boot/css/style.css heeft een Base64 BackGround afbeelding
-# /PAGES
+
+### /PAGES
 + /pages/admin/upload.php Relative Link aanpassen anders WERKT upload niet
 + /pages/home.php heeft fixed categorie's en Base64 Afbeeldingen
 + /pages/checkout.php Heeft standaard prijsen en selectie voor levering
 + /pages/invoer.php bij register staat er $promo = 50 
 + /pages/merk.php heeft base64 afbeeldingen ( default image)
 + /pages/product.php heeft base64 afbeeldingen ( default image)
-# /AJAX
+
+### /AJAX
 + /ajax/bestel.php de eigenlijke bestelling text en Paymentwall API
 + /ajax/history.php bestel geschiedenis
 + /ajax/stock.php de text weergave van de stock
 + /ajax/tos.php De tos en contact info en privacy policy
-#PAYMENTWALL
+
+### PAYMENTWALL
 + /ping.php -> Vergeet uw sleutels niet in te vullen
 + /ajax/bestel.php -> Vergeet uw sleutels niet in te vullen
 
