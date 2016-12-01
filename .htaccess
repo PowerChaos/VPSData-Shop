@@ -1,0 +1,26 @@
+RewriteEngine On
+
+# /* force redirect to https */
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
+# /* End Force HTTPS */
+
+Options +FollowSymLinks
+Options -Indexes
+RewriteRule ^logout$ index.php?action=logout
+RewriteRule ^sessionexpired$ index.php?session=expired
+RewriteRule ^a/([a-zA-Z0-9_-]+)$ index.php?admin=$1
+RewriteRule ^s/([a-zA-Z0-9_-]+)$ index.php?staff=$1
+
+#seo rewrite
+RewriteRule ^([a-zA-Z0-9_-]+).html$ index.php?page=merk&merk=$1
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+).html$ index.php?page=product&product=$2
+
+#base rewrite
+RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?page=$1
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . / [L,R=302]
+
+# /* CopyRight PowerChaos 2016 */
+
