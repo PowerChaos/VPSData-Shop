@@ -1,6 +1,6 @@
 <?php
 require(getenv("DOCUMENT_ROOT")."/functions/database.php");
-function mail_test($code,$body="1",$email="bestelling@$_SERVER['SERVER_NAME']")
+function mail_test($code,$body="1",$email="bestelling@$_SERVER[SERVER_NAME]")
 {
 global $db;
 switch($body)
@@ -213,5 +213,5 @@ break;
   $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
  $headers .= "From: Vaporama Shop <shop@$_SERVER[SERVER_NAME]>" . "\r\n";
  $headers .= "Reply-To: Vaporama Shop <shop@$_SERVER[SERVER_NAME]>" . "\r\n";
- mail($email,$subject,$body,$headers,"-f errorshop@powerchaos.com");
+ mail($email,$subject,$body,$headers,"-f errorshop@$_SERVER[SERVER_NAME]");
 }
