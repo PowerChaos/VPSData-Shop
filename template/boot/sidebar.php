@@ -18,7 +18,7 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> sidebar.php </#FN>                                                                
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.382 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/18 03:34:21.901 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/09/18 03:47:40.931 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
@@ -31,7 +31,8 @@
 
 
 
-require(getenv("DOCUMENT_ROOT")."/functions/database.php"); ?>
+require(getenv("DOCUMENT_ROOT")."/inc/include.php"); 
+$db = new db();?>
  <!-- fixed top navbar -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
@@ -54,28 +55,24 @@ require(getenv("DOCUMENT_ROOT")."/functions/database.php"); ?>
 				<li>
 				<div class="yamm-content">
                     <div class="row">
-			  <?php
-                                            try {
-                                                $stmt = $db->prepare("SELECT cat FROM products GROUP BY (cat) ORDER BY cat ASC");
-                                                $stmt->execute();
-                                                $category = $stmt->fetchall(PDO::FETCH_ASSOC);
-                                                $count = $stmt->RowCount();
+			     <?php
+												$category = $db->select('products','','','','','cat','cat','cat ASC');
+                                                $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
                                                 $count = ($count == "")?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
                                                     echo "<ul class='col-md-$div list-unstyled'>";
                                                     $naam = $cat['cat'];
-                                                    //subcats query en count
-                                                    $stmt2 = $db->prepare("SELECT * FROM products WHERE cat = :name GROUP BY (merk) ORDER BY merk ASC");
-                                                    $stmt2->execute(array(':name' => $naam));
                                                     //echo cats
                                                     echo "
 													<li><h4>$naam</h4></li>
 													<li class='divider'></li>
 													";
-                                                    $subcat = $stmt2->fetchall(PDO::FETCH_ASSOC);
                                                     //echo subcats
+													//subcats query en count
+													$cate = array(":cat" =>$naam);
+													$subcat = $db->select('products','cat = :cat','',$cate,'','','merk','merk ASC');
                                                     foreach ($subcat as $sub) {
                                                         $seomerk = strtolower($sub['merk']);
                                                         echo "
@@ -84,13 +81,12 @@ require(getenv("DOCUMENT_ROOT")."/functions/database.php"); ?>
                                                     }
                                                     echo "</ul>";
                                                 }
-                                            } catch (Exception $e) {
-                                                echo '<h2><font color=red>';
-                                                var_dump($e->getMessage());
-                                                die('</h2></font> ');
-                                            }
-                                            ?>
-										</div></div></li></ul></li>
+            	?>
+					</div>
+				</div>
+			    </li>
+		        </ul>
+	        </li>
 
 		  <li class="dropdown">
 	            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products<b class="caret"></b></a>

@@ -18,14 +18,19 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> footer.php </#FN>                                                                 
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.379 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/18 02:33:43.122 </#FT>                                                    *
-*          License          > <!#LT> BSD-3-Clause-Attribution </#LT>                                                   
-*                             <!#LU> https://spdx.org/licenses/BSD-3-Clause-Attribution.html </#LU>                    
+*          File Mod         > <!#FT> 2021/09/18 03:47:10.401 </#FT>                                                    *
+*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
+*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
 *          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
+
+
+
+
+
 
 
 ?>

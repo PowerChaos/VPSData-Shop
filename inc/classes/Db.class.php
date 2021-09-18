@@ -1,5 +1,37 @@
 <?php
-class Db extends PDO {
+
+/*
+<!#CR>
+************************************************************************************************************************
+*                                                    Copyrigths ©                                                      *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          Authors Names    > PowerChaos                                                                               *
+*          Company Name     > VPS Data                                                                                 *
+*          Company Email    > info@vpsdata.be                                                                          *
+*          Company Websites > https://vpsdata.be                                                                       *
+*                             https://vpsdata.shop                                                                     *
+*          Company Socials  > https://facebook.com/vpsdata                                                             *
+*                             https://twitter.com/powerchaos                                                           *
+*                             https://instagram.com/vpsdata                                                            *
+* -------------------------------------------------------------------------------------------------------------------- *
+*                                           File and License Informations                                              *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          File Name        > <!#FN> Db.class.php </#FN>                                                               
+*          File Birth       > <!#FB> 2021/09/02 09:22:29.967 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/09/18 03:35:58.925 </#FT>                                                    *
+*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
+*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
+*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
+*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*                                                                                                                      *
+</#CR>
+*/
+
+
+
+
+
+class db extends PDO {
     private $error;
     private $sql;
     private $bind;
@@ -113,7 +145,7 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
 /* Insert Statement Functie */	
     public function insert($table, $info) {
         $fields = $this->filter($table, $info);
-        $sql = "INSERT INTO " . $table . " (" . implode($fields, ", ") . ") VALUES (:" . implode($fields, ", :") . ");";
+        $sql = "INSERT INTO " . $table . "(".implode(",",$fields).") VALUES (:".implode(",:",$fields).");";
         $bind = array();
         foreach($fields as $field)
             $bind[":$field"] = $info[$field];
@@ -144,6 +176,9 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
 					case "fetch":
 					 return $pdostmt->fetch(PDO::FETCH_ASSOC);
 					 break;
+                     case "fetchall":
+                    return $pdostmt->fetchAll(PDO::FETCH_ASSOC);
+                    break;
 				 }
             }
         } catch (PDOException $e) {
@@ -154,12 +189,16 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
     }
 
 /* Select Functie met extra opties en Fields */	
-    public function select($table, $where="",$limit="", $bind="", $option="", $fields="*") {
+    public function select($table, $where="",$limit="", $bind="", $option="", $fields="*",$group="",$order="") {
         $sql = "SELECT " . $fields . " FROM " . $table;
         if(!empty($where))
             $sql .= " WHERE " . $where;
 		if(!empty($limit))
             $sql .= " LIMIT " . $limit;
+        if(!empty($group))
+            $sql .= "GROUP BY (" . $group . ")";
+        if(!empty($order))
+            $sql .= "ORDER BY" . $order;
         $sql .= ";";
         return $this->run($sql, $bind, $option);
     }
@@ -198,5 +237,4 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
         return $this->run($sql, $bind);
     }
 }   
-/* CopyRight PowerChaos 2016 */
 	?>	
