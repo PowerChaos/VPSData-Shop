@@ -31,8 +31,9 @@
 
 
 
-require(getenv("DOCUMENT_ROOT")."/inc/include.php"); 
-$db = new db();?>
+require(getenv("DOCUMENT_ROOT")."/inc/include.php");
+$session = new Session;   
+$db = new db;?>
  <!-- fixed top navbar -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">
@@ -95,27 +96,22 @@ $db = new db();?>
 					<div class="yamm-content">
 						<div class="row">
 			  							<?php
-                                            try {
-                                                $stmt = $db->prepare("SELECT * FROM products WHERE cat !='fillaments' GROUP BY (merk) ORDER BY merk ASC");
-                                                $stmt->execute();
-                                                $category = $stmt->fetchall(PDO::FETCH_ASSOC);
-                                                $count = $stmt->RowCount();
+                                               $category = $db->select('products','cat !=fillaments','','','','','merk','merk ASC');
+                                               $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
                                                 $count = ($count == "")?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
                                                     echo "<ul class='col-md-$div list-unstyled'>";
                                                     $naam = $cat['merk'];
-                                                    //subcats query en count
-                                                    $stmt2 = $db->prepare("SELECT * FROM products WHERE merk =:name AND cat !='fillaments' ORDER BY name ASC");
-                                                    $stmt2->execute(array(':name' => $naam));
                                                     //echo cats
                                                     echo "
 													<li><h4>{$naam}</h4></li>
 													<li class='divider'></li>
 													";
-                                                    $subcat = $stmt2->fetchall(PDO::FETCH_ASSOC);
                                                     //echo subcats
+                                                    $cate = array(":cat" =>$naam);
+													$subcat = $db->select('products','cat = :cat AND cat !=fillaments','',$cate,'','','','name ASC');
                                                     foreach ($subcat as $sub) {
                                                         $seoproduct = str_replace(" ", "-", $sub['name']);
                                                         $seoproduct = strtolower($seoproduct);
@@ -126,11 +122,6 @@ $db = new db();?>
                                                     }
                                                     echo "</ul>";
                                                 }
-                                            } catch (Exception $e) {
-                                                echo '<h2><font color=red>';
-                                                var_dump($e->getMessage());
-                                                die('</h2></font> ');
-                                            }
                                             ?>
 											</div></div></li></ul></li>	
 		  <li class="dropdown">
@@ -140,26 +131,21 @@ $db = new db();?>
 					<div class="yamm-content">
 						<div class="row">
 			  							<?php
-                                            try {
-                                                $stmt = $db->prepare("SELECT * FROM products WHERE cat ='fillaments' GROUP BY (merk) ORDER BY merk ASC");
-                                                $stmt->execute();
-                                                $category = $stmt->fetchall(PDO::FETCH_ASSOC);
-                                                $count = $stmt->RowCount();
+                                                $category = $db->select('products','cat =fillaments','','','','','merk','merk ASC');
+                                                $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
                                                 $count = ($count == "")?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
                                                     echo "<ul class='col-md-$div list-unstyled'>";
                                                     $naam = $cat['merk'];
-                                                    //subcats query en count
-                                                    $stmt2 = $db->prepare("SELECT * FROM products WHERE merk =:name AND cat ='fillaments' ORDER BY name ASC");
-                                                    $stmt2->execute(array(':name' => $naam));
                                                     //echo cats
                                                     echo "
 													<li><h4>{$naam}</h4></li>
 													<li class='divider'></li>
 													";
-                                                    $subcat = $stmt2->fetchall(PDO::FETCH_ASSOC);
+                                                    $cate = array(":cat" =>$naam);
+													$subcat = $db->select('products','cat = :cat AND cat =fillaments','',$cate,'','','','name ASC');
                                                     //echo subcats
                                                     foreach ($subcat as $sub) {
                                                         $seoproduct = str_replace(" ", "-", $sub['name']);
@@ -171,11 +157,6 @@ $db = new db();?>
                                                     }
                                                     echo "</ul>";
                                                 }
-                                            } catch (Exception $e) {
-                                                echo '<h2><font color=red>';
-                                                var_dump($e->getMessage());
-                                                die('</h2></font> ');
-                                            }
                                             ?>
 											</div></div></li></ul></li>		
 											
@@ -190,7 +171,7 @@ $db = new db();?>
 			  <ul class="dropdown-menu">
 					<li><a href="../a/producten"><i class="material-icons">store</i> Producten</a></li>
 					 <li><a href="../a/order"><i class="material-icons">history</i> Bestellingen</a></li>
-					 <li><a href="../a/promo"><i class='material-icons'>filter_drama</i> Promoties</a></li> 
+					 <li><a href="../a/promo"><i class='material-icons'>3d_rotation</i> Promoties</a></li> 
 					<li class="divider"></li>					
 				  <li><a href="../a/gebruikers"><i class="material-icons">account_circle</i> Gebruikers</a></li>
 				  <li><a href="../a/groepen"><i class="material-icons">group</i> Groepen</a></li>
@@ -203,21 +184,21 @@ $db = new db();?>
         if (u()) { //gebruikers
           ?> 			
 						<li class="dropdown">
-		  				 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">more_vert</i> Overzicht
+		  				 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">more_vert</i> General
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-						 <li><a href="../history"><i class="material-icons">history</i> Bestel History</a></li>
-						 <li><a href="../clouds"><i class='material-icons'>filter_drama</i> Bonus Clouds</a></li> 
-						 <li><a href="../bonus"><i class="material-icons">add_shopping_cart</i> Cloud Shop</a></li> 
+						 <li><a href="../history"><i class="material-icons">history</i> Order History</a></li>
+						 <li><a href="../clouds"><i class='material-icons'>3d_rotation</i>3D Points</a></li> 
+						 <li><a href="../bonus"><i class="material-icons">add_shopping_cart</i>3D Points Shop</a></li> 
 						</ul>
 						</li>
 						<li class="dropdown">
 		  				 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">person</i><?php echo $_SESSION['naam'] ?>
 						<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-						 <li><a href="../profiel"><i class="material-icons">account_circle</i> Profiel</a></li>
-						 <li><a href="../pass"><i class="material-icons">vpn_key</i> wachtwoord</a></li>
-						 <li><a href="../logout"><i class="material-icons">exit_to_app</i> Log Uit</a></li>  
+						 <li><a href="../profiel"><i class="material-icons">account_circle</i> Profile</a></li>
+						 <li><a href="../pass"><i class="material-icons">vpn_key</i> Password</a></li>
+						 <li><a href="../logout"><i class="material-icons">exit_to_app</i>Log Out</a></li>  
 						</ul>
 						</li>
 
@@ -245,3 +226,13 @@ $db = new db();?>
       </div>          
     </div>
   </nav>
+<?php
+$session->flash('error');
+/*
+			echo "<div class='alert alert-success fade in text-center' data-dismiss='alert' role='alert'>
+			$_SESSION[ERROR]
+			</div>";
+			$_SESSION[ERROR] ="";
+		}
+*/
+?>        
