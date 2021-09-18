@@ -1,10 +1,39 @@
+<?php
+/*
+<!#CR>
+************************************************************************************************************************
+*                                                    Copyrigths ©                                                      *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          Authors Names    > PowerChaos                                                                               *
+*          Company Name     > VPS Data                                                                                 *
+*          Company Email    > info@vpsdata.be                                                                          *
+*          Company Websites > https://vpsdata.be                                                                       *
+*                             https://vpsdata.shop                                                                     *
+*          Company Socials  > https://facebook.com/vpsdata                                                             *
+*                             https://twitter.com/powerchaos                                                           *
+*                             https://instagram.com/vpsdata                                                            *
+* -------------------------------------------------------------------------------------------------------------------- *
+*                                           File and License Informations                                              *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          File Name        > <!#FN> header.php </#FN>                                                                 
+*          File Birth       > <!#FB> 2021/09/18 00:38:17.379 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/09/18 02:28:43.126 </#FT>                                                    *
+*          License          > <!#LT> BSD-3-Clause-Attribution </#LT>                                                   
+*                             <!#LU> https://spdx.org/licenses/BSD-3-Clause-Attribution.html </#LU>                    
+*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
+*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*                                                                                                                      *
+</#CR>
+*/
+?>
+
 <!DOCTYPE html>
 <html lang="nl">
 
 <head>
 <?php
 function tokenTruncate($string, $your_desired_width) {
-  $parts = preg_split('/([\s\n\r]+)/', $string, null, PREG_SPLIT_DELIM_CAPTURE);
+  $parts = preg_split('/([\s\n\r]+)/', $string,'', PREG_SPLIT_DELIM_CAPTURE);
   $parts_count = count($parts);
 
   $length = 0;
@@ -17,15 +46,15 @@ function tokenTruncate($string, $your_desired_width) {
   return implode(array_slice($parts, 0, $last_part));
 }
  if ($_GET['page'] != ""){
-			if ($_GET[product] !=""){
-				$header = $_GET[product];
+			if ($_GET['product'] !=""){
+				$header = $_GET['product'];
 		}
-		elseif ($_GET[merk] !=""){
-			$header = $_GET[merk];
+		elseif ($_GET['merk'] !=""){
+			$header = $_GET['merk'];
 		}
 		else 
 		{
-			$header = $_GET[page];
+			$header = $_GET['page'];
 		}
 		 $titel = "Vaporama - ".$header;
 		}else{
@@ -40,7 +69,7 @@ function tokenTruncate($string, $your_desired_width) {
  $metacount = $stmt->RowCount();
  if ($metacount > "0")
  {
- $meta = tokenTruncate($seodesc[over],155);
+ $meta = tokenTruncate($seodesc['over'],155);
  }
  else
  {
@@ -81,11 +110,6 @@ function tokenTruncate($string, $your_desired_width) {
 	<!-- Fonts -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
-	<!-- end Fonts -->
-
-	<!-- Preload -->
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/red/pace-theme-barber-shop.min.css">
-	
+	<!-- end Fonts -->	
 </head>
 		<body>
