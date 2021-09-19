@@ -33,8 +33,7 @@
 
 
 include (getenv("DOCUMENT_ROOT")."/inc/include.php");
- $session = new Session;
- $session->start();
+$session = new Session;
 $page = new Page;
 $page->Showpage($_GET['perm'],$_GET['file'],$session->get('rank'));
 ?>
