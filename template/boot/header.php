@@ -29,7 +29,7 @@
 
 
 
-$db = new DB;
+$db = new Db;
 ?>
 
 <!DOCTYPE html>

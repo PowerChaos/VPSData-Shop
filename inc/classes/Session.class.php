@@ -41,7 +41,7 @@ class Session {
         $this->httponly = true; // This stops javascript being able to access the session id.
         ini_set('session.use_only_cookies', 1); // Forces sessions to only use cookies.
         $this->cookieParams = session_get_cookie_params(); // Gets current cookies params.
-        session_set_cookie_params($this->cookieParams->lifetime, $this->cookieParams->path, $this->cookieParams->domain, $this->secure, $this->httponly);
+        session_set_cookie_params($this->cookieParams['lifetime'], $this->cookieParams['path'], $this->cookieParams['domain'], $this->secure, $this->httponly);
         session_name($this->session_name); // Sets the session name to the one set above.
     
         if(!isset($_SESSION)) session_start();
