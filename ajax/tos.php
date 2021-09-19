@@ -1,5 +1,5 @@
 ﻿<?php
-switch($_POST[footer])
+switch($_POST['footer'])
 {
 	case "tos":
 	?>
@@ -14,13 +14,13 @@ switch($_POST[footer])
 					<p>1.8 Overeenkomst op afstand: een overeenkomst waarbij in het kader van een door de ondernemer georganiseerd systeem voor verkoop op afstand van producten en/of diensten, tot en met het sluiten van de overeenkomst uitsluitend gebruik gemaakt wordt van één of meer technieken voor communicatie op afstand.</p>
 					<p>1.9 Techniek voor communicatie op afstand: middel dat kan worden gebruikt voor het sluiten van een overeenkomst, zonder dat consument en ondernemer gelijktijdig in dezelfde ruimte zijn samengekomen.</p>
 			  <h2>2. Identiteit van de ondernemer:</h2>
-					<p>Vaporama - Dhr J. Gigengack
+					<p>VPS Data
 					<br />
-					<br />Handelsnaam van: Stichting Kermis Attractie Nederland
-					<br />KVK: 20128327 - BTW: NL817253130B01
 					<br />
-					<br />Oude Turfvaartsestraat 45
-					<br />4709 RP Nispen</p>
+					<br />BTW:BE0743874489
+					<br />
+					<br />rijkmakerlaan 9
+					<br />2910 Essen</p>
 			  <h2>3. Toepasselijkheid:</h2>
 					<p>3.1 Deze algemene voorwaarden zijn van toepassing op elk aanbod van de ondernemer en op elke tot stand gekomen overeenkomst op afstand tussen ondernemer en consument.</p>
 					<p>3.2 Voordat de overeenkomst op afstand wordt gesloten, wordt de tekst van deze algemene voorwaarden aan de consument beschikbaar gesteld. Indien dit redelijkerwijs niet mogelijk is, zal voordat de overeenkomst op afstand wordt gesloten, worden aangegeven dat de algemene voorwaarden bij de ondernemer zijn in te zien en zij op verzoek van de consument zo spoedig mogelijk kosteloos worden toegezonden.</p>
@@ -77,20 +77,8 @@ switch($_POST[footer])
 					<p>14.1 Op overeenkomsten tussen de ondernemer en de consument waarop deze algemene voorwaarden betrekking hebben, is uitsluitend Nederlands recht van toepassing.</p>
 				<h2>15. Aanvullende of afwijkende bepalingen:</h2>
 					<p>15.1 Aanvullende dan wel van deze algemene voorwaarden afwijkende bepalingen mogen niet ten nadele van de consument zijn en dienen schriftelijk te worden vastgelegd dan wel op zodanige wijze dat deze door de consument op een toegankelijke manier kunnen worden opgeslagen op een duurzame gegevensdrager.</p>
-				<h2>16. Algemene regels voor het gebruik van een elektronische sigaret:</h2>
-					<p>16.1 Laad batterijen altijd op met de bijgeleverde USB lader en AC adapter uit de startset. Laad geen batterijen van andere merken op met de bijgeleverde multilader of USB lader en AC adapter uit de startset. Het uitwisselen van USB laders, AC adapters en batterijen van andere merken is geheel voor eigen risico.</p>
-					<p>16.2 Bescherm batterijen tegen beschadiging door scherpe voorwerpen en/of water. Vervoer uw elektrische sigaret altijd in een stevige case of dergelijks. Het in de zak steken of onbeschermd in een tas vervoeren van batterijen is voor eigen risico. Hierdoor kan een batterij en atomizer/cartomizer/clearomizer doorbranden, afbreken of beschadigen, wat kan resulteren in kortsluiting. Voorkom het laten vallen van batterijen, een batterij is niet schokbestendig en kan hierdoor onherstelbaar beschadigen. Maak contactpunten van laders en batterijen regelmatig schoon. Dit voorkomt laadproblemen.</p>
-					<p>16.3 Volg altijd nauwkeurig de gebruiksaanwijzing op zoals beschreven in de handleiding van een startset, of zoals op de website staat beschreven. Alle onderdelen van een elektrische sigaret zijn uitsluitend bestemd om deze als zodanig te gebruiken. Neem bij falen van èèn van de onderdelen binnen de garantietermijn contact met ons en volg de instructies op die u meegedeeld worden. Door het zelf aanbrengen van aanpassingen aan een elektronische sigaret in originele staat, vervalt de garantie en aansprakelijkheid.</p>
-					<p>16.4 Het gebruik van een elektronische sigaret is niet geschikt voor personen jonger dan 18 jaar, personen met hart en/of bloeddruk klachten, zwangere vrouwen, vrouwen die borstvoeding geven, personen met een allergie voor èèn van de ingrediënten en astmapatiënten. Door een bestelling te plaatsen op de website verklaart u dat u 18 jaar of ouder bent en niet voldoet aan de zojuist beschreven gezondheidsklachten en/of zwangerschapscondities.</p>
-					<p>16.5 Door gebruik slijt een atomizer, clearomizer of cartomizer. Na een aantal weken gebruik (afhankelijk van het gebruikersgedrag) zal u bepaalde onderdelen moeten vervangen. Ook batterijen zullen af en toe vervangen moeten worden. De meeste batterijen kunnen ongeveer 150-200 keer opgeladen worden, daarna verliezen ze hun kracht en kunt u beter een nieuwe aanschaffen.</p>
-					<p>16.6 De omschrijvingen van de smaken van de liquids op de website zijn van persoonlijke aard. Smaken zijn persoonlijk en dus verschillend.</p>
-					<p>16.7 Het gebruik van een elektronische sigaret is voor eigen risico. Vaporama is niet aansprakelijk voor verkeerd gebruik van een elektronische sigaret, anders dan is aangeven in de gebruiksaanwijzing of op de website staat vermeld.</p>
-					<p>16.8 Vaporama is niet aansprakelijk voor defecten door uitwisselend gebruik van diverse onderdelen, afkomstig van andere leveranciers dan Vaporama. Onderdelen kunnen worden gecombineerd, mits deze zijn aangekocht bij Vaporama.</p>
-					<p>16.9 Vaporama is niet aansprakelijk voor gezondheidsklachten door het gebruik van een elektronische sigaret. Lees onze algemene adviezen, waarschuwingen en gebruiksaanwijzingen goed door voor u besluit om een elektronische sigaret te gaan gebruiken.</p>
-					<p>16.10 Elektrisch roken is een alternatieve manier van roken. Een elektronische sigaret is geen middel om te stoppen met roken. Wees ervan bewust dat u nicotine binnenkrijgt als u liquids gebruikt met nicotine. Nicotine is een verslavende stof en is slecht voor hart en bloedvaten. Het gebruik van liquids met en zonder nicotine is voor eigen risico.</p>
-					<p>16.11 Liquid is giftig bij inname anders dan door inhalering bij verdamping, en niet bestemd voor orale inname. Liquid is alleen bestemd voor in het gebruik van een elektronische sigaret, op voorgeschreven wijze.</p>
-				<h3>Vaporama behoudt zich het recht om deze regels ten alle tijden bij te werken.</h3>
-				<h3>Vaporama 2014</h3>
+				<h3>VPS Data behoudt zich het recht om deze regels ten alle tijden bij te werken.</h3>
+				<h3>VPS Data 2021</h3>
 <?php
 break;
 	case 'privacy':
@@ -116,7 +104,7 @@ break;
 {
     display:none;
 }
-</style><div id='ppHeader'>vaporama.eu Privacy Policy</div><div id='ppBody'><div class='ppConsistencies'><div class='col-2'>
+</style><div id='ppHeader'>VPS Data Privacy Policy</div><div id='ppBody'><div class='ppConsistencies'><div class='col-2'>
             <div class="quick-links text-center">Information Collection</div>
         </div><div class='col-2'>
             <div class="quick-links text-center">Information Usage</div>
@@ -148,11 +136,99 @@ break;
         </div><div class='col-2'>
             <div class="quick-links2 gen-text-center">Our Contact Information<br></div>
         </div></div><div style='clear:both;height:10px;'></div>
-<div class='innerText'>This privacy policy has been compiled to better serve those who are concerned with how their 'Personally Identifiable Information' (PII) is being used online. PII, as described in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website.<br></div><span id='infoCo'></span><br><div class='grayText'><strong>What personal information do we collect from the people that visit our blog, website or app?</strong></div><br /><div class='innerText'>When ordering or registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number  or other details to help you with your experience.</div><br><div class='grayText'><strong>When do we collect information?</strong></div><br /><div class='innerText'>We collect information from you when you register on our site, place an order or enter information on our site.</div><br>Provide us with feedback on our products or services  <span id='infoUs'></span><br><div class='grayText'><strong>How do we use your information? </strong></div><br /><div class='innerText'> We may use the information we collect from you when you register, make a purchase, sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:<br><br></div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> To quickly process your transactions.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> To follow up with them after correspondence (live chat, email or phone inquiries)</div><span id='infoPro'></span><br><div class='grayText'><strong>How do we protect your information?</strong></div><br /><div class='innerText'>We do not use vulnerability scanning and/or scanning to PCI standards.</div><div class='innerText'>We only provide articles and information. We never ask for credit card numbers.</div><div class='innerText'>We use regular Malware Scanning.<br><br></div><div class='innerText'>Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems, and are required to keep the information confidential. In addition, all sensitive/credit information you supply is encrypted via Secure Socket Layer (SSL) technology. </div><br><div class='innerText'>We implement a variety of security measures when a user places an order enters, submits, or accesses their information to maintain the safety of your personal information.</div><br><div class='innerText'>All transactions are processed through a gateway provider and are not stored or processed on our servers.</div>kept for more than 60 days in order<span id='coUs'></span><br><div class='grayText'><strong>Do we use 'cookies'?</strong></div><br /><div class='innerText'>We do not use cookies for tracking purposes </div><div class='innerText'><br>You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You do this through your browser settings. Since browser is a little different, look at your browser's Help Menu to learn the correct way to modify your cookies.<br></div><br><div class='innerText'>If you turn cookies off, some features will be disabled. It won't affect the user's experience that make your site experience more efficient and may not function properly.</div><br><div class='innerText'>However, you will still be able to place orders .</div><br><span id='trDi'></span><br><div class='grayText'><strong>Third-party disclosure</strong></div><br /><div class='innerText'>We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information.</div><span id='trLi'></span><br><div class='grayText'><strong>Third-party links</strong></div><br /><div class='innerText'>We do not include or offer third-party products or services on our website.</div><span id='gooAd'></span><br><div class='blueText'><strong>Google</strong></div><br /><div class='innerText'>Google's advertising requirements can be summed up by Google's Advertising Principles. They are put in place to provide a positive experience for users. https://support.google.com/adwordspolicy/answer/1316548?hl=en <br><br></div><div class='innerText'>We have not enabled Google AdSense on our site but we may do so in the future.</div><span id='calOppa'></span><br><div class='blueText'><strong>California Online Privacy Protection Act</strong></div><br /><div class='innerText'>CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy.  The law's reach stretches well beyond California to require any person or company in the United States (and conceivably the world) that operates websites collecting Personally Identifiable Information from California consumers to post a conspicuous privacy policy on its website stating exactly the information being collected and those individuals or companies with whom it is being shared. -  See more at: http://consumercal.org/california-online-privacy-protection-act-caloppa/#sthash.0FdRbT51.dpuf<br></div><div class='innerText'><br><strong>According to CalOPPA, we agree to the following:</strong><br></div><div class='innerText'>Users can visit our site anonymously.</div><div class='innerText'>Once this privacy policy is created, we will add a link to it on our home page or as a minimum, on the first significant page after entering our website.<br></div><div class='innerText'>Our Privacy Policy link includes the word 'Privacy' and can easily be found on the page specified above.</div><div class='innerText'><br>You will be notified of any Privacy Policy changes:</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> On our Privacy Policy Page<br></div><div class='innerText'>Can change your personal information:</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> By logging in to your account</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> By chatting with us or by sending us a support ticket</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Others</div><div class='innerText'>personal visit</div><div class='innerText'><br><strong>How does our site handle Do Not Track signals?</strong><br></div><div class='innerText'>We honor Do Not Track signals and Do Not Track, plant cookies, or use advertising when a Do Not Track (DNT) browser mechanism is in place. </div><div class='innerText'><br><strong>Does our site allow third-party behavioral tracking?</strong><br></div><div class='innerText'>It's also important to note that we do not allow third-party behavioral tracking</div><span id='coppAct'></span><br><div class='blueText'><strong>COPPA (Children Online Privacy Protection Act)</strong></div><br /><div class='innerText'>When it comes to the collection of personal information from children under the age of 13 years old, the Children's Online Privacy Protection Act (COPPA) puts parents in control.  The Federal Trade Commission, United States' consumer protection agency, enforces the COPPA Rule, which spells out what operators of websites and online services must do to protect children's privacy and safety online.<br><br></div><div class='innerText'>We do not specifically market to children under the age of 13 years old.</div><span id='ftcFip'></span><br><div class='blueText'><strong>Fair Information Practices</strong></div><br /><div class='innerText'>The Fair Information Practices Principles form the backbone of privacy law in the United States and the concepts they include have played a significant role in the development of data protection laws around the globe. Understanding the Fair Information Practice Principles and how they should be implemented is critical to comply with the various privacy laws that protect personal information.<br><br></div><div class='innerText'><strong>In order to be in line with Fair Information Practices we will take the following responsive action, should a data breach occur:</strong></div><div class='innerText'>We will notify you via email</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Within 7 business days</div><div class='innerText'>We will notify the users via in-site notification</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Within 7 business days</div><div class='innerText'><br>We also agree to the Individual Redress Principle which requires that individuals have the right to legally pursue enforceable rights against data collectors and processors who fail to adhere to the law. This principle requires not only that individuals have enforceable rights against data users, but also that individuals have recourse to courts or government agencies to investigate and/or prosecute non-compliance by data processors.</div><span id='canSpam'></span><br><div class='blueText'><strong>CAN SPAM Act</strong></div><br /><div class='innerText'>The CAN-SPAM Act is a law that sets the rules for commercial email, establishes requirements for commercial messages, gives recipients the right to have emails stopped from being sent to them, and spells out tough penalties for violations.<br><br></div><div class='innerText'><strong>We collect your email address in order to:</strong></div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Process orders and to send information and updates pertaining to orders.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Send you additional information related to your product and/or service</div><div class='innerText'><br><strong>To be in accordance with CANSPAM, we agree to the following:</strong></div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Not use false or misleading subjects or email addresses.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Identify the message as an advertisement in some reasonable way.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Include the physical address of our business or site headquarters.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Monitor third-party email marketing services for compliance, if one is used.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Honor opt-out/unsubscribe requests quickly.</div><div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Allow users to unsubscribe by using the link at the bottom of each email.</div><div class='innerText'><strong><br>If at any time you would like to unsubscribe from receiving future emails, you can email us at</strong></div><div class='innerText'>remove@vaporama.eu and we will promptly remove you from <strong>ALL</strong> correspondence.</div><br><span id='ourCon'></span><br><div class='blueText'><strong>Contacting Us</strong></div><br /><div class='innerText'>If there are any questions regarding this privacy policy, you may contact us using the information below.<br><br></div><div class='innerText'>vaporama.eu</div><div class='innerText'>Antwerpseweg 101</div>Nispen, Nispen 4709 <div class='innerText'>nederland</div><div class='innerText'>support@vaporama.eu</div><div class='innerText'><br>Last Edited on 2016-11-28</div></div>	
+<div class='innerText'>This privacy policy has been compiled to better serve those who are concerned with how their 'Personally Identifiable Information' (PII) is being used online. PII, as described in US privacy law and information security, is information that can be used on its own or with other information to identify, contact, or locate a single person, or to identify an individual in context. Please read our privacy policy carefully to get a clear understanding of how we collect, use, protect or otherwise handle your Personally Identifiable Information in accordance with our website.<br></div>
+<span id='infoCo'></span>
+<br><div class='grayText'><strong>What personal information do we collect from the people that visit our blog, website or app?</strong></div>
+<br /><div class='innerText'>When ordering or registering on our site, as appropriate, you may be asked to enter your name, email address, mailing address, phone number  or other details to help you with your experience.</div>
+<br><div class='grayText'><strong>When do we collect information?</strong></div>
+<br /><div class='innerText'>We collect information from you when you register on our site, place an order or enter information on our site.</div>
+<br>Provide us with feedback on our products or services  <span id='infoUs'></span>
+<br><div class='grayText'><strong>How do we use your information? </strong></div>
+<br /><div class='innerText'> We may use the information we collect from you when you register, make a purchase, sign up for our newsletter, respond to a survey or marketing communication, surf the website, or use certain other site features in the following ways:<br>
+<br></div>
+<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> To quickly process your transactions.</div>
+<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> To follow up with them after correspondence (live chat, email or phone inquiries)</div>
+<span id='infoPro'></span><br>
+<div class='grayText'><strong>How do we protect your information?</strong></div>
+<br /><div class='innerText'>We do not use vulnerability scanning and/or scanning to PCI standards.</div>
+<div class='innerText'>We only provide articles and information. We never ask for credit card numbers.</div>
+<div class='innerText'>We use regular Malware Scanning.<br>
+<br></div>
+<div class='innerText'>Your personal information is contained behind secured networks and is only accessible by a limited number of persons who have special access rights to such systems, and are required to keep the information confidential. In addition, all sensitive/credit information you supply is encrypted via Secure Socket Layer (SSL) technology. </div>
+<br><div class='innerText'>We implement a variety of security measures when a user places an order enters, submits, or accesses their information to maintain the safety of your personal information.</div>
+<br><div class='innerText'>All transactions are processed through a gateway provider and are not stored or processed on our servers.</div>
+kept for more than 60 days in order
+<span id='coUs'></span><br>
+<div class='grayText'><strong>Do we use 'cookies'?</strong></div>
+<br /><div class='innerText'>We do not use cookies for tracking purposes </div>
+<div class='innerText'><br>You can choose to have your computer warn you each time a cookie is being sent, or you can choose to turn off all cookies. You do this through your browser settings. Since browser is a little different, look at your browser's Help Menu to learn the correct way to modify your cookies.<br></div>
+<br><div class='innerText'>If you turn cookies off, some features will be disabled. It won't affect the user's experience that make your site experience more efficient and may not function properly.</div>
+<br><div class='innerText'>However, you will still be able to place orders .</div>
+<br><span id='trDi'></span>
+<br><div class='grayText'><strong>Third-party disclosure</strong></div>
+<br /><div class='innerText'>We do not sell, trade, or otherwise transfer to outside parties your Personally Identifiable Information.</div>
+<span id='trLi'></span>
+<br><div class='grayText'><strong>Third-party links</strong></div>
+<br /><div class='innerText'>We do not include or offer third-party products or services on our website.</div><span id='gooAd'></span>
+<br><div class='blueText'><strong>Google</strong></div>
+<br /><div class='innerText'>Google's advertising requirements can be summed up by Google's Advertising Principles. They are put in place to provide a positive experience for users. https://support.google.com/adwordspolicy/answer/1316548?hl=en <br><br></div>
+	<div class='innerText'>We have not enabled Google AdSense on our site but we may do so in the future.</div>
+	<span id='calOppa'></span>
+	<br><div class='blueText'><strong>California Online Privacy Protection Act</strong></div>
+	<br /><div class='innerText'>CalOPPA is the first state law in the nation to require commercial websites and online services to post a privacy policy.  The law's reach stretches well beyond California to require any person or company in the United States (and conceivably the world) that operates websites collecting Personally Identifiable Information from California consumers to post a conspicuous privacy policy on its website stating exactly the information being collected and those individuals or companies with whom it is being shared. -  See more at: http://consumercal.org/california-online-privacy-protection-act-caloppa/#sthash.0FdRbT51.dpuf<br></div>
+	<div class='innerText'><br><strong>According to CalOPPA, we agree to the following:</strong><br></div>
+	<div class='innerText'>Users can visit our site anonymously.</div>
+	<div class='innerText'>Once this privacy policy is created, we will add a link to it on our home page or as a minimum, on the first significant page after entering our website.<br></div>
+	<div class='innerText'>Our Privacy Policy link includes the word 'Privacy' and can easily be found on the page specified above.</div>
+	<div class='innerText'><br>You will be notified of any Privacy Policy changes:</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> On our Privacy Policy Page<br></div>
+	<div class='innerText'>Can change your personal information:</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> By logging in to your account</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> By chatting with us or by sending us a support ticket</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Others</div>
+	<div class='innerText'>personal visit</div>
+	<div class='innerText'><br><strong>How does our site handle Do Not Track signals?</strong><br></div>
+	<div class='innerText'>We honor Do Not Track signals and Do Not Track, plant cookies, or use advertising when a Do Not Track (DNT) browser mechanism is in place. </div>
+	<div class='innerText'><br><strong>Does our site allow third-party behavioral tracking?</strong><br></div>
+	<div class='innerText'>It's also important to note that we do not allow third-party behavioral tracking</div>
+	<span id='coppAct'></span>
+	<br><div class='blueText'><strong>COPPA (Children Online Privacy Protection Act)</strong></div>
+	<br /><div class='innerText'>When it comes to the collection of personal information from children under the age of 13 years old, the Children's Online Privacy Protection Act (COPPA) puts parents in control.  The Federal Trade Commission, United States' consumer protection agency, enforces the COPPA Rule, which spells out what operators of websites and online services must do to protect children's privacy and safety online.<br><br></div>
+	<div class='innerText'>We do not specifically market to children under the age of 13 years old.</div>
+	<span id='ftcFip'></span><br><div class='blueText'><strong>Fair Information Practices</strong></div>
+	<br /><div class='innerText'>The Fair Information Practices Principles form the backbone of privacy law in the United States and the concepts they include have played a significant role in the development of data protection laws around the globe. Understanding the Fair Information Practice Principles and how they should be implemented is critical to comply with the various privacy laws that protect personal information.<br><br></div>
+	<div class='innerText'><strong>In order to be in line with Fair Information Practices we will take the following responsive action, should a data breach occur:</strong></div>
+	<div class='innerText'>We will notify you via email</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Within 7 business days</div>
+	<div class='innerText'>We will notify the users via in-site notification</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Within 7 business days</div>
+	<div class='innerText'><br>We also agree to the Individual Redress Principle which requires that individuals have the right to legally pursue enforceable rights against data collectors and processors who fail to adhere to the law. This principle requires not only that individuals have enforceable rights against data users, but also that individuals have recourse to courts or government agencies to investigate and/or prosecute non-compliance by data processors.</div>
+	<span id='canSpam'></span><br><div class='blueText'><strong>CAN SPAM Act</strong></div><br />
+	<div class='innerText'>The CAN-SPAM Act is a law that sets the rules for commercial email, establishes requirements for commercial messages, gives recipients the right to have emails stopped from being sent to them, and spells out tough penalties for violations.<br><br></div>
+	<div class='innerText'><strong>We collect your email address in order to:</strong></div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Process orders and to send information and updates pertaining to orders.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Send you additional information related to your product and/or service</div>
+	<div class='innerText'><br><strong>To be in accordance with CANSPAM, we agree to the following:</strong></div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Not use false or misleading subjects or email addresses.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Identify the message as an advertisement in some reasonable way.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Include the physical address of our business or site headquarters.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Monitor third-party email marketing services for compliance, if one is used.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Honor opt-out/unsubscribe requests quickly.</div>
+	<div class='innerText'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>&bull;</strong> Allow users to unsubscribe by using the link at the bottom of each email.</div>
+	<div class='innerText'><strong><br>If at any time you would like to unsubscribe from receiving future emails, you can email us at</strong></div>
+	<div class='innerText'>info@vpsdata.be and we will promptly remove you from <strong>ALL</strong> correspondence.</div>
+	<br><span id='ourCon'></span><br><div class='blueText'><strong>Contacting Us</strong></div><br />
+	<div class='innerText'>If there are any questions regarding this privacy policy, you may contact us using the information below.<br><br></div>
+	<div class='innerText'>https://vpsdata.be</div>
+	<div class='innerText'>papenaardekenstraat 198</div>
+	2900 schoten 
+	<div class='innerText'>Belgie</div>
+	<div class='innerText'>info@vpsdata.be</div>
+	<div class='innerText'><br>Last Edited on 2021-09-20</div></div>	
 	<?php
 	break;
 	case "contact":
-	echo "Kom gerust is langs bij onze shop voor een persoonlijk contact <br>Wij zijn alle dagen open van 10.00 tot 19.00 <br>Maandag zijn wij gesloten<br><br>u kan ook een email sturen naar <pre>info@$_SERVER[SERVER_NAME]</pre>";
+	echo "u kan een email sturen naar <pre>info@$_SERVER[SERVER_NAME]</pre> <br> u kan ons ook contacteren via <pre>https://vpsdata.be</pre>";
 	break;
 	
 }
