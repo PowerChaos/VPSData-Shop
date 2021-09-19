@@ -36,7 +36,7 @@ $ch = curl_init();
 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/PowerChaos/vaporshop/tags');
+curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/PowerChaos/VPSData-Shop/tags');
 $result = curl_exec($ch);
 curl_close($ch);
 ///Deocde Json
