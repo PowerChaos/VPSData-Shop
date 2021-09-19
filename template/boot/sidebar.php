@@ -29,6 +29,7 @@
    
 $db = new Db;
 $perm = new Permission;
+$session = new Session;
 ?>
  <!-- fixed top navbar -->
   <nav class="navbar navbar-inverse" role="navigation">
