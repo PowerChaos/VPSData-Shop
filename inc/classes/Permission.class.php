@@ -41,7 +41,6 @@ class Permission{
 
     public function rank($rank)
 	{
-        $this->session = new Session;
 		switch ($rank)
 		{
 			case "user":
@@ -55,6 +54,23 @@ class Permission{
 				return true;
 			break;
 		}
-	}	
+	}
+
+function check($rank)
+{
+    switch($rank)
+    {
+        case "user":
+          return ($this->session->get('loggedin') == 1 )?true:false;
+    break;
+        case "admin":
+            return ($this->session->get('admin') == 1 )?true:false;
+    break;
+        case "staff":
+        if ($this->session->get('admin') == 1 || $this->session->get('staff') == 1 )
+            return true;
+        break;
+    }
+}
 }
 ?>	

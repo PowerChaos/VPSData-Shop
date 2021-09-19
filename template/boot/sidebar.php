@@ -28,6 +28,7 @@
 */
    
 $db = new Db;
+$perm = new Permission;
 ?>
  <!-- fixed top navbar -->
   <nav class="navbar navbar-inverse" role="navigation">
@@ -158,7 +159,7 @@ $db = new Db;
 	            </ul> <!-- Einde NavBar -->
 		 	 <ul class="nav navbar-nav navbar-right"> 
 	  	  <?php
-      if (a()) {
+     if ($perm->check('admin')) {
           ?>			
 			<li class="dropdown">
 			  <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">local_play</i> Admin Menu
@@ -176,7 +177,7 @@ $db = new Db;
 		  </li>
 			  <?php
       }
-        if (u()) { //gebruikers
+        if ($perm->check('user')) { //gebruikers
           ?> 			
 						<li class="dropdown">
 		  				 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">more_vert</i> General
