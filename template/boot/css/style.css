@@ -116,9 +116,6 @@ h1.b1,h2.b2,h3.b3 {
 	color:#333;
 	text-decoration: none;
 }
-.item_add:hover{
-}
-
 .itemContainer{
 	width:100%;
 	float:left;
@@ -141,10 +138,7 @@ h1.b1,h2.b2,h3.b3 {
 .cartHeaders div{
 	float:left;
 	margin: 5px 20px 5px 20px ;
-}
-.item_add {
-
-}		
+}	
 .grid_1 img{
 	margin-bottom:1em;
 }
@@ -484,7 +478,6 @@ li.nbs-flexisel-item a:hover{
 	  background: #eee;
   padding: 4em 0;
 }
-.shpng-grids{}
 .shpng-grid{
 	text-align:center;
 }
@@ -980,7 +973,6 @@ font-size: 0.8em;
 .form-control:focus{
 	border-color:#ccc!important;
    outline: 0!important;
-   webkit-box-shadow:none;
   box-shadow: none;
 }
 .single-bottom1 h6 {
@@ -1572,7 +1564,7 @@ ul.unit{
 	padding:1em;
 }
 ul.unit li {
-	display:inline-block;
+	display:block;
 	 width:20%;
 	  float:left;
 	}
@@ -1606,7 +1598,7 @@ padding:1em;
 	background:#f8f8f8;
 }
  ul.cart-header li, ul.cart-header1 li, ul.cart-header2 li, ul.cart-header3 li{
-	display:inline-block;
+	display:block;
 	
 	 width:20%;
 	  float:left;
@@ -2317,7 +2309,7 @@ ul.unit li span {
   font-size:0.9em;
 }
 ul.unit li {
-  display: inline-block;
+  display: block;
   width: 25%;
   float: left;
 }
