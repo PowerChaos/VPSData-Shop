@@ -14,7 +14,7 @@ if (a())
 	?>
 <?php	foreach ($data as $key => $value)
 		{
-		if ($value['name'] > $versie)
+		if ($value['name '] > $versie)
 		{			
 	echo "<div class='alert alert-danger text-center'>
 			<a href='$value[zipball_url]'>Nieuwe Versie $value[name] Beschikbaar</a>
