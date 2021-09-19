@@ -26,14 +26,9 @@
 *                                                                                                                      *
 </#CR>
 */
-
-
-
-
-
-require(getenv("DOCUMENT_ROOT")."/inc/include.php");
-$session = new Session;   
-$db = new db;?>
+   
+$db = new Db;
+?>
  <!-- fixed top navbar -->
   <nav class="navbar navbar-inverse" role="navigation">
     <div class="container-fluid">

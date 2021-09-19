@@ -29,7 +29,7 @@
 
 
 
-
+$db = new DB;
 ?>
 
 <!DOCTYPE html>
@@ -61,24 +61,22 @@ function tokenTruncate($string, $your_desired_width) {
 		{
 			$header = $_GET['page'];
 		}
-		 $titel = "Vaporama - ".$header;
+		 $titel = "VPS Data - ".$header;
 		}else{
-		$header = 'Vaporama World of Vaping';
+		$header = '3D printing made easy';
 		 $titel = $header;
 		}
- require(getenv("DOCUMENT_ROOT")."/functions/database.php");
  $head = str_replace("-", " ", $header);
- $stmt = $db->prepare("SELECT * FROM products WHERE name = :id");
- $stmt->execute(array(':id' => $head));
- $seodesc = $stmt->fetch(PDO::FETCH_ASSOC);
- $metacount = $stmt->RowCount();
+ $bind = array(":id" =>$head);
+ $seodesc = $db->select('products','name = :id','',$bind,'fetch');
+ $metacount = $db->select('products','name = :id','',$bind,'rowcount');
  if ($metacount > "0")
  {
  $meta = tokenTruncate($seodesc['over'],155);
  }
  else
  {
-	 $meta = "U bevind zich op pagina van $head van Vaporama - World of Vaping";
+	 $meta = "Welkom to $head  at VPS Data - 3D Printing made easy";
  }
  ?>
     <meta charset="UTF-8">

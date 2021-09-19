@@ -31,7 +31,7 @@
 
 
 
-class db extends PDO {
+class Db extends PDO {
     private $error;
     private $sql;
     private $bind;
