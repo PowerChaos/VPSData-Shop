@@ -32,7 +32,16 @@
 
 
 
-
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/PowerChaos/vaporshop/tags');
+$result = curl_exec($ch);
+curl_close($ch);
+///Deocde Json
+$data = json_decode($result,true);
+	$versie = $data['0']['name'];
 ?>
 <!---->
 <div class="clearfix"></div>
@@ -44,7 +53,8 @@
 		</div>
 		<div class="col-xs-6 text-right">
 		<a href='#' data-toggle="modal" data-target="#modal" id="tos" onclick="tos(this.id);" aria-hidden="true" >TOS</a> | <a href='#' data-toggle="modal" data-target="#modal" id="privacy" onclick="tos(this.id);" aria-hidden="true" >Privacy</a> | <a href='#' data-toggle="modal" data-target="#modal" id="contact" onclick="tos(this.id);" aria-hidden="true" >Contact</a>
-		</div>
+		version: <?php echo $versie ?>	
+	</div>
 		</div>
 		</div>
 	</div>	
