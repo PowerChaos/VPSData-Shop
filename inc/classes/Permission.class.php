@@ -16,9 +16,9 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *                                           File and License Informations                                              *
 * -------------------------------------------------------------------------------------------------------------------- *
-*          File Name        > <!#FN> Page.class.php </#FN>                                                             
-*          File Birth       > <!#FB> 2021/09/18 02:47:28.181 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/18 03:31:43.408 </#FT>                                                    *
+*          File Name        > <!#FN> Permission.class.php </#FN>                                                       
+*          File Birth       > <!#FB> 2021/09/19 22:22:39.487 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/09/19 22:22:55.225 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
@@ -30,75 +30,31 @@
 
 
 
+class Permission{
+	protected $rank;
+	protected $groep;
+	
+    public function __construct() {
+        // start db en Sessie
+       $this->session = new Session; 
+       }
 
-
-class Page {
-private $info;
-private $file;
-private $perm;
-private $page;
-private $rank;
-private $show;
-
-public function __construct() {
-	// start db en Sessie
-   $this->session = new Session; 
-	   }
-
-protected function Template($info)
-{
-include (getenv("DOCUMENT_ROOT")."/template/boot/$info.php");
-}
-
-public function Showpage($perm,$page,$rank=Null)
-{	
-	switch ($perm)
-	{	
-	case "admin":
-		if ($rank == 'admin')
+    public function rank($rank)
+	{
+        $this->session = new Session;
+		switch ($rank)
 		{
-		$file = getenv("DOCUMENT_ROOT")."/pages/admin/".$page.".php";
+			case "user":
+              return  $this->session->set('loggedin','1');
 		break;
-		}
-		else
-		{
-		goto home;
-			break;
-		}	
-	case "staff":
-		if (($rank == 'admin') OR ($rank == 'staff'))
-		{
-		$file = getenv("DOCUMENT_ROOT")."/pages/staff/".$page.".php";
+			case "admin":
+               return $this->session->set('admin','1');
 		break;
-		}
-		else
-		{
-		goto home;
+			case "staff":
+			if ($this->session->get('admin') == 1 || $this->session->get('staff') == 1 )
+				return true;
 			break;
 		}
-	case 'logout':
-	$this->session->destroy();
-	return header("Refresh:0; url=../?logout=success");
-	break;
-	default:
-		home:
-		$file = getenv("DOCUMENT_ROOT")."/pages/".$page.".php";
-		break;
-	}
-if (file_exists($file))
-{
-$this->Template("header");
-$this->Template("sidebar");
-include ("$file");
-$this->Template("footer");
+	}	
 }
-else
-{	
-$this->Template("header");
-$this->Template("sidebar");
-include (getenv("DOCUMENT_ROOT")."/pages/home.php");
-$this->Template("footer");
-}
-}
-}
-?>
+?>	
