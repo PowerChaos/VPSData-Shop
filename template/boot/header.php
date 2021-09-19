@@ -30,6 +30,11 @@
 
 
 $db = new Db;
+
+//site variables
+$page = $_GET['page']?:"";
+$product = $_GET['product']?:"";
+$merk = $_GET['merk']?:"";
 ?>
 
 <!DOCTYPE html>
@@ -50,16 +55,16 @@ function tokenTruncate($string, $your_desired_width) {
 
   return implode(array_slice($parts, 0, $last_part));
 }
- if ($_GET['page'] != ""){
-			if ($_GET['product'] !=""){
-				$header = $_GET['product'];
+ if ($page != ""){
+			if ($product !=""){
+				$header = $product;
 		}
-		elseif ($_GET['merk'] !=""){
-			$header = $_GET['merk'];
+		elseif ($merk !=""){
+			$header = $merk;
 		}
 		else 
 		{
-			$header = $_GET['page'];
+			$header = $page;
 		}
 		 $titel = "VPS Data - ".$header;
 		}else{

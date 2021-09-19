@@ -31,9 +31,11 @@
 
 
 
+$perm = $_GET['perm']?:"";
+$file = $_GET['file']?:"";
 
 include (getenv("DOCUMENT_ROOT")."/inc/include.php");
 $session = new Session;
 $page = new Page;
-$page->Showpage($_GET['perm'],$_GET['file'],$session->get('rank'));
+$page->Showpage($perm,$file,$session->get('rank'));
 ?>
