@@ -39,6 +39,7 @@ class Db extends PDO {
     private $errorMsgFormat;
 
 public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config::DB_DATA.'', $user=Config::DB_USER, $passwd=Config::DB_PASS, $options=array()) {
+    $this->session = new Session;
 /* Hard coded sql connectie voor database
 *  Gebruik $db = new db ( connectie,gebruiker, wachtwoord ) voor andere database connectie
 */       
@@ -235,6 +236,17 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
             $bind[":update_$field"] = $info[$field];
 
         return $this->run($sql, $bind);
+    }
+    //ajax edit
+    function ajaxedit($table,$waarde,$split)
+    {
+    $split_data = explode(':', $split);
+    $id = $split_data[1];
+    $field = $split_data[0];
+    $bind = array(':id' => $id);
+    $update = array($field => $waarde);
+    $this->update($table,$update,"id = :id",$bind);
+    return $this->session->flashdata('error','field '.$field.' from '.$table.' updated to new value :\n\n '.$waarde);
     }
 }   
 	?>	
