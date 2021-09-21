@@ -22,7 +22,7 @@
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -32,9 +32,9 @@
 $db = new Db;
 
 //site variables
-$page = $_GET['page']?:"";
-$product = $_GET['product']?:"";
-$merk = $_GET['merk']?:"";
+$page = $_GET['page']?? null;
+$product = $_GET['product']?? null;
+$merk = $_GET['merk']?? null;
 ?>
 
 <!DOCTYPE html>

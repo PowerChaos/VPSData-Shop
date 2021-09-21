@@ -36,6 +36,8 @@ class Session {
 
     public function __construct()
     {
+        if(!isset($_SESSION))
+        { 
         $this->session_name = 'VPS_Data_WebShop'; // Set a custom session name
         $this->secure = true; // Set to true if using https.
         $this->httponly = true; // This stops javascript being able to access the session id.
@@ -43,8 +45,8 @@ class Session {
         $this->cookieParams = session_get_cookie_params(); // Gets current cookies params.
         session_set_cookie_params($this->cookieParams['lifetime'], $this->cookieParams['path'], $this->cookieParams['domain'], $this->secure, $this->httponly);
         session_name($this->session_name); // Sets the session name to the one set above.
-    
-        if(!isset($_SESSION)) session_start();
+        session_start();
+        }
     }
 
  /*

@@ -22,13 +22,13 @@
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
    
 $db = new Db;
-$perm = new Permission;
+$perm = new Gebruikers;
 $session = new Session;
 ?>
  <!-- fixed top navbar -->
@@ -213,9 +213,6 @@ $session = new Session;
 		<li>
 			 <a href='../login'><i class="material-icons">account_circle</i> Login</a>
 		</li>
-		<li>
-			 <a href='#' data-toggle="modal" data-target="#modal" id="register" onclick="login(this.id);" aria-hidden="true" ><i class="material-icons">vpn_key</i> Register</a>
-		</li>
 		<?php
         }
         ?>	 	
@@ -224,10 +221,5 @@ $session = new Session;
     </div>
   </nav>
 <?php
-if ($session->flash('error'))
-{
-	echo "<div class='alert alert-success fade in text-center' data-dismiss='alert' role='alert'>
-	".$session->flash('error')."
-	</div>";
-}
+	echo "<div class='error'></div>";
 ?>        

@@ -1,7 +1,5 @@
 <?php
-require(getenv("DOCUMENT_ROOT")."/functions/database.php");
-require(getenv("DOCUMENT_ROOT")."/functions/PasswordStorage.php");
-
+require(getenv("DOCUMENT_ROOT")."/inc/include.php");
 //verwerking Data van home.php Login Form
 //LOGIN CONFIG
 if(isset($_POST['btn-login']))

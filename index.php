@@ -22,20 +22,17 @@
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
 
 
-
-
-
-$perm = $_GET['perm']?:"";
-$file = $_GET['file']?:"";
-
 include (getenv("DOCUMENT_ROOT")."/inc/include.php");
 $session = new Session;
 $page = new Page;
-$page->Showpage($perm,$file,$session->get('rank'));
+$perm = $_GET['perm']?? null;
+$file = $_GET['file']?? null;
+$page->Showpage($perm,$file);
+
 ?>

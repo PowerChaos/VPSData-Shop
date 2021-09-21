@@ -20,35 +20,43 @@
 #*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 #*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 #*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-#*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+#*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 #*                                                                                                                      *
 #</#CR>
 #*/
 
-
-
-
 RewriteEngine On
-
-# /* force redirect to https */
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{SERVER_NAME}/$1 [R,L]
-# /* End Force HTTPS */
-
 Options +FollowSymLinks
 Options -Indexes
-RewriteRule ^logout$ index.php?action=logout
-RewriteRule ^sessionexpired$ index.php?session=expired
-RewriteRule ^a/([a-zA-Z0-9_-]+)$ index.php?admin=$1
-RewriteRule ^s/([a-zA-Z0-9_-]+)$ index.php?staff=$1
+# /* force redirect to https */
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://%{SERVER_NAME}/$1 [R=301,L]
+# /* End Force HTTPS */
 
+RewriteRule ^logout$ index.php?perm=logout
+RewriteRule ^lang/([a-zA-Z0-9_-]+)$ index.php?perm=lang&file=$1
+#RewriteRule ^dashboard/([a-zA-Z0-9_-]+)$ index.php?perm=dashboard&file=$1
+RewriteRule ^a/([a-zA-Z0-9_-]+)$ index.php?perm=admin&file=$1
+RewriteRule ^s/([a-zA-Z0-9_-]+)$ index.php?perm=staff&file=$1
+RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?file=$1
+RewriteRule ^t/(.*)$ index.php?file=test&$1
+RewriteRule ^bugs/([0-9]+)/([a-zA-Z0-9_-]+).html$ index.php?file=bugs&bug=$1
+RewriteRule ^forum/([0-9]+)/([a-zA-Z0-9_-]+).html$ index.php?file=forum&forum=$1
+RewriteRule ^faq/([0-9]+)/([a-zA-Z0-9_-]+).html$ index.php?file=faq&faq=$1
+RewriteRule ^reset/([a-zA-Z0-9_-]{12,18})$ index.php?file=reset&code=$1
+#ajax callback fix
+RewriteRule ^x/([a-zA-Z0-9_-]+)$ index.php?perm=ajax&file=$1
 #seo rewrite
-RewriteRule ^([a-zA-Z0-9_-]+).html$ index.php?page=merk&merk=$1
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+).html$ index.php?page=product&product=$2
-
+RewriteRule ^([a-zA-Z0-9_-]+).html$ index.php?file=merk&merk=$1
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+).html$ index.php?file=product&product=$2
 #base rewrite
-RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?page=$1
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . / [L,R=302]
+#website lock
+RewriteRule ^ajax/([a-zA-Z0-9_-]+)$ index.php?file=$1
+RewriteRule ^inc/([a-zA-Z0-9_-]+)$ index.php?file=$1
+RewriteRule ^pages/([a-zA-Z0-9_-]+)$ index.php?file=$1
+RewriteRule ^template/([a-zA-Z0-9_-]+)$ index.php?file=$1
+# /* CopyRight PowerChaos 2016 */
 

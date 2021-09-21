@@ -22,7 +22,7 @@
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -31,18 +31,9 @@
 
 
 
-
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($ch, CURLOPT_URL, 'https://api.github.com/repos/PowerChaos/VPSData-Shop/tags');
-$result = curl_exec($ch);
-curl_close($ch);
-///Deocde Json
-$data = json_decode($result,true);
-	$versie = $data['0']['name'];
+$session = new Session;
 ?>
+
 <!---->
 <div class="clearfix"></div>
 	<div class="copywrite">
@@ -52,8 +43,7 @@ $data = json_decode($result,true);
 		Copyright © 2021 VPS Data. All Rights Reserved | Coded by <a href="https://vpsdata.be">PowerChaos</a>
 		</div>
 		<div class="col-xs-6 text-right">
-		<a href='#' data-toggle="modal" data-target="#modal" id="tos" onclick="tos(this.id);" aria-hidden="true" >TOS</a> | <a href='#' data-toggle="modal" data-target="#modal" id="privacy" onclick="tos(this.id);" aria-hidden="true" >Privacy</a> | <a href='#' data-toggle="modal" data-target="#modal" id="contact" onclick="tos(this.id);" aria-hidden="true" >Contact</a>
-		version: <?php echo $versie ?>	
+		<a href='#' data-toggle="modal" data-target="#modal" id="tos" onclick="tos(this.id);" aria-hidden="true" >TOS</a> | <a href='#' data-toggle="modal" data-target="#modal" id="privacy" onclick="tos(this.id);" aria-hidden="true" >Privacy</a> | <a href='#' data-toggle="modal" data-target="#modal" id="contact" onclick="tos(this.id);" aria-hidden="true" >Contact</a>	
 	</div>
 		</div>
 		</div>
@@ -123,7 +113,17 @@ function tos(val) {
 $(document).ready(function() {
 	//enter prevention
 $(".no-enter").keypress(function(e){ return e.which != 13; });
-		
+$('.error').hide();
+<?php
+$error = $session->flash('error');
+if ($error)
+{
+?>
+$('.error').show();	
+$(".error").html("<?php echo "<div class='alert alert-success fade in text-center' data-dismiss='alert' role='alert'>$error</div>"; ?>");
+<?php
+}
+?>		
 //header DropDown Fix
   $('.navbar-header').click(function(){
 		var parent = $(this).parent();
@@ -146,6 +146,6 @@ $(".no-enter").keypress(function(e){ return e.which != 13; });
 	});
 	
 	});
-</script> 
+</script>
 </body>
 </html>

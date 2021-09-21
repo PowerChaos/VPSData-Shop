@@ -22,7 +22,7 @@
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 0.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -39,6 +39,7 @@ private $perm;
 private $page;
 private $rank;
 private $show;
+private $ajax;
 
 public function __construct() {
 	// start db en Sessie
@@ -50,12 +51,13 @@ protected function Template($info)
 include (getenv("DOCUMENT_ROOT")."/template/boot/$info.php");
 }
 
-public function Showpage($perm,$page,$rank=Null)
-{	
+public function Showpage($perm,$page)
+{
+	$ajax = '0';	
 	switch ($perm)
 	{	
 	case "admin":
-		if ($rank == 'admin')
+		if ($this->session->get('admin'))
 		{
 		$file = getenv("DOCUMENT_ROOT")."/pages/admin/".$page.".php";
 		break;
@@ -66,7 +68,7 @@ public function Showpage($perm,$page,$rank=Null)
 			break;
 		}	
 	case "staff":
-		if (($rank == 'admin') OR ($rank == 'staff'))
+		if ($this->session->get('admin') || $this->session->get('staff'))
 		{
 		$file = getenv("DOCUMENT_ROOT")."/pages/staff/".$page.".php";
 		break;
@@ -79,6 +81,9 @@ public function Showpage($perm,$page,$rank=Null)
 	case 'logout':
 	$this->session->destroy();
 	return header("Refresh:0; url=../?logout=success");
+	case 'ajax':
+	$file = getenv("DOCUMENT_ROOT")."/pages/".$page.".php";
+	$ajax = '1';	
 	break;
 	default:
 		home:
@@ -87,10 +92,17 @@ public function Showpage($perm,$page,$rank=Null)
 	}
 if (file_exists($file))
 {
+if ($ajax != '1')
+{	
 $this->Template("header");
 $this->Template("sidebar");
 include ("$file");
 $this->Template("footer");
+}
+else
+{
+	include ("$file");
+}
 }
 else
 {	
