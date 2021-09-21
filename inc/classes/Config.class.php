@@ -38,8 +38,8 @@
 
 class Config {
     const DB_HOST     	= 'localhost', // Database Host
-          DB_DATA	  	= 'vpsd_webshop', // Database Name
-		  DB_USER     	= 'vpsd_WebShop', // Database User
-          DB_PASS     	= 'e*HJLtmzHGq%k#ya'; // Database Password
+          DB_DATA	  	= 'database', // Database Name
+		  DB_USER     	= 'username', // Database User
+          DB_PASS     	= 'password'; // Database Password
 }
 ?>
