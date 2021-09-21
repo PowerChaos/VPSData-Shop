@@ -41,5 +41,6 @@ class Config {
           DB_DATA	  	= 'vpsd_webshop', // Database Name
 		  DB_USER     	= 'vpsd_WebShop', // Database User
           DB_PASS     	= 'e*HJLtmzHGq%k#ya'; // Database Password
+          
 }
 ?>

@@ -10,23 +10,20 @@ $versie = "1.0.0";
 	curl_close($ch);
 	///Deocde Json
 	$data = json_decode($result,true);
-	foreach ($data as $key => $value)
-		{
-if ($key="message"){
-	echo "<div class='alert alert-danger text-center'>Limit reached , check back in a hour </div>";
-	break;
-}		
-elseif ($value['name'] > $versie)
-		{			
-	echo "<div class='alert alert-danger text-center'>
-			<a href='$value[zipball_url]'>Nieuwe Versie $value[name] Beschikbaar</a>
-				</div>"; 
-		}
-			elseif ($value['name'] == $versie)
-			{			
-				echo "<div class='alert alert-success text-center'>
-				<a href='$value[zipball_url]'>Laatste Versie $value[name] is Geinstaleerd</a>
-				</div>"; 
-			}
-		}
+	if ($data['message'])
+	{
+	echo "<div class='alert alert-danger text-center'>Your version is $version, unable to check latest version<br>try again in a hour</div>";
+	}
+	elseif ($data['0']['name'] > $versie)
+	{
+		echo "<div class='alert alert-danger text-center'>
+			<a href='".$data['0']['zipball_url']."'>New Version ".$data['0']['name']." avaible</a>
+				</div>";
+	}
+	else 
+	{
+		echo "<div class='alert alert-success text-center'>
+		<a href='".$data['0']['zipball_url']."'>Latest Version ".$data['0']['name']." installed</a>
+		</div>";
+	}
 ?>	
