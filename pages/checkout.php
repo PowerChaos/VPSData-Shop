@@ -91,7 +91,7 @@ $clknop = $cl->fetch(PDO::FETCH_ASSOC);
 			&euro; {$item[prijs]}
 			</td>
 			<td style='width:20%'>
-			{$item[clouds]} <i class='material-icons'>filter_drama</i>
+			{$item[clouds]} <i class='material-icons'>3d_rotation</i>
 			</td>
 		</tr>
 		";
@@ -125,7 +125,7 @@ Selecteer Betaling:
 </div>
 <br>
 <?php echo ($prijs > "0")?"<a href='#' id='bestel' class='btn btn-success btn-block bestel'>Bestel Nu voor &euro; <prijs id='total'>$prijs</prijs></a>":"<div class='alert alert-info text-center'>Gelieven eerst iets toe te voegen om te bestellen</div>"; ?>
-<?php echo ($clouds > "0")?"<a href='#' id='clouds' class='btn btn-info btn-block clouds'>Bestel Nu voor $clouds <i class='material-icons'>filter_drama</i></a>":""; ?>
+<?php echo ($clouds > "0")?"<a href='#' id='clouds' class='btn btn-info btn-block clouds'>Bestel Nu voor $clouds <i class='material-icons'>3d_rotation</i></a>":""; ?>
 <?php if ($prijs < '75'){ ?>
 <div class="shoping">
 	 <div class="container">
