@@ -51,7 +51,8 @@ $this->hash = new PasswordStorage;
 		if (empty($id)){
 		$this->session->set('hash',$this->hash->create_hash($newpass));
 		}
-		return $this->session->flashdata('error','Password changed');	
+		$this->session->destroy();
+		return $this->session->flashdata('error','Password changed, please relog');	
 		}
 		else
 		{
@@ -120,10 +121,10 @@ $this->hash = new PasswordStorage;
 	}
 
 	// Register
-	private function isDigits(string $s, int $minDigits = 9, int $maxDigits = 15): bool {
+	private function isDigits(string $s, int $minDigits = 9, int $maxDigits = 16): bool {
 		return preg_match('/^[0-9]{'.$minDigits.','.$maxDigits.'}\z/', $s);
 	}
-	private function validphone(string $telephone, int $minDigits = 9, int $maxDigits = 15): bool {
+	function validphone(string $telephone, int $minDigits = 9, int $maxDigits = 16): bool {
 		if (preg_match('/^[+][0-9]/', $telephone)) { //is the first character + followed by a digit
 			$count = 1;
 			$telephone = str_replace(['+'], '', $telephone, $count); //remove +
@@ -225,6 +226,7 @@ $this->hash = new PasswordStorage;
 			echo 1;
 			break;
 		case 'b':
+			$this->session->set('loggedin','0');
 			echo 0;
 			break;
 		default:

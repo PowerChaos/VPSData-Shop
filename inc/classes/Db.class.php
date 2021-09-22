@@ -246,7 +246,7 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
     $bind = array(':id' => $id);
     $update = array($field => $waarde);
     $this->update($table,$update,"id = :id",$bind);
-    return $this->session->flashdata('error','field '.$field.' from '.$table.' updated to new value :\n\n '.$waarde);
+    echo 'field '.$field.' from '.$table.' updated to new value :'.$waarde;
     }
 }   
 	?>	

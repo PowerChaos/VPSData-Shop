@@ -1,15 +1,24 @@
-<?php echo "<h1>".$_SESSION[ERROR]."</h1>";
-$_SESSION[ERROR] ="";
-if (u()){ //begin user
+<?php 
+$perm = new Gebruikers;
+$session = new Session;
+if ($perm->check('user'))
+{
+  if ($_POST['info'] == 'pass')
+  {
+    $old    = $_POST['oldpass']??"";
+    $new    = $_POST['newpass']??"";
+    $check  = $_POST['newpass2']??"";
+    $perm->ChangePass($old,$new,$check);
+  } 
 ?>
 <div class="container">
-<form action="../invoer" method="post" id='pass' name='pass'>
+<form action="" method="post" id='pass' name='pass'>
 <input type="hidden" name="info" value="pass" />
-  oud Wachtwoord:<br>
+  Old Password:<br>
   <input class="form-control" type="text" name="oldpass"><br>
-  Nieuw Wachtwoord:<br>
+  New Password:<br>
   <input class="form-control" type="password" name="newpass"><br>
-  Herhaling Nieuw Wachtwoord:<br>
+  Repeat New Password:<br>
   <input class="form-control" type="password" name="newpass2"><br>
   <input class="btn btn-danger" type="submit" value="Submit">
 </form>
@@ -18,6 +27,6 @@ if (u()){ //begin user
 }
 else
 {
-echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://{$_SERVER['SERVER_NAME']}/\" />";	
+$session->flashdata('error','Please login to use this page');
 }
 ?>
