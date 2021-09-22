@@ -32,11 +32,13 @@
 
 $defimg = Config::DEFIMG;
 $db = new Db;
+$session = new Session;
 if (isset($_GET['merk'])) {
 	$id = $_GET['merk'];
 	$bmerk = array(':id' => $id);
 	$row = $db->select('products','merk = :id','',$bmerk,'','*','cat','cat');
-}
+if ($row)
+{	
 ?>
 <div class="welcome">
 	 <div class="container">
@@ -106,3 +108,11 @@ foreach ($row as $cat){
 			</div>
 		</div>
 	</div>
+<?php
+}
+else
+{
+$session->flashdata('error','Brand not found , please choose the right brand');
+}
+}
+?>	

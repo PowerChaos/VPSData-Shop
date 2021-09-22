@@ -56,7 +56,7 @@ $session = new Session;
 			     <?php
 												$category = $db->select('products','','','','','cat','cat','cat ASC');
                                                 $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
-                                                $count = ($count == "")?'1':$count;
+                                                $count = ($count=='0')?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
@@ -95,7 +95,7 @@ $session = new Session;
 			  							<?php
                                                $category = $db->select('products','cat !=fillaments','','','','','merk','merk ASC');
                                                $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
-                                                $count = ($count == "")?'1':$count;
+                                                $count = ($count == "0")?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
@@ -130,7 +130,7 @@ $session = new Session;
 			  							<?php
                                                 $category = $db->select('products','cat =fillaments','','','','','merk','merk ASC');
                                                 $count = $db->select('products','','','','rowcount','cat','cat','cat ASC');
-                                                $count = ($count == "")?'1':$count;
+                                                $count = ($count == "0")?'1':$count;
                                                 $div = ceil(12/$count);
                                                 $div = ($div%2 != "0")?$div+1:$div;
                                                 foreach ($category as $cat) {
@@ -201,11 +201,11 @@ $session = new Session;
 
 				  <li>
 				  <?php
-                    $shop = $db->prepare("SELECT * FROM bestelling WHERE bestel ='$_SESSION[rand]' and status = '0'");
-                    $shop->execute();
-                    $count = $shop->RowCount();
-                    $total = ($count == "")?"0":$count;?>
-				<a class="badge" data-toggle="modal" data-target="#modal" id="<?php echo $_SESSION['rand'] ?>" onclick="shopcart(this.id,'shop');" aria-hidden="true"><i class="material-icons">shopping_cart</i><?php echo $total ?></a>
+				  	$rand = $session->get('rand');
+				  	$bestel = array(":rand" =>$rand);
+				  	$total = $db->select('bestelling','bestel = :rand AND status = 0','',$bestel,'rowcount');
+					?>
+				<a class="badge" data-toggle="modal" data-target="#modal" id="<?php echo $rand ?>" onclick="shopcart(this.id,'shop');" aria-hidden="true"><i class="material-icons">shopping_cart</i><?php echo $total ?></a>
 					</li>	
 		<?php
         } else { //einde gebruikers

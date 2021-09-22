@@ -33,14 +33,12 @@ $session = new Session;
 $db = new DB;
 if (isset($_GET['product'])) {
 	$id = str_replace("-", " ", $_GET['product']);
-	try {
 		$bid = array(':id' => $id);
 		$prod = $db->select('products','name = :id','',$bid,'fetch');
 		$bpid = array(':pid' => $prod['id']);
 		$rating = $db->select('rating','pid = :pid','',$bpid);
 		$ratingcount = $db->select('rating','pid = :pid','',$bpid,'rowcount');
 		$img = $db->select('images','pid = :pid','',$bpid,'','*','','RAND()');
-		$count = $db->select('images','pid = :pid','',$bpid,'rowcount');
 		$starcount = "0";
 		$totstar = "0";
 		foreach ($rating AS $star)
@@ -59,21 +57,15 @@ if (isset($_GET['product'])) {
 								$ubind = array(':uid' => $session->get('id'));
 								$getuser = $db->select('gebruikers','id = :uid','',$ubind,'fetch');
 								$dbinb = array(':uid' => $getuser['punten']);
-								$getdisc = $db->select('discount','clouds <= :clouds','1',$dbind,'fetch','*','clouds DESC');
-								$disc = $getdisc['discount']??"0";
+								$disc = $db->select('discount','clouds <= :clouds','1',$dbind,'fetch','*','clouds DESC');
 								$korting = floor($prod['prijs']);
 								$bonus = floor(($korting / 100) * $disc);
 								$clouds = " <div class='clearfix'></div> <li class='active'>earn <clouds id='clouds'>".$korting."</clouds> <i class='material-icons'>3d_rotation</i></li>";
 								$tot = $korting + $bonus;
 								$totbonus = "<li>+ <d id='disc'>$disc</d> % Bonus =  <t id='bon'>$tot</t> <i class='material-icons'>3d_rotation</i></li><div class='clearfix'></div>";
 	}							
-	}
-	catch(Exception $e) {
-		echo '<h2><font color=red>';
-		var_dump($e->getMessage());
-		die ('</h2></font> ');
-	}	
-}
+	if ($prod)
+	{			
 ?>
 <div class="single-sec">
 	 <div class="container">
@@ -83,7 +75,7 @@ if (isset($_GET['product'])) {
 					 <div class="flexslider">
 							<ul class="slides">
 							<?php
-							if ($count < '1')
+							if ($img)
 							{ ?>
 								<li data-thumb="<?php echo $defimg ?>">
 									<img src="<?php echo $defimg ?>" />
@@ -274,3 +266,11 @@ window.location.reload();
 	 </div>
 </div>
 </div>
+<?php
+}
+else
+{
+$session->flashdata('error','Product not found, please check product link');
+}
+}
+?>

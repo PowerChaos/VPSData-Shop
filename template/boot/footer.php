@@ -81,21 +81,6 @@ function shopcart(val, dat) {
 }
 	});		
 }
-//Login/register
-function login(val) {
-	$.ajax({
-	type: "POST",
-	url: "//<?php echo $_SERVER['SERVER_NAME']?>/ajax/register.php",
-	data:'gebruiker='+val,
-	success: function(data){
-		//alert(data);
-		//alert ("gebruiker: " +val);
-		$("#modal").modal('show');
-		$("#modalcode").html(data);	
-}
-	});		
-}
-
 //tos contact and privacy
 function tos(val) {
 	$.ajax({

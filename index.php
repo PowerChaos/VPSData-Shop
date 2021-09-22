@@ -34,5 +34,4 @@ $page = new Page;
 $perm = $_GET['perm']?? null;
 $file = $_GET['file']?? null;
 $page->Showpage($perm,$file);
-
 ?>

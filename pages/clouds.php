@@ -40,14 +40,14 @@ if ($perm->check('user')){
 								<hr />
 								<p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i><br />
 									This <i class='material-icons'>3d_rotation</i></i> can you trade for free products or discounts.<br />
-									For each  <i class='material-icons'>3d_rotation</i> you do NOT use, do you get a discount at certain amounts.</p>
+									if you get a certain amount of  <i class='material-icons'>3d_rotation</i> then you get even extra bonus points</p>
 							</div>
 							<div class="table-responsive">
 								<?php
 										$buser = array(':id' => $session->get('id'));
-										$result = $db->select('gebruikers','id = :id','',$bmerk,'fetch','punten');
-										echo "<div class='alert alert-info text-center'>You have  $result[punten] <i class='material-icons'>3d_rotation</i> in total!</div>";		
-
+										$result = $db->select('gebruikers','id = :id','',$buser,'fetch','punten');
+										$punt = $result['punten'];
+										echo "<div class='alert alert-info text-center'>You have  {$punt} <i class='material-icons'>3d_rotation</i> in total!</div>";
 								?>
 								<table class="table table-bordered table-striped">
 								  <thead>
@@ -64,16 +64,22 @@ if ($perm->check('user')){
 									</tfoot>
 									<tbody>
 									<?php
-									$discount = $db->select('discount','','','','','','','clouds DESC');
-									$bdis = array(':punten' => $result['punten']);
-									$punten = $db->select('discount','clouds <= :punten','1',$bdis,'fetch','','','clouds DESC');
-											foreach($discount as $info) {
-												$discount = ($info['id'] == $punten['id'])?"<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>":"<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
+									$promos = $db->select('discount');
+									$bdis = array(':punt' => $punt);
+									$pun = $db->select('discount','clouds <= :punt','1',$bdis,'fetch','*','','clouds DESC');
+											foreach($promos as $info) {
+												$id = $info['id'];
+												$puntje = $pun['id'];
+												$promo = ($id == $puntje)?"<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>":"<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
 												$table2 .= "<tr>";
-												$table2 .=  "$discount";
+												$table2 .=  "$promo";
 												$table2 .=  "</tr>";
 											}
 											echo $table2;
+											print_r($promos);
+											print_r($pun);
+											echo '<br><br>puntje : '.$puntje.'<br><br>';
+											print $id;
 									?>
 									</tbody>
 								</table>

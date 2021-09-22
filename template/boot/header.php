@@ -74,14 +74,13 @@ function tokenTruncate($string, $your_desired_width) {
  $head = str_replace("-", " ", $header);
  $bind = array(":id" =>$head);
  $seodesc = $db->select('products','name = :id','',$bind,'fetch');
- $metacount = $db->select('products','name = :id','',$bind,'rowcount');
- if ($metacount > "0")
+ if ($seodesc)
  {
  $meta = tokenTruncate($seodesc['over'],155);
  }
  else
  {
-	 $meta = "Welkom to $head  at VPS Data - 3D Printing made easy";
+	 $meta = "Welcome to $head by VPS Data - 3D Printing made easy";
  }
  ?>
     <meta charset="UTF-8">

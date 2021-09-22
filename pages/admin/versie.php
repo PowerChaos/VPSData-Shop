@@ -1,5 +1,5 @@
 <?php
-$versie = "1.0.0";
+$versie = "2.0.0";
 
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');

@@ -190,16 +190,16 @@ public function __construct($dsn='mysql:host='.Config::DB_HOST.';dbname='.Config
     }
 
 /* Select Functie met extra opties en Fields */	
-    public function select($table, $where="",$limit="", $bind="", $option="", $fields="*",$group="",$order="") {
+    public function select($table, $where="",$limit="", $bind="", $option="", $fields="*", $group="", $order="") {
         $sql = "SELECT " . $fields . " FROM " . $table;
         if(!empty($where))
             $sql .= " WHERE " . $where;
-		if(!empty($limit))
-            $sql .= " LIMIT " . $limit;
         if(!empty($group))
-            $sql .= "GROUP BY (" . $group . ")";
+            $sql .= " GROUP BY " . $group . "";
         if(!empty($order))
-            $sql .= "ORDER BY" . $order;
+            $sql .= " ORDER BY " . $order;
+        if(!empty($limit))
+            $sql .= " LIMIT " . $limit;
         $sql .= ";";
         return $this->run($sql, $bind, $option);
     }

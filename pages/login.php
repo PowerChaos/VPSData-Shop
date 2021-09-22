@@ -50,6 +50,7 @@ if ($_POST['register'] == 'register')
 {
 	echo $reg->register('50',$_POST['user'],$_POST['pass1'],$_POST['pass2'],$_POST['vn'],$_POST['an'],$_POST['tel'],$_POST['adress'],$_POST['number'],$_POST['bus'],$_POST['gemeente'],$_POST['postcode'],$_POST['land'],$_POST['code'],$_POST['checkcode']);
 }
+//ajax call
 if($_POST['btn-login'] == 'login')
 {
 	die ($reg->login($_POST["username"],$_POST["password"]));
