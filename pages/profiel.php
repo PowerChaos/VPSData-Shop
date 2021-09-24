@@ -32,27 +32,16 @@
 
 
 $perm = new Gebruikers;
+$ship = new Shipping;
 $session = new Session;
 $db = new Db;
-if ($_POST['edit'] == "gebruikers") {
-	$table = $_POST['edit'];
-	$field = $_POST['field'];
-	$waarde = $_POST['waarde'];
-	$split_data = explode(':', $field);
-	$value = $split_data[0];
-	if (($value == 'phone') && !$perm->validphone($waarde)) {
-		echo $waarde . ' is not a valid, please use +32 493 48 30 33 format';
-		exit;
-	}
-	$db->ajaxedit($table, $waarde, $field);
-	exit;
-}
+
 
 if ($perm->check('user')) {
-	$bind = array(':id' => $session->get('id'));
-	$result = $db->select('gebruikers', 'id = :id', '', $bind, 'fetch');
-	$id = $result['id'];
-	$zone = $perm->land($result['land']);
+    $bind = array(':id' => $session->get('id'));
+    $result = $db->select('gebruikers', 'id = :id', '', $bind, 'fetch');
+    $id = $result['id'];
+    $zone = $ship->land($result['land']);
 ?>
 <div class="container">
     <div class="registration">
@@ -135,14 +124,14 @@ Click on a field to edit it , press ENTER to confirm the new field value
                         <select id="land:<?php echo $id ?>" class="form-control" contenteditable="true"
                             value="<?php echo $result['land'] ?>">
                             <?php
-								foreach ($perm->land() as $code => $land) {
-									if ($code == $result['land']) {
-										echo "<option value='$code' selected>$land[name]</option>";
-									} else {
-										echo "<option value='$code'>$land[name]</option>";
-									}
-								}
-								?>
+                                foreach ($ship->land() as $code => $land) {
+                                    if ($code == $result['land']) {
+                                        echo "<option value='$code' selected>$land[name]</option>";
+                                    } else {
+                                        echo "<option value='$code'>$land[name]</option>";
+                                    }
+                                }
+                                ?>
                         </select>
                     </div>
                 </div>
@@ -167,7 +156,7 @@ Click on a field to edit it , press ENTER to confirm the new field value
                 } else {
                     $.ajax({
                         type: "POST",
-                        url: "../x/profiel",
+                        url: "../x/edit",
                         data: 'field=' + field + '&waarde=' + encodeURIComponent(val) +
                             '&edit=gebruikers',
                         success: function(data) {
@@ -187,7 +176,7 @@ Click on a field to edit it , press ENTER to confirm the new field value
             var val = $(this).val();
             $.ajax({
                 type: "POST",
-                url: "../x/profiel",
+                url: "../x/edit",
                 data: 'field=' + field + '&waarde=' + encodeURIComponent(val) +
                     '&edit=gebruikers',
                 success: function(data) {
@@ -204,6 +193,6 @@ Click on a field to edit it , press ENTER to confirm the new field value
     </script>
     <?php
 } else {
-	$session->flashdata('error', 'Please login first before accessing this page');
+    $session->flashdata('error', 'Please login first before accessing this page');
 }
-	?>
+    ?>

@@ -1,4 +1,34 @@
 <?php
+
+/*
+<!#CR>
+************************************************************************************************************************
+*                                                    Copyrigths ©                                                      *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          Authors Names    > PowerChaos                                                                               *
+*          Company Name     > VPS Data                                                                                 *
+*          Company Email    > info@vpsdata.be                                                                          *
+*          Company Websites > https://vpsdata.be                                                                       *
+*                             https://vpsdata.shop                                                                     *
+*          Company Socials  > https://facebook.com/vpsdata                                                             *
+*                             https://twitter.com/powerchaos                                                           *
+*                             https://instagram.com/vpsdata                                                            *
+* -------------------------------------------------------------------------------------------------------------------- *
+*                                           File and License Informations                                              *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          File Name        > <!#FN> upload.php </#FN>                                                                 
+*          File Birth       > <!#FB> 2021/09/18 00:38:17.363 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/09/24 00:23:20.246 </#FT>                                                    *
+*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
+*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
+*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*                                                                                                                      *
+</#CR>
+*/
+
+
+
 $target_dir = getenv("DOCUMENT_ROOT")."/upload/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;

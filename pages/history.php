@@ -31,48 +31,47 @@ $perm = new Gebruikers;
 $session = new Session;
 $db = new Db;
 
-if ($perm->check('user')){
+if ($perm->check('user')) {
 	$bes = array(':id' => $session->get('id'));
-	$result = $db->select('bestelling','uid = :id AND status > 0','',$bes,'','*','bestel','status ASC,datum DESC');	
+	$result = $db->select('bestelling', 'uid = :id AND status > 0', '', $bes, '', '*', 'bestel', 'status ASC,datum DESC');
 ?>
 <div class="container">
-<table class="table table-bordered table-striped table-responsive">
-	<thead>
-		<tr>
-			<th style="width:20%">
-				Order Code
-			</th>
-			<th style="width:15%">
-				Delivery
-			</th>
-			<th style="width:20%">
-				Payment
-			</th>
-			<th style="width:15%">
-				Order date
-			</th>
-			<th style="width:30%">
-				Status
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php
-	foreach ($result as $item)
-	{
-		switch($item['status']){
-		case '1':
-			$status = "Not paid - Waiting for payment";
-			break;
-			case '2':
-			$status = "Paid - Waiting for shipping";
-			break;
-			case '3':
-			$status = "Paid and shipped - Order Completed";
-			break;
-		}
-		$datum = date("d-m-Y \o\m H:i",$item['datum']);
-		echo"
+    <table class="table table-bordered table-striped table-responsive">
+        <thead>
+            <tr>
+                <th style="width:20%">
+                    Order Code
+                </th>
+                <th style="width:15%">
+                    Delivery
+                </th>
+                <th style="width:20%">
+                    Payment
+                </th>
+                <th style="width:15%">
+                    Order date
+                </th>
+                <th style="width:30%">
+                    Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+				foreach ($result as $item) {
+					switch ($item['status']) {
+						case '1':
+							$status = "Not paid - Waiting for payment";
+							break;
+						case '2':
+							$status = "Paid - Waiting for shipping";
+							break;
+						case '3':
+							$status = "Paid and shipped - Order Completed";
+							break;
+					}
+					$datum = date("d-m-Y \o\m H:i", $item['datum']);
+					echo "
 				<tr>
 			<td style='width:20%'>
 			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('history',this.id);\">{$item['bestel']}</a>
@@ -91,36 +90,34 @@ if ($perm->check('user')){
 			</td>
 		</tr>
 		";
-	}
-?>
-</tbody>
-</table>
-<script>
-$(document).ready(function(){
-//Bestel Bevestigen
- $('table.table').DataTable( {
-	aaSorting: []	
-    } );				
-}); //einde document Ready
+				}
+				?>
+        </tbody>
+    </table>
+    <script>
+    $(document).ready(function() {
+        //Bestel Bevestigen
+        $('table.table').DataTable({
+            aaSorting: []
+        });
+    }); //einde document Ready
 
-function history(status,dat) {
-			$.ajax({
-			type: "POST",
-			url: "../ajax/history.php",
-			data:'bestelling='+dat+'&history='+status,
-			success: function(data){
-			 $("#modal").modal('show');
-			$("#modalcode").html(data);			
-			}
-			});
-}
-</script>
+    function history(status, dat) {
+        $.ajax({
+            type: "POST",
+            url: "../ajax/history.php",
+            data: 'bestelling=' + dat + '&history=' + status,
+            success: function(data) {
+                $("#modal").modal('show');
+                $("#modalcode").html(data);
+            }
+        });
+    }
+    </script>
 </div>
 <div class="clearfix"></div>
 <?php
-	}
-else
-{
-	$session->flashdata('error','Please login to use this page');
+} else {
+	$session->flashdata('error', 'Please login to use this page');
 }
 ?>

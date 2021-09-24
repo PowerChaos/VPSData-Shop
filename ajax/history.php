@@ -2,46 +2,36 @@
 require_once(getenv("DOCUMENT_ROOT") . "/inc/include.php");
 $perm = new Gebruikers;
 $db = new Db;
-$post = new Post;
 $bestelling = $_POST['bestelling'];
 $bes = array(':bestel' => $bestelling);
 $result = $db->select('bestelling', 'bestel = :bestel AND status > 0', '', $bes);
 
 if ($perm->check('user')) {
 ?>
-	<table class="table table-bordered table-striped table-responsive">
-		<thead>
-			<tr>
-				<th style="width:40%">
-					Product
-				</th>
-				<th style="width:10%">
-					Color
-				</th>
-				<th style="width:10%">
-					Amount
-				</th>
-				<th style="width:20%">
-					Price
-				</th>
-				<th style="width:20%">
-					3D Points
-				</th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php
+<table class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th style="width:40%">
+                Product
+            </th>
+            <th style="width:10%">
+                Color
+            </th>
+            <th style="width:10%">
+                Amount
+            </th>
+            <th style="width:20%">
+                Price
+            </th>
+            <th style="width:20%">
+                3D Points
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
 			$prijs = "0";
-			switch ($result[0]['levering']) {
-				case 'Express':
-					break;
-				case 'Post':
-					$totprice = 5.00;
-					break;
-				default:
-					$totprice = 0.00;
-					break;
-			}
+			$levering = $result[0]['levering'];
 			foreach ($result as $item) {
 				$name = $db->select('products', 'id = :bestel', '', $bes, 'fetch');
 				echo "
@@ -63,16 +53,18 @@ if ($perm->check('user')) {
 			</td>
 		</tr>
 		";
-				$prijs += $item[prijs];
-				$clouds += $item[clouds];
+				$prijs += $item['prijs'];
+				$clouds += $item['clouds'];
 			}
-			$tot = ($prijs + $totprice)
+			$tot = ($prijs + $levering)
 			?>
-		</tbody>
-	</table>
-	<div class='alert alert-info text-center'> Total amount of &euro; <?php echo $tot ?> will reward you <?php echo $clouds ?> <i class='material-icons'>3d_rotation</i><br>Delivery costs are &euro; <?php echo $totprice; ?> </div>
+    </tbody>
+</table>
+<div class='alert alert-info text-center'> Total amount of &euro; <?php echo $tot ?> will reward you
+    <?php echo $clouds ?> <i class='material-icons'>3d_rotation</i><br>Delivery costs are &euro;
+    <?php echo $levering; ?> </div>
 <?php
-	switch ($_POST[history]) {
+	switch ($_POST['history']) {
 		case 'history':
 			break;
 		case 'status':

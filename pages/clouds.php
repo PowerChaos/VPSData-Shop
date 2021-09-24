@@ -32,61 +32,60 @@
 $db = new Db;
 $session = new Session;
 $perm = new Gebruikers;
-if ($perm->check('user')){
+if ($perm->check('user')) {
 ?>
 <div class="container">
-							<div>
-								<h4>This page shows you a overview how our point system works</h4>
-								<hr />
-								<p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i><br />
-									This <i class='material-icons'>3d_rotation</i></i> can you trade for free products or discounts.<br />
-									if you get a certain amount of  <i class='material-icons'>3d_rotation</i> then you get even extra bonus points</p>
-							</div>
-							<div class="table-responsive">
-								<?php
-										$buser = array(':id' => $session->get('id'));
-										$result = $db->select('gebruikers','id = :id','',$buser,'fetch','punten');
-										$punt = $result['punten'];
-										echo "<div class='alert alert-info text-center'>You have  {$punt} <i class='material-icons'>3d_rotation</i> in total!</div>";
-								?>
-								<table class="table table-bordered table-striped">
-								  <thead>
-									  <tr>	
-										  <th>Bonus <i class='material-icons'>3d_rotation</i></th>
-										  <th>Minimum <i class='material-icons'>3d_rotation</i> needed</th>
-									  </tr>
-								  </thead>
-									<tfoot>
-										<tr>
-											<th>Bonus <i class='material-icons'>3d_rotation</i></th>
-											<th>Minimum <i class='material-icons'>3d_rotation</i> needed</th>
-										</tr>
-									</tfoot>
-									<tbody>
-									<?php
-									$promos = $db->select('discount');
-									$bdis = array(':punt' => $punt);
-									$pun = $db->select('discount','clouds <= :punt','1',$bdis,'fetch','*','','clouds DESC');
-											foreach($promos as $info) {
-												$id = $info['id'];
-												$puntje = $pun['id'];
-												$promo = ($id == $puntje)?"<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>":"<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
-												$table2 .= "<tr>";
-												$table2 .=  "$promo";
-												$table2 .=  "</tr>";
-											}
-											echo $table2;
-											print_r($promos);
-											print_r($pun);
-											echo '<br><br>puntje : '.$puntje.'<br><br>';
-											print $id;
-									?>
-									</tbody>
-								</table>
-</div>
-								<?php
+    <div>
+        <h4>This page shows you a overview how our point system works</h4>
+        <hr />
+        <p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i><br />
+            This <i class='material-icons'>3d_rotation</i></i> can you trade for free products or discounts.<br />
+            if you get a certain amount of <i class='material-icons'>3d_rotation</i> then you get even extra bonus
+            points</p>
+    </div>
+    <div class="table-responsive">
+        <?php
+			$buser = array(':id' => $session->get('id'));
+			$result = $db->select('gebruikers', 'id = :id', '', $buser, 'fetch', 'punten');
+			$punt = $result['punten'];
+			echo "<div class='alert alert-info text-center'>You have  {$punt} <i class='material-icons'>3d_rotation</i> in total!</div>";
+			?>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Bonus <i class='material-icons'>3d_rotation</i></th>
+                    <th>Minimum <i class='material-icons'>3d_rotation</i> needed</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Bonus <i class='material-icons'>3d_rotation</i></th>
+                    <th>Minimum <i class='material-icons'>3d_rotation</i> needed</th>
+                </tr>
+            </tfoot>
+            <tbody>
+                <?php
+					$promos = $db->select('discount');
+					$bdis = array(':punt' => $punt);
+					$pun = $db->select('discount', 'clouds <= :punt', '1', $bdis, 'fetch', '*', '', 'clouds DESC');
+					foreach ($promos as $info) {
+						$id = $info['id'];
+						$puntje = $pun['id'];
+						$promo = ($id == $puntje) ? "<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>" : "<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
+						$table2 .= "<tr>";
+						$table2 .=  "$promo";
+						$table2 .=  "</tr>";
+					}
+					echo $table2;
+					print_r($promos);
+					print_r($pun);
+					echo '<br><br>puntje : ' . $puntje . '<br><br>';
+					print $id;
+					?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+} else {
+	$session->flashdata('error', 'Please login to use this page');
 }
-else
-{
-	$session->flashdata('error','Please login to use this page');
-}	

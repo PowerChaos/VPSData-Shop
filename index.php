@@ -28,10 +28,9 @@
 */
 
 
-include (getenv("DOCUMENT_ROOT")."/inc/include.php");
+include(getenv("DOCUMENT_ROOT") . "/inc/include.php");
 $session = new Session;
 $page = new Page;
-$perm = $_GET['perm']?? null;
-$file = $_GET['file']?? null;
-$page->Showpage($perm,$file);
-?>
+$perm = $_GET['perm'] ?? null;
+$file = $_GET['file'] ?? null;
+$page->Showpage($perm, $file);
