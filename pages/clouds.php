@@ -45,11 +45,11 @@ if ($perm->check('user')) {
     </div>
     <div class="table-responsive">
         <?php
-			$buser = array(':id' => $session->get('id'));
-			$result = $db->select('gebruikers', 'id = :id', '', $buser, 'fetch', 'punten');
-			$punt = $result['punten'];
-			echo "<div class='alert alert-info text-center'>You have  {$punt} <i class='material-icons'>3d_rotation</i> in total!</div>";
-			?>
+            $buser = array(':id' => $session->get('id'));
+            $result = $db->select('gebruikers', 'id = :id', '', $buser, 'fetch', 'punten');
+            $punt = $result['punten'];
+            echo "<div class='alert alert-info text-center'>You have  {$punt} <i class='material-icons'>3d_rotation</i> in total!</div>";
+            ?>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -65,27 +65,23 @@ if ($perm->check('user')) {
             </tfoot>
             <tbody>
                 <?php
-					$promos = $db->select('discount');
-					$bdis = array(':punt' => $punt);
-					$pun = $db->select('discount', 'clouds <= :punt', '1', $bdis, 'fetch', '*', '', 'clouds DESC');
-					foreach ($promos as $info) {
-						$id = $info['id'];
-						$puntje = $pun['id'];
-						$promo = ($id == $puntje) ? "<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>" : "<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
-						$table2 .= "<tr>";
-						$table2 .=  "$promo";
-						$table2 .=  "</tr>";
-					}
-					echo $table2;
-					print_r($promos);
-					print_r($pun);
-					echo '<br><br>puntje : ' . $puntje . '<br><br>';
-					print $id;
-					?>
+                    $promos = $db->select('discount');
+                    $bdis = array(':punt' => $punt);
+                    $pun = $db->select('discount', 'clouds <= :punt', '1', $bdis, 'fetch', '*', '', 'clouds DESC');
+                    foreach ($promos as $info) {
+                        $id = $info['id'];
+                        $puntje = $pun['id'];
+                        $promo = ($id == $puntje) ? "<td class=success >$info[discount] &#37;</td><td class=success >$info[clouds] <i class='material-icons'>3d_rotation</i></td>" : "<td class=danger >$info[discount] &#37;</td><td class=danger >$info[clouds] <i class='material-icons'>3d_rotation</i></td>";
+                        $table2 .= "<tr>";
+                        $table2 .=  "$promo";
+                        $table2 .=  "</tr>";
+                    }
+                    echo $table2;
+                    ?>
             </tbody>
         </table>
     </div>
     <?php
 } else {
-	$session->flashdata('error', 'Please login to use this page');
+    $session->flashdata('error', 'Please login to use this page');
 }

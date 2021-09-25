@@ -27,12 +27,8 @@
 </#CR>
 */
 
-
-$perm = new Gebruikers;
 $sesison = new Session;
 $db = new Db;
-if ($perm->check('user')) {
-
 ?>
 <div class="container">
     <div class="alert alert-info">Our current products that you can buy with <i class='material-icons'>3d_rotation</i>
@@ -56,30 +52,25 @@ if ($perm->check('user')) {
         </tfoot>
         <tbody>
             <?php
-				$bonus = $db->select('bonus', '', '', '', '', '', '', 'datum DESC');
-				foreach ($bonus as $info) {
-					$verval = ($info['datum'] < time()) ? "Expired" : date('d-m-Y', $info['datum']);
-					$bbon = array(':id' => $info['pid']);
-					$order = $db->select('products', 'id = :id', '', $bbon, 'fetch');
-					$seoproduct = str_replace(" ", "-", $order['name']);
-					$seoproduct = strtolower($seoproduct);
-					$seomerk = strtolower($order['merk']);
-					$discount = "
-												<td style='width:25%' class='info'> <a href='//$_SERVER[SERVER_NAME]/$seomerk/$seoproduct.html'>$order[name]</a></td>
-												<td style='width:25%' class='info'><a href='//$_SERVER[SERVER_NAME]/$seomerk.html'>$order[merk]</a></td>
+            $bonus = $db->select('bonus', '', '', '', '', '*', '', 'datum DESC');
+            foreach ($bonus as $info) {
+                $verval = ($info['datum'] < time()) ? "Expired" : date('d-m-Y', $info['datum']);
+                $bbon = array(':id' => $info['pid']);
+                $order = $db->select('products', 'id = :id', '', $bbon, 'fetch');
+                $seoproduct = str_replace(" ", "-", $order['name']);
+                $seoproduct = strtolower($seoproduct);
+                $seomerk = strtolower($order['merk']);
+                $discount = "
+												<td style='width:25%' class='info'> <a href='../$seomerk/$seoproduct.html'>$order[name]</a></td>
+												<td style='width:25%' class='info'><a href='../$seomerk.html'>$order[merk]</a></td>
 												<td style='width:25%' class='warning'>$info[prijs] <i class='material-icons'>filter_drama</i></td>
 												<td style='width:25%' class='danger'>$verval</td>";
-					$table .= "<tr>";
-					$table .=  "$discount";
-					$table .=  "</tr>";
-				}
-				echo $table;
-				?>
+                $table .= "<tr>";
+                $table .=  "$discount";
+                $table .=  "</tr>";
+            }
+            echo $table;
+            ?>
         </tbody>
     </table>
 </div>
-<?php
-} else {
-	$session->flashdata('error', 'Please login to see this page');
-}
-?>

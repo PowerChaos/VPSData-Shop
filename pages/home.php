@@ -51,164 +51,59 @@ $defimg = Config::DEFIMG;
     </div>
 </div>
 <!---->
-<?php
-//cat Selection
-//Category's
-$pid1 = $db->select('products', 'cat = Esun', '1', '', '', '*', '', 'RAND()');
-$pid2 = $db->select('products', 'cat = Makerfill', '1', '', '', '*', '', 'RAND()');
-$pid3 = $db->select('products', 'cat = Fillament', '1', '', '', '*', '', 'RAND()');
-$pid4 = $db->select('products', 'cat = Resin', '1', '', '', '*', '', 'RAND()');
-$pid5 = $db->select('products', 'cat = Others', '1', '', '', '*', '', 'RAND()');
-
-//images
-$img = array(
-    ':pid1' => $pid1['id'],
-    ':pid2' => $pid2['id'],
-    ':pid3' => $pid3['id'],
-    ':pid4' => $pid4['id'],
-    ':pid5' => $pid5['id']
-);
-
-$imgid1 = $db->select('iamges', 'pid = :pid1', '1', $img, '', '*', '', 'RAND()');
-$imgid2 = $db->select('iamges', 'pid = :pid2', '1', $img, '', '*', '', 'RAND()');
-$imgid3 = $db->select('iamges', 'pid = :pid3', '1', $img, '', '*', '', 'RAND()');
-$imgid4 = $db->select('iamges', 'pid = :pid4', '1', $img, '', '*', '', 'RAND()');
-$imgid5 = $db->select('iamges', 'pid = :pid5', '1', $img, '', '*', '', 'RAND()');
-
-//seo Namen
-$sp1 = strtolower(str_replace(" ", "-", $pid1['name']));
-$sm1 = strtolower($pid1['merk']);
-$sp2 = strtolower(str_replace(" ", "-", $pid2['name']));
-$sm2 = strtolower($pid2['merk']);
-$sp3 = strtolower(str_replace(" ", "-", $pid3['name']));
-$sm3 = strtolower($pid3['merk']);
-$sp4 = strtolower(str_replace(" ", "-", $pid4['name']));
-$sm4 = strtolower($pid4['merk']);
-$sp5 = strtolower(str_replace(" ", "-", $pid5['name']));
-$sm5 = strtolower($pid5['merk']);
-
-
-$categories = array(
-    'Esun',
-    'Makerfill',
-    'Fillament',
-    'Resin',
-    'Others'
-);
-
-
-$data = array();
-
-for ($i = 0; $x < count($categories); $i++) {
-    $product = $db->select('products', 'cat = ' . $categories[i], '', '', 'fetch', '*', '', 'RAND()');
-    $prod = array('product' => $product['id']);
-    $image = $db->select('images', 'product = :product', '', $prod, 'fetch', '*', '', 'RAND()');
-    $sp = strtolower(str_replace(" ", "-", $product['name']));
-    $sm = strtolower($product['merk']);
-    data[i] = array(
-        'product' => $product,
-        'image' => $image,
-        'sp' => $sp,
-        'sm' => $sm
-    );
-}
-
-?>
-
 <div class="bride-grids">
     <div class="container">
+        <!-- start rows -->
+        <?php
+        for ($i = 0; $i < 6; $i++) {
+            $product = $db->select('products', '', '', '', 'fetch', '*', '', 'RAND()');
+            $prod = array('product' => $product['id']);
+            $image = $db->select('images', 'product = :product', '', $prod, 'fetch', '*', '', 'RAND()');
+            $sp = strtolower(str_replace(" ", "-", $product['name']));
+            $sm = strtolower($product['merk']);
+            if ($i % 2 == 0) {
+        ?>
         <div class="col-md-4 bride-grid">
             <div class="content-grid l-grids">
                 <!-- row 1-->
                 <figure class="effect-bubba">
-                    <a href="<?php echo '../' . $data[0]['sm'] . '/' . $data[0]['sp']; ?>.html">
-                        <img src="<?php echo ($data[0]['image']) ?? $defimg ?>" height="320"
-                            alt="<?php echo $data[0]['product']['name'] ?>" />
+                    <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
+                        <img src="<?php echo ($image[0]['img']) ?? $defimg ?>" height="320"
+                            alt="<?php echo $product['name'] ?>" />
                         <figcaption>
-                            <h4><?php echo $data[0]['product']['merk'] ?></h4>
-                            <p><?php echo $data[0]['product']['over'] ?></p>
+                            <h4><?php echo $product['merk'] ?></h4>
+                            <p><?php echo $product['name'] ?></p>
+                            <p><?php echo $product['over'] ?></p>
                         </figcaption>
                     </a>
                 </figure>
                 <div class="clearfix"></div>
-                <h3>Esun</h3>
+                <h3><?php echo $product['cat'] ?></h3>
             </div>
+            <?php
+            } else {
+                ?>
             <div class="content-grid l-grids">
-                <!-- row 2-->
+                <!-- row 1-->
                 <figure class="effect-bubba">
-                    <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $sm2 . '/' . $sp2; ?>.html">
-                        <img src="<?php echo ($imgid2['img'] == "") ? $defimg : $imgid2['img'] ?>" height="320"
-                            alt="<?php echo $pid2['name'] ?>" />
+                    <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
+                        <img src="<?php echo ($image[0]['img']) ?? $defimg ?>" height="320"
+                            alt="<?php echo $product['name'] ?>" />
                         <figcaption>
-                            <h4>MakerFill</h4>
-                            <p>Our premium Belguim brand for quality prints</p>
+                            <h4><?php echo $product['merk'] ?></h4>
+                            <p><?php echo $product['name'] ?></p>
+                            <p><?php echo $product['over'] ?></p>
                         </figcaption>
                     </a>
                 </figure>
                 <div class="clearfix"></div>
-                <h3>MakerFill</h3>
+                <h3><?php echo $product['cat'] ?></h3>
             </div>
         </div>
-        <!--einde row 1 en 2 -->
-        <div class="col-md-4 bride-grid">
-            <!-- row 3-->
-            <div class="content-grid l-grids">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP4AAADfCAIAAABZBPmVAAACZklEQVR4nO3SMQEAIAzAMMC/5yFjRxMFPXpn5kDP2w6AHdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaI+Re8Eu6ekYsUAAAAASUVORK5CYII="
-                    height="100" alt="whitespace" />
-            </div>
-            <div class="content-grid l-grids">
-                <figure class="effect-bubba">
-                    <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $sm3 . '/' . $sp3; ?>.html">
-                        <img src="<?php echo ($imgid3['img'] == "") ? $defimg : $imgid3['img'] ?>" height="480"
-                            alt="<?php echo $pid3['name'] ?>" />
-                        <figcaption>
-                            <h4>Fillaments</h4>
-                            <p>Our premium selection of fillamnets<br>We offer Esun and Makerfill for your FDM
-                                Printer.<br>The quality is tested and is verified. </p>
-                        </figcaption>
-                    </a>
-                </figure>
-                <div class="clearfix"></div>
-                <h3>Fillaments</h3>
-            </div>
-            <div class="content-grid l-grids">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAP4AAADfCAIAAABZBPmVAAACZklEQVR4nO3SMQEAIAzAMMC/5yFjRxMFPXpn5kDP2w6AHdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaKsT5T1ibI+UdYnyvpEWZ8o6xNlfaI+Re8Eu6ekYsUAAAAASUVORK5CYII="
-                    height="100" alt="whitespace" />
-            </div>
-        </div>
-        <!--einde row 3 -->
-        <div class="col-md-4 bride-grid">
-            <div class="content-grid l-grids">
-                <!-- row 4-->
-                <figure class="effect-bubba">
-                    <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $sm4 . '/' . $sp4; ?>.html">
-                        <img src="<?php echo ($imgid4['img'] == "") ? $defimg : $imgid4['img'] ?>" height="320"
-                            alt="<?php echo $pid4['name'] ?>" />
-                        <figcaption>
-                            <h4>Resin</h4>
-                            <p>Resin from Esun for quality prints</p>
-                        </figcaption>
-                    </a>
-                </figure>
-                <div class="clearfix"></div>
-                <h3>Resin</h3>
-            </div>
-            <div class="content-grid l-grids">
-                <!-- row 5-->
-                <figure class="effect-bubba">
-                    <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $sm5 . '/' . $sp5; ?>.html">
-                        <img src="<?php echo ($imgid5['img'] == "") ? $defimg : $imgid5['img'] ?>" height="320"
-                            alt="<?php echo $pid5['name'] ?>" />
-                        <figcaption>
-                            <h4>Others</h4>
-                            <p>We got a lot of other stuff for you<br>SD cards, Tape, 3D prints ... </p>
-                        </figcaption>
-                    </a>
-                </figure>
-                <div class="clearfix"></div>
-                <h3>Others</h3>
-            </div>
-        </div>
+        <?php
+            }
+        }
+        ?>
         <!--einde row 4 en 5 -->
         <div class="clearfix"></div>
     </div>
@@ -224,16 +119,16 @@ for ($i = 0; $x < count($categories); $i++) {
             $rel = $db->select('products', '', '3', '', '', '*', '', 'RAND()');
             foreach ($rel as $related) {
                 $sel = array(':pid' => $related['id']);
-                $select = $db->select('images', 'pid = :pid', '1', $sel, '', '*', '', 'RAND()');
+                $img = $db->select('images', 'pid = :pid', '1', $sel, '', '*', '', 'RAND()');
                 $seoproduct = str_replace(" ", "-", $related['name']);
                 $seoproduct = strtolower($seoproduct);
                 $seomerk = strtolower($related['merk']);
             ?>
-            <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $seomerk . '/' . $seoproduct; ?>.html">
+            <a href="<?php echo '../' . $seomerk . '/' . $seoproduct; ?>.html">
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<?php echo ($select['img'] == "") ? $defimg : $select['img'] ?>" height="280"
+                        <img src="<?php echo ($img[0]['img']) ?? $defimg ?>" height="280"
                             alt="<?php echo $related['name'] ?>" />
                     </div>
                     <div class="product-info">
@@ -258,11 +153,11 @@ for ($i = 0; $x < count($categories); $i++) {
         <div class="shpng-grids">
             <div class="col-md-4 shpng-grid">
                 <h3>Premium Delivery</h3>
-                <p>We deliver up to 30KG<br>PostNL , BPost or DPD</p>
+                <p>We only deliver to europe<br>other regions need to contact us for shipping prices</p>
             </div>
             <div class="col-md-4 shpng-grid">
                 <h3>Quality Service</h3>
-                <p>Our products are of great quality<br>We also use them ourself</p>
+                <p>Our products are of great quality<br>We also use them ourself<br>Also avaible in bulk orders</p>
             </div>
             <div class="col-md-4 shpng-grid">
                 <h3>Payments</h3>

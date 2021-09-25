@@ -55,7 +55,7 @@ if (isset($_GET['merk'])) {
             <?php
 					foreach ($row as $cat) {
 						$bcat = array(':cat' => $cat['cat'], ':merk' => $cat['merk']);
-						$check = $db->select('products', 'cat = :cat AND merk = :merk', '', $bmerk, '', '*', '', 'RAND()');
+						$check = $db->select('products', 'cat = :cat AND merk = :merk', '', $bcat, '', '*', '', 'RAND()');
 						echo "
 						<div class='clearfix'> </div>
 			<div class='welcome'>
@@ -86,11 +86,11 @@ if (isset($_GET['merk'])) {
 							}
 							$totstar = ($ratingcount > '0') ? ($starcount / $ratingcount) : "0";
 					?>
-            <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $seomerk . '/' . $seoproduct; ?>.html">
+            <a href="<?php echo '../' . $seomerk . '/' . $seoproduct; ?>.html">
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<?php echo $img['img'] ?? $defimg ?>" height="280"
+                        <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
                             alt="<?php echo $prod['name'] ?>" />
                     </div>
                     <div class="product-info">

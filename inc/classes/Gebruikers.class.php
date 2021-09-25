@@ -50,8 +50,8 @@ class Gebruikers
 			$this->db->update("gebruikers", $update, "id=:uid", $bind);
 			if (empty($id)) {
 				$this->session->set('hash', $this->hash->create_hash($newpass));
+				$this->session->destroy();
 			}
-			$this->session->destroy();
 			return $this->session->flashdata('error', 'Password changed, please relog');
 		} else {
 			return $this->session->flashdata('error', 'Passwords does not match, please try again');

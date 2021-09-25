@@ -1,4 +1,34 @@
 <?php
+
+/*
+<!#CR>
+************************************************************************************************************************
+*                                                    Copyrigths ©                                                      *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          Authors Names    > PowerChaos                                                                               *
+*          Company Name     > VPS Data                                                                                 *
+*          Company Email    > info@vpsdata.be                                                                          *
+*          Company Websites > https://vpsdata.be                                                                       *
+*                             https://vpsdata.shop                                                                     *
+*          Company Socials  > https://facebook.com/vpsdata                                                             *
+*                             https://twitter.com/powerchaos                                                           *
+*                             https://instagram.com/vpsdata                                                            *
+* -------------------------------------------------------------------------------------------------------------------- *
+*                                           File and License Informations                                              *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          File Name        > <!#FN> pass.php </#FN>                                                                   
+*          File Birth       > <!#FB> 2021/09/18 00:38:17.366 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/09/24 21:11:38.764 </#FT>                                                    *
+*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
+*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
+*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
+*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*                                                                                                                      *
+</#CR>
+*/
+
+
+
 $perm = new Gebruikers;
 $session = new Session;
 if ($perm->check('user')) {

@@ -94,7 +94,7 @@ $merk = $_GET['merk'] ?? null;
     <!-- bootstrap -->
     <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//<?php echo $_SERVER['SERVER_NAME'] ?>/template/boot/css/style.css">
+    <link rel="stylesheet" href="../template/boot/css/style.css">
 
     <!-- Datatables -->
     <script type="text/javascript"
@@ -113,7 +113,7 @@ $merk = $_GET['merk'] ?? null;
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.1/css/star-rating.min.css">
 
     <!-- box dropdown -->
-    <link rel="stylesheet" href="//<?php echo $_SERVER['SERVER_NAME'] ?>/template/boot/css/dropdown.min.css">
+    <link rel="stylesheet" href="../template/boot/css/dropdown.min.css">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">

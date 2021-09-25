@@ -32,8 +32,8 @@ $session = new Session;
 $db = new Db;
 
 if ($perm->check('user')) {
-	$bes = array(':id' => $session->get('id'));
-	$result = $db->select('bestelling', 'uid = :id AND status > 0', '', $bes, '', '*', 'bestel', 'status ASC,datum DESC');
+    $bes = array(':id' => $session->get('id'));
+    $result = $db->select('bestelling', 'uid = :id AND status > 0', '', $bes, '', '*', 'bestel', 'status ASC,datum DESC');
 ?>
 <div class="container">
     <table class="table table-bordered table-striped table-responsive">
@@ -58,20 +58,20 @@ if ($perm->check('user')) {
         </thead>
         <tbody>
             <?php
-				foreach ($result as $item) {
-					switch ($item['status']) {
-						case '1':
-							$status = "Not paid - Waiting for payment";
-							break;
-						case '2':
-							$status = "Paid - Waiting for shipping";
-							break;
-						case '3':
-							$status = "Paid and shipped - Order Completed";
-							break;
-					}
-					$datum = date("d-m-Y \o\m H:i", $item['datum']);
-					echo "
+                foreach ($result as $item) {
+                    switch ($item['status']) {
+                        case '1':
+                            $status = "Not paid - Waiting for payment";
+                            break;
+                        case '2':
+                            $status = "Paid - Waiting for shipping";
+                            break;
+                        case '3':
+                            $status = "Paid and shipped - Order Completed";
+                            break;
+                    }
+                    $datum = date("d-m-Y \o\m H:i", $item['datum']);
+                    echo "
 				<tr>
 			<td style='width:20%'>
 			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('history',this.id);\">{$item['bestel']}</a>
@@ -90,14 +90,17 @@ if ($perm->check('user')) {
 			</td>
 		</tr>
 		";
-				}
-				?>
+                }
+                ?>
         </tbody>
     </table>
     <script>
     $(document).ready(function() {
         //Bestel Bevestigen
         $('table.table').DataTable({
+            scrollY: '50vh',
+            scrollCollapse: false,
+            paging: false,
             aaSorting: []
         });
     }); //einde document Ready
@@ -105,7 +108,7 @@ if ($perm->check('user')) {
     function history(status, dat) {
         $.ajax({
             type: "POST",
-            url: "../ajax/history.php",
+            url: "../x/history",
             data: 'bestelling=' + dat + '&history=' + status,
             success: function(data) {
                 $("#modal").modal('show');
@@ -118,6 +121,6 @@ if ($perm->check('user')) {
 <div class="clearfix"></div>
 <?php
 } else {
-	$session->flashdata('error', 'Please login to use this page');
+    $session->flashdata('error', 'Please login to use this page');
 }
 ?>

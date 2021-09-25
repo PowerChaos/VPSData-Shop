@@ -62,14 +62,14 @@ if ($perm->check('user')) {
         </thead>
         <tbody>
             <?php
-				$prijs = '0';
-				$clouds = '0';
-				$t = '0';
-				foreach ($order as $item) {
-					$bpid = array(':pid' => $item['pid'], ':tm' => time());
-					$product = $db->select('products', 'id = :pid', '', $bid, 'fetch');
-					$clknop = $db->select('bonus', 'pid = :pid AND datum > :tm', '', $bid, 'fetch');
-					echo "
+                $prijs = '0';
+                $clouds = '0';
+                $t = '0';
+                foreach ($order as $item) {
+                    $bpid = array(':pid' => $item['pid'], ':tm' => time());
+                    $product = $db->select('products', 'id = :pid', '', $bid, 'fetch');
+                    $clknop = $db->select('bonus', 'pid = :pid AND datum > :tm', '', $bid, 'fetch');
+                    echo "
 				<tr>
 			<td style='width:40%'>
 			{$product['name']} <a href='#' id='$item[id]' onclick=\"remove(this.id,'shopcart','{$product['name']}');\"><span class='glyphicon glyphicon-remove'></span></a>
@@ -88,19 +88,19 @@ if ($perm->check('user')) {
 			</td>
 		</tr>
 		";
-					$prijs += $item['prijs'];
-					$clouds += $item['qty'] * $clknop['prijs'];
-					$amount += $item['qty'];
-					$t++;
-				}
-				$paypalfee = round((($prijs / 100) * 5), 2);
-				$delivery = $ship->dpd($land['land']);
-				$verzending = $delivery['prijs'];
-				while ($amount > '25') {
-					$verzending += $delivery['prijs'];
-					$amount -= '25';
-				}
-				?>
+                    $prijs += $item['prijs'];
+                    $clouds += $item['qty'] * $clknop['prijs'];
+                    $amount += $item['qty'];
+                    $t++;
+                }
+                $paypalfee = round((($prijs / 100) * 5), 2);
+                $delivery = $ship->dpd($land['land']);
+                $verzending = $delivery['prijs'];
+                while ($amount > '25') {
+                    $verzending += $delivery['prijs'];
+                    $amount -= '25';
+                }
+                ?>
         </tbody>
     </table>
     <div class='row'>
@@ -146,7 +146,7 @@ function remove(val, dat, name) {
         {
             $.ajax({
                 type: "POST",
-                url: "../ajax/remove.php",
+                url: "../x/remove",
                 data: 'confirm=' + dat + '&id=' + val,
                 success: function(data) {
                     //alert(dat+" Succesvol uitgevoerd");
@@ -173,7 +173,7 @@ $(document).ready(function() {
 
             $.ajax({
                 type: "POST",
-                url: "../ajax/bestel.php",
+                url: "../x/bestel",
                 data: 'confirm=bestel&ship=' + dat + '&pay=' + pay,
                 success: function(data) {
                     $('#success').html(data);
@@ -188,7 +188,7 @@ $(document).ready(function() {
         if (confirm('Are you sure you want to spend your points on this product ?')) {
             $.ajax({
                 type: "POST",
-                url: "../ajax/bestel.php",
+                url: "../x/bestel",
                 data: 'confirm=bestel&ship=' + dat + '&pay=' + pay,
                 success: function(data) {
                     $('#success').html(data);
@@ -210,6 +210,6 @@ $(document).ready(function() {
 </script>
 <?
 } else {
-	$session->flashdata('error', 'Please login to use this page');
+    $session->flashdata('error', 'Please login to use this page');
 }
 ?>

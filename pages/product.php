@@ -74,7 +74,7 @@ if (isset($_GET['product'])) {
                 <div class="flexslider">
                     <ul class="slides">
                         <?php
-                                if ($img) { ?>
+                                if (!$img) { ?>
                         <li data-thumb="<?php echo $defimg ?>">
                             <img src="<?php echo $defimg ?>" />
                         </li>
@@ -105,8 +105,7 @@ if (isset($_GET['product'])) {
                 </div>
                 <?php $sk = strtolower($prod['merk']); ?>
                 <div class="id">
-                    <h4>Brand: <a
-                            href="//<?php echo $_SERVER['SERVER_NAME'] . "/" . $sk ?>.html"><?php echo $prod['merk'] ?></a>
+                    <h4>Brand: <a href="<?php echo "../" . $sk ?>.html"><?php echo $prod['merk'] ?></a>
                     </h4>
                 </div>
                 <form action="" class="sky-form">
@@ -144,8 +143,8 @@ if (isset($_GET['product'])) {
                                 data-target="#modal" id="<?php echo $prod['id'] ?>"
                                 onclick="shop(this.id,'toevoegen')">Buy now for &euro; <prijs id='prijs'>
                                     <?php echo $prod['prijs'] ?></prijs>
-                                <?php if ($clknop['prijs'] != "") { ?>
-                                or buy for <free id='free'><?php echo $clknop['prijs'] ?></free> <i
+                                <?php if ($clknop['prijs']) { ?>
+                                or <free id='free'><?php echo $clknop['prijs'] ?></free> <i
                                     class='material-icons'>3d_rotation</i>
                                 <?php } ?>
                             </button>
@@ -170,19 +169,19 @@ if (isset($_GET['product'])) {
             <!-- Random producten -->
             <?php
                     $brel = array(':cat' => $prod['cat']);
-                    $rel2 = $db->select('gebruikers', 'cat = :cat', '3', $brel, '', '*', '', 'RAND()');
+                    $rel2 = $db->select('products', 'cat = :cat', '3', $brel, '', '*', '', 'RAND()');
                     foreach ($rel2 as $related2) {
                         $bim = array(':pid' => $related2['id']);
-                        $img = $db->select('images', 'pid = :pid', '1', $bim, 'fetch', '*', '', 'RAND()');
+                        $img = $db->select('images', 'pid = :pid', '1', $bim, '', '*', '', 'RAND()');
                         $seoproduct = str_replace(" ", "-", $related2['name']);
                         $seoproduct = strtolower($seoproduct);
                         $seomerk = strtolower($related2['merk']);
                     ?>
-            <a href="//<?php echo $_SERVER['SERVER_NAME'] . '/' . $seomerk . '/' . $seoproduct; ?>.html">
+            <a href="<?php echo '../' . $seomerk . '/' . $seoproduct; ?>.html">
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<?php echo $img['img'] ?? $defimg ?>" height="280"
+                        <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
                             alt="<?php echo $related2['name'] ?>" />
                     </div>
                     <div class="product-info">

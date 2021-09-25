@@ -94,7 +94,7 @@ $session = new Session;
                             <div class="yamm-content">
                                 <div class="row">
                                     <?php
-                                    $category = $db->select('products', 'cat != \'testje\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
+                                    $category = $db->select('products', 'cat != \'Fillament\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
                                     $count = ($count != '0') ?? '1';
                                     $div = ceil(12 / $count);
@@ -134,7 +134,7 @@ $session = new Session;
                             <div class="yamm-content">
                                 <div class="row">
                                     <?php
-                                    $category = $db->select('products', 'cat = \'testje\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
+                                    $category = $db->select('products', 'cat = \'fillament\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
                                     $count = ($count != '0') ?? '1';
                                     $div = ceil(12 / $count);
@@ -170,6 +170,7 @@ $session = new Session;
 
             </ul> <!-- Einde NavBar -->
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="../bonus"><i class="material-icons">add_shopping_cart</i>3D Points Shop</a></li>
                 <?php
                 if ($perm->check('admin')) {
                 ?>
@@ -199,7 +200,6 @@ $session = new Session;
                     <ul class="dropdown-menu">
                         <li><a href="../history"><i class="material-icons">history</i> Order History</a></li>
                         <li><a href="../clouds"><i class='material-icons'>3d_rotation</i>3D Points</a></li>
-                        <li><a href="../bonus"><i class="material-icons">add_shopping_cart</i>3D Points Shop</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
