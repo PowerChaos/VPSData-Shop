@@ -53,6 +53,7 @@ $db = new Db;
         <tbody>
             <?php
             $bonus = $db->select('bonus', '', '', '', '', '*', '', 'datum DESC');
+            $table = "";
             foreach ($bonus as $info) {
                 $verval = ($info['datum'] < time()) ? "Expired" : date('d-m-Y', $info['datum']);
                 $bbon = array(':id' => $info['pid']);

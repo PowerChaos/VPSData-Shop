@@ -68,6 +68,7 @@ if ($perm->check('user')) {
                     $promos = $db->select('discount');
                     $bdis = array(':punt' => $punt);
                     $pun = $db->select('discount', 'clouds <= :punt', '1', $bdis, 'fetch', '*', '', 'clouds DESC');
+                    $table2 = "";
                     foreach ($promos as $info) {
                         $id = $info['id'];
                         $puntje = $pun['id'];

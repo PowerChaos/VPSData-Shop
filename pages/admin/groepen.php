@@ -32,7 +32,7 @@
 $perm = new Gebruikers;
 $groep = new Groepen;
 $db = new Db;
-$post = $_POST['groep'];
+$post = $_POST['groep'] ?? "";
 if ($perm->check('admin')) {
 	if ($post) {
 		switch ($post) {

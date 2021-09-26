@@ -136,16 +136,16 @@ if (isset($_GET['product'])) {
                         <ul>
                             <?php echo $clouds ?>
                             <div class="clearfix"></div>
-                            <?php echo $totbonus ?>
+                            <?php echo $totbonus;
+                                    $prijs = $clknop['prijs'] ?? ""; ?>
                             <input type="hidden" value="<?php echo $prod['prijs'] ?>" id='check'>
-                            <input type="hidden" value="<?php echo $clknop['prijs'] ?>" id='clcheck'>
+                            <input type="hidden" value="<?php echo $prijs ?>" id='clcheck'>
                             <button type="button" class="btn-lg btn-primary text-center kleur" data-toggle="modal"
                                 data-target="#modal" id="<?php echo $prod['id'] ?>"
                                 onclick="shop(this.id,'toevoegen')">Buy now for &euro; <prijs id='prijs'>
                                     <?php echo $prod['prijs'] ?></prijs>
-                                <?php if ($clknop['prijs']) { ?>
-                                or <free id='free'><?php echo $clknop['prijs'] ?></free> <i
-                                    class='material-icons'>3d_rotation</i>
+                                <?php if ($prijs) { ?>
+                                or <free id='free'><?php echo $prijs ?></free> <i class='material-icons'>3d_rotation</i>
                                 <?php } ?>
                             </button>
                         </ul>

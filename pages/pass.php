@@ -32,7 +32,8 @@
 $perm = new Gebruikers;
 $session = new Session;
 if ($perm->check('user')) {
-  if ($_POST['info'] == 'pass') {
+  $info = $_POST['info'] ?? "";
+  if ($info == 'pass') {
     $old    = $_POST['oldpass'] ?? "";
     $new    = $_POST['newpass'] ?? "";
     $check  = $_POST['newpass2'] ?? "";

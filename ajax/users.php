@@ -30,38 +30,39 @@
 
 $session = new Session;
 $db = new Db;
-if ($_POST['bewerk'] == "blokeer") {
-	$id = $_POST['id'];
-	if ($id > 1) {
-		$update = array("rechten" => "b");
-		$bind = array(":id" => $id);
-		$db->update("gebruikers", $update, "id =:id", $bind);
-		$session->flashdata('error', 'Gebruiker ' . $id . ' successvol geblokeerd');
-	} else {
-		$session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden geblokeerd Voor Veiligheid');
-	}
+$bewerk = $_POST['bewerk'] ?? "";
+if ($bewerk == "blokeer") {
+    $id = $_POST['id'];
+    if ($id > 1) {
+        $update = array("rechten" => "b");
+        $bind = array(":id" => $id);
+        $db->update("gebruikers", $update, "id =:id", $bind);
+        $session->flashdata('error', 'Gebruiker ' . $id . ' successvol geblokeerd');
+    } else {
+        $session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden geblokeerd Voor Veiligheid');
+    }
 }
-if ($_POST['bewerk'] == "deblokeer") {
-	$id = $_POST['id'];
-	if ($id > 1) {
-		$update = array("rechten" => "0");
-		$bind = array(":id" => $id);
-		$db->update("gebruikers", $update, "id =:id", $bind);
-		$session->flashdata('error', 'Gebruiker ' . $id . ' successvol geDEblokeerd');
-	} else {
-		$session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden geblokeerd.. dus deze fout kan niet');
-	}
+if ($bewerk == "deblokeer") {
+    $id = $_POST['id'];
+    if ($id > 1) {
+        $update = array("rechten" => "0");
+        $bind = array(":id" => $id);
+        $db->update("gebruikers", $update, "id =:id", $bind);
+        $session->flashdata('error', 'Gebruiker ' . $id . ' successvol geDEblokeerd');
+    } else {
+        $session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden geblokeerd.. dus deze fout kan niet');
+    }
 }
-if ($_POST['bewerk'] == "delete") {
-	$id = $_POST['id'];
-	if ($id > 1) {
-		$bind = array(":id" => $id);
-		$db = new db;
-		$db->delete("gebruikers", "id =:id", $bind);
-		$session->flashdata('error', 'Gebruiker ' . $id . ' successvol verwijderd');
-	} else {
-		$session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden verwijderd Voor Veiligheid');
-	}
+if ($bewerk == "delete") {
+    $id = $_POST['id'];
+    if ($id > 1) {
+        $bind = array(":id" => $id);
+        $db = new db;
+        $db->delete("gebruikers", "id =:id", $bind);
+        $session->flashdata('error', 'Gebruiker ' . $id . ' successvol verwijderd');
+    } else {
+        $session->flashdata('error', 'Gebruiker ' . $id . ' kan niet worden verwijderd Voor Veiligheid');
+    }
 }
 ?>
 <script>
@@ -184,8 +185,8 @@ if ($_POST['groep'] == "blokeer") {
 <br>
 <?php
 } elseif ($_POST['groep'] == "hernoem") {
-	$bind = array(":pn" => $_POST['waarde']);
-	$account = $db->select("gebruikers", "id =:pn", "", $bind, "fetch");
+    $bind = array(":pn" => $_POST['waarde']);
+    $account = $db->select("gebruikers", "id =:pn", "", $bind, "fetch");
 ?>
 <form action="../a/gebruikers" method="POST" class='text-center'>
     <input type="hidden" name="users" value="hernoem">

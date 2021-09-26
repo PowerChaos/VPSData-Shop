@@ -59,21 +59,22 @@ inactieve Promo's worden opgeruimt na 3 maanden
         </tfoot>
         <tbody>
             <?php
-				$tijd = strtotime("-3 month", time());
-				$bdel = array(':time' => $tijd);
-				$db->delete('bonus', 'datum < :tijd', $bdel);
-				$bonus = $db->select('bonus', '', '', '', '', '*', '', 'datum DESC');
-				foreach ($bonus as $info) {
-					$discount = "
+                $tijd = strtotime("-3 month", time());
+                $bdel = array(':time' => $tijd);
+                $db->delete('bonus', 'datum < :tijd', $bdel);
+                $bonus = $db->select('bonus', '', '', '', '', '*', '', 'datum DESC');
+                $table = "";
+                foreach ($bonus as $info) {
+                    $discount = "
 												<td style='width:33%' class='info' id='pid:$info[id]' contenteditable='true'>$info[pid]</td>
 												<td style='width:33%' class='warning' id='prijs:$info[id]' contenteditable='true'>$info[prijs]</td>
 												<td style='width:34%' class='danger' id='datum:$info[id]' contenteditable='true'>" . date('d-m-Y', $info['datum']) . "</td>";
-					$table .= "<tr>";
-					$table .=  "$discount";
-					$table .=  "</tr>";
-				}
-				echo $table;
-				?>
+                    $table .= "<tr>";
+                    $table .=  "$discount";
+                    $table .=  "</tr>";
+                }
+                echo $table;
+                ?>
         </tbody>
     </table>
     <div class="alert alert-info">Bonus Points Ranks</div>
@@ -92,15 +93,16 @@ inactieve Promo's worden opgeruimt na 3 maanden
         </tfoot>
         <tbody>
             <?php
-				$discounts = $db->select('discount', '', '', '', '', '*', '', 'clouds DESC');
-				foreach ($discounts as $info2) {
-					$discount2 = "<td class='danger' contenteditable='true' id='discount:$info2[id]'>$info2[discount]</td><td class='danger' id='clouds:$info2[id]' contenteditable='true'>$info2[clouds]</td>";
-					$table2 .= "<tr>";
-					$table2 .=  "$discount2";
-					$table2 .=  "</tr>";
-				}
-				echo $table2;
-				?>
+                $discounts = $db->select('discount', '', '', '', '', '*', '', 'clouds DESC');
+                $table2 = "";
+                foreach ($discounts as $info2) {
+                    $discount2 = "<td class='danger' contenteditable='true' id='discount:$info2[id]'>$info2[discount]</td><td class='danger' id='clouds:$info2[id]' contenteditable='true'>$info2[clouds]</td>";
+                    $table2 .= "<tr>";
+                    $table2 .=  "$discount2";
+                    $table2 .=  "</tr>";
+                }
+                echo $table2;
+                ?>
         </tbody>
     </table>
     <script>
@@ -147,4 +149,4 @@ inactieve Promo's worden opgeruimt na 3 maanden
     </script>
     <?php
 }
-	?>
+    ?>

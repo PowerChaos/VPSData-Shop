@@ -32,23 +32,24 @@
 $db = new db;
 $perm = new Gebruikers;
 if ($perm->check('admin')) {
-	if ($_POST['users']) {
-		$users = new Gebruikers;
-		switch ($_POST['users']) {
-			case 'rechten': //Rechten aanpassen
-				$users->ChangeRechten($_POST['id'], $_POST['rechten']);
-				break;
-			case 'hernoem': //Naam aanpassen
-				$users->ChangeName($_POST['id'], $_POST['naam']);
-				break;
-			case 'wachtwoord': //wachtwoord aanpassen
-				$users->ChangePass('', $_POST['wachtwoord'], '', $_POST['id']);
-				break;
-			case 'toevoegen': //Gebruiker toevoegen
-				$users->AddUser($_POST['wachtwoord'], $_POST['naam']);
-				break;
-		}
-	}
+    $puser = $_POST['users'] ?? "";
+    if ($puser) {
+        $users = new Gebruikers;
+        switch ($puser) {
+            case 'rechten': //Rechten aanpassen
+                $users->ChangeRechten($_POST['id'], $_POST['rechten']);
+                break;
+            case 'hernoem': //Naam aanpassen
+                $users->ChangeName($_POST['id'], $_POST['naam']);
+                break;
+            case 'wachtwoord': //wachtwoord aanpassen
+                $users->ChangePass('', $_POST['wachtwoord'], '', $_POST['id']);
+                break;
+            case 'toevoegen': //Gebruiker toevoegen
+                $users->AddUser($_POST['wachtwoord'], $_POST['naam']);
+                break;
+        }
+    }
 ?>
 <script type="text/javascript" class="init">
 function bewerk(val, dat) {
@@ -91,29 +92,29 @@ function bewerk(val, dat) {
     </thead>
     <tbody>
         <?php
-			$result = $db->select("gebruikers");
-			foreach ($result as $info) {
-				echo "<tr><td class=warning >$info[id]</td>";
-				echo "<td class=success>$info[naam]</td>";
-				$groep = $info['rechten'];
-				$ban = 'n';
-				switch ($groep) {
-					case "3":
-						$groep = "<td class=success><i class='material-icons' title='Admin' aria-hidden='true'>star</i><span class='sr-only'>Admin</span></td>";
-						break;
-					case "2":
-						$groep = "<td class=warning><i class='material-icons' title='Staff' aria-hidden='true'>star_half</i><span class='sr-only'>Staff</span></td>";
-						break;
-					case "b":
-						$groep = "<td class=danger><i class='material-icons' title='Geblokeerd' aria-hidden='true'>not_interested</i><span class='sr-only'>Geblokeerd</span></td>";
-						$ban = 'y';
-						break;
-					default:
-						$groep = "<td class=info><i class='material-icons' title='Gebruiker' aria-hidden='true'>star_border</i><span class='sr-only'>Gebruiker</span></td>";
-				}
-				echo "$groep";
-				echo "<td class=active>";
-			?>
+            $result = $db->select("gebruikers");
+            foreach ($result as $info) {
+                echo "<tr><td class=warning >$info[id]</td>";
+                echo "<td class=success>$info[naam]</td>";
+                $groep = $info['rechten'];
+                $ban = 'n';
+                switch ($groep) {
+                    case "3":
+                        $groep = "<td class=success><i class='material-icons' title='Admin' aria-hidden='true'>star</i><span class='sr-only'>Admin</span></td>";
+                        break;
+                    case "2":
+                        $groep = "<td class=warning><i class='material-icons' title='Staff' aria-hidden='true'>star_half</i><span class='sr-only'>Staff</span></td>";
+                        break;
+                    case "b":
+                        $groep = "<td class=danger><i class='material-icons' title='Geblokeerd' aria-hidden='true'>not_interested</i><span class='sr-only'>Geblokeerd</span></td>";
+                        $ban = 'y';
+                        break;
+                    default:
+                        $groep = "<td class=info><i class='material-icons' title='Gebruiker' aria-hidden='true'>star_border</i><span class='sr-only'>Gebruiker</span></td>";
+                }
+                echo "$groep";
+                echo "<td class=active>";
+            ?>
         <div class="dropdown pull-right">
             <button class="btn btn-warning btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Bewerk</button>
             <ul class="dropdown-menu">
@@ -142,7 +143,7 @@ function bewerk(val, dat) {
         </div>
         </td>
         <?php
-			}
-			echo "</tbody></table>";
-		}
-		?>
+            }
+            echo "</tbody></table>";
+        }
+        ?>

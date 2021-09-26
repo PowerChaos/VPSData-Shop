@@ -31,10 +31,11 @@
 
 $db = new Db;
 $groep = new Groepen;
-$waarde = $_POST['waarde'];
-$gebruiker = $_POST['groep'];
+$waarde = $_POST['waarde'] ?? "";
+$gebruiker = $_POST['groep'] ?? "";
+$del = $_POST['del'] ?? "";
 if (!empty($waarde)) {
-    switch ($_POST['del']) {
+    switch ($del) {
         case 'delete': { ?>
 <form action="../a/groepen" method="POST" class='text-center'>
     <input type="hidden" name="groep" value="delgroep">
@@ -71,7 +72,7 @@ if (!empty($waarde)) {
                 break;
             }
     }
-    if ($_POST['groep'] == 'gebruikers') {
+    if ($gebruiker == 'gebruikers') {
         $account = $db->select("gebruikers", "rechten !='b'");
         ?>
 <SCRIPT language="javascript">
@@ -135,7 +136,7 @@ function addRow(tableID) {
 
 <?php
     }
-    if ($_POST['groep'] == 'eigenaars') {
+    if ($gebruiker == 'eigenaars') {
         $account = $db->select("gebruikers", "rechten !='b'");
 
     ?>
@@ -201,7 +202,7 @@ function addRow(tableID) {
 
 <?php
     }
-    if ($_POST['groep'] == 'toevoegen') {
+    if ($gebruiker == 'toevoegen') {
     ?>
 <SCRIPT language="javascript">
 function addRow(tableID) {
@@ -256,7 +257,7 @@ function addRow(tableID) {
 </form>
 <?php
     }
-    if ($_POST['groep'] == 'groepnaam') //eigenaars toevoegen
+    if ($gebruiker == 'groepnaam') //eigenaars toevoegen
     {
         $naam = $db->select("groep", "id = $waarde", "", "", "fetch");
     ?>

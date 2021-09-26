@@ -32,7 +32,7 @@
 $db = new Db;
 
 //site variables
-$page = $_GET['page'] ?? null;
+$page = $_GET['file'] ?? null;
 $product = $_GET['product'] ?? null;
 $merk = $_GET['merk'] ?? null;
 ?>
@@ -44,7 +44,7 @@ $merk = $_GET['merk'] ?? null;
     <?php
 	function tokenTruncate($string, $your_desired_width)
 	{
-		$parts = preg_split('/([\s\n\r]+)/', $string, '', PREG_SPLIT_DELIM_CAPTURE);
+		$parts = preg_split('/([\s\n\r]+)/', $string, '-1', PREG_SPLIT_DELIM_CAPTURE);
 		$parts_count = count($parts);
 
 		$length = 0;

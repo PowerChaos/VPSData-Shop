@@ -58,7 +58,7 @@ $defimg = Config::DEFIMG;
         for ($i = 0; $i < 6; $i++) {
             $product = $db->select('products', '', '', '', 'fetch', '*', '', 'RAND()');
             $prod = array('product' => $product['id']);
-            $image = $db->select('images', 'product = :product', '', $prod, 'fetch', '*', '', 'RAND()');
+            $image = $db->select('images', 'pid = :product', '1', $prod, '', '*', '', 'RAND()');
             $sp = strtolower(str_replace(" ", "-", $product['name']));
             $sm = strtolower($product['merk']);
             if ($i % 2 == 0) {
@@ -68,7 +68,7 @@ $defimg = Config::DEFIMG;
                 <!-- row 1-->
                 <figure class="effect-bubba">
                     <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
-                        <img src="<?php echo ($image[0]['img']) ?? $defimg ?>" height="320"
+                        <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
                             alt="<?php echo $product['name'] ?>" />
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
@@ -87,7 +87,7 @@ $defimg = Config::DEFIMG;
                 <!-- row 1-->
                 <figure class="effect-bubba">
                     <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
-                        <img src="<?php echo ($image[0]['img']) ?? $defimg ?>" height="320"
+                        <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
                             alt="<?php echo $product['name'] ?>" />
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
@@ -128,7 +128,7 @@ $defimg = Config::DEFIMG;
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<?php echo ($img[0]['img']) ?? $defimg ?>" height="280"
+                        <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
                             alt="<?php echo $related['name'] ?>" />
                     </div>
                     <div class="product-info">
