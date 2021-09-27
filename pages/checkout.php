@@ -33,8 +33,9 @@ $session = new Session;
 $perm = new Gebruikers;
 $ship = new Shipping;
 $db = new Db;
-$bid = array(':rand' => $session->get('rand'), ':id' => $session->get('id'));
-$order = $db->select('bestelling', 'bestel = :rand AND status = 0', '', $bid);
+$brand = array(':rand' => $session->get('rand'));
+$bid = array(':id' => $session->get('id'));
+$order = $db->select('bestelling', 'bestel = :rand AND status = 0', '', $brand);
 $land = $db->select('gebruikers', 'id = :id', '', $bid, 'fetch');
 
 if ($perm->check('user')) {
@@ -65,10 +66,14 @@ if ($perm->check('user')) {
                 $prijs = '0';
                 $clouds = '0';
                 $t = '0';
+                $amount = '0';
+                $tm = time();
                 foreach ($order as $item) {
-                    $bpid = array(':pid' => $item['pid'], ':tm' => time());
-                    $product = $db->select('products', 'id = :pid', '', $bid, 'fetch');
-                    $clknop = $db->select('bonus', 'pid = :pid AND datum > :tm', '', $bid, 'fetch');
+                    $bpid = array(':pid' => $item['pid']);
+                    $btime = array(':pid2 ' => $item['pid'], ':tm' => $tm);
+                    $product = $db->select('products', 'id = :pid', '', $bpid, 'fetch');
+                    $clknop = $db->select('bonus', 'pid = :pid2 AND datum > :tm', '', $btime, 'fetch');
+                    $clprijs = $clknop['prijs'] ?? "0";
                     echo "
 				<tr>
 			<td style='width:40%'>
@@ -89,15 +94,15 @@ if ($perm->check('user')) {
 		</tr>
 		";
                     $prijs += $item['prijs'];
-                    $clouds += $item['qty'] * $clknop['prijs'];
+                    $clouds += $item['qty'] * $clprijs;
                     $amount += $item['qty'];
                     $t++;
                 }
                 $paypalfee = round((($prijs / 100) * 5), 2);
                 $delivery = $ship->dpd($land['land']);
-                $verzending = $delivery['prijs'];
+                $verzending = $delivery;
                 while ($amount > '25') {
-                    $verzending += $delivery['prijs'];
+                    $verzending += $delivery;
                     $amount -= '25';
                 }
                 ?>
@@ -105,7 +110,7 @@ if ($perm->check('user')) {
     </table>
     <div class='row'>
         <div class='col-md-6'>
-            Select Levery option:
+            Select Delivery option:
             <select id='shipping' name='shipping'>
                 <option value='Afhaal:0'>Local Store</option>
                 <option value='Post:<?php echo $verzending ?>'>DPD Delivery Europe ( + &euro; <?php echo $verzending ?>)
@@ -115,9 +120,9 @@ if ($perm->check('user')) {
         <div class="col-md-6">
             Select Payment:
             <select id='pay' name='pay'>
-                <option value='Cash'>Cash (Local Store)</option>
-                <option value='Overschrijving'>Wire Transfer</option>
-                <option value='paypal'>Paypal ( + &euro;<?php echo $paypalfee ?> )</option>
+                <option value='Cash:0'>Cash (Local Store)</option>
+                <option value='Overschrijving:0'>Wire Transfer</option>
+                <option value='paypal:<?php echo $paypalfee ?>'>Paypal ( + &euro;<?php echo $paypalfee ?> )</option>
                 <?php echo (($t == "1") and ($land['punten'] >= $clouds) and ($clouds > '0')) ? "<option value='Clouds' style='background-color: silver'>Pay with <i class='material-icons'>3d_rotation</i></option>" : ""; ?>
             </select>
         </div>
@@ -165,7 +170,7 @@ $(document).ready(function() {
     $('#bestel').on('click', function() {
         var dat = $('#shipping').val();
         var pay = $('#pay').val();
-        if ((dat == "Post:<?php echo $verzending ?>") && (pay == "Cash")) {
+        if ((dat == "Post:<?php echo $verzending ?>") && (pay == "Cash:0")) {
             alert('Cash is only to pickup from the local store');
             return false;
         }
@@ -200,15 +205,28 @@ $(document).ready(function() {
     $('#shipping').on('change', function() {
         var prijs = <?php echo $prijs ?>;
         var dat = $('#shipping').val();
+        var pay = $('#pay').val();
         var arr = dat.split(':');
-        var ship = (arr[1] * 1);
+        var arr2 = pay.split(':');
+        var ship = (arr[1] * 1) + (arr2[1] * 1);
+        var tot = prijs + ship;
+        $('#total').html(tot);
+    });
+
+    $('#pay').on('change', function() {
+        var prijs = <?php echo $prijs ?>;
+        var dat = $('#shipping').val();
+        var pay = $('#pay').val();
+        var arr = dat.split(':');
+        var arr2 = pay.split(':');
+        var ship = (arr[1] * 1) + (arr2[1] * 1);
         var tot = prijs + ship;
         $('#total').html(tot);
     });
 
 }); //einde document Ready
 </script>
-<?
+<?php
 } else {
     $session->flashdata('error', 'Please login to use this page');
 }

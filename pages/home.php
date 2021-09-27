@@ -60,7 +60,7 @@ $defimg = Config::DEFIMG;
             $prod = array('product' => $product['id']);
             $image = $db->select('images', 'pid = :product', '1', $prod, '', '*', '', 'RAND()');
             $sp = strtolower(str_replace(" ", "-", $product['name']));
-            $sm = strtolower($product['merk']);
+            $sm = strtolower(str_replace(" ", "-", $product['merk']));
             if ($i % 2 == 0) {
         ?>
         <div class="col-md-4 bride-grid">
@@ -69,7 +69,7 @@ $defimg = Config::DEFIMG;
                 <figure class="effect-bubba">
                     <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
                         <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
-                            alt="<?php echo $product['name'] ?>" />
+                            alt="<?php echo $product['name'] ?>" loading="lazy" />
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
@@ -88,7 +88,7 @@ $defimg = Config::DEFIMG;
                 <figure class="effect-bubba">
                     <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
                         <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
-                            alt="<?php echo $product['name'] ?>" />
+                            alt="<?php echo $product['name'] ?>" loading="lazy" />
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
@@ -120,16 +120,15 @@ $defimg = Config::DEFIMG;
             foreach ($rel as $related) {
                 $sel = array(':pid' => $related['id']);
                 $img = $db->select('images', 'pid = :pid', '1', $sel, '', '*', '', 'RAND()');
-                $seoproduct = str_replace(" ", "-", $related['name']);
-                $seoproduct = strtolower($seoproduct);
-                $seomerk = strtolower($related['merk']);
+                $seoproduct = str_replace(" ", "-", strtolower($related['name']));
+                $seomerk =  str_replace(" ", "-", strtolower($related['merk']));
             ?>
             <a href="<?php echo '../' . $seomerk . '/' . $seoproduct; ?>.html">
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
                         <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
-                            alt="<?php echo $related['name'] ?>" />
+                            alt="<?php echo $related['name'] ?>" loading="lazy" />
                     </div>
                     <div class="product-info">
                         <div class="product-info-cust prt_name">

@@ -34,7 +34,7 @@ $defimg = Config::DEFIMG;
 $db = new Db;
 $session = new Session;
 if (isset($_GET['merk'])) {
-	$id = $_GET['merk'];
+	$id = str_replace("-", " ", $_GET['merk']);
 	$bmerk = array(':id' => $id);
 	$row = $db->select('products', 'merk = :id', '', $bmerk, '', '*', 'cat', 'cat');
 	if ($row) {
@@ -72,9 +72,8 @@ if (isset($_GET['merk'])) {
 ";
 
 						foreach ($check as $prod) {
-							$seoproduct = str_replace(" ", "-", $prod['name']);
-							$seoproduct = strtolower($seoproduct);
-							$seomerk = strtolower($prod['merk']);
+							$seoproduct = str_replace(" ", "-", strtolower($prod['name']));
+							$seomerk =  str_replace(" ", "-", strtolower($prod['merk']));
 							$bpid = array(':pid' => $prod['id']);
 							$rating = $db->select('rating', 'pid = :pid', '', $bpid);
 							$ratingcount = $db->select('rating', 'pid = :pid', '', $bpid, 'rowcount');

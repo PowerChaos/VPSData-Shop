@@ -73,7 +73,7 @@ $session = new Session;
                                         $cate = array(":cat" => $naam);
                                         $subcat = $db->select('products', 'cat = :cat', '', $cate, '', '*', 'merk', 'merk ASC');
                                         foreach ($subcat as $sub) {
-                                            $seomerk = strtolower($sub['merk']);
+                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
                                             echo "
 															<li><a href='../{$seomerk}.html'>{$sub['merk']}</a></li>
 														";
@@ -112,9 +112,8 @@ $session = new Session;
                                         $cate = array(":cat" => $naam);
                                         $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', 'merk', 'merk ASC');
                                         foreach ($subcat as $sub) {
-                                            $seoproduct = str_replace(" ", "-", $sub['name']);
-                                            $seoproduct = strtolower($seoproduct);
-                                            $seomerk = strtolower($sub['merk']);
+                                            $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
+                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
                                             echo "
 															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
 														";
@@ -152,9 +151,8 @@ $session = new Session;
                                         $cate = array(":cat" => $naam);
                                         $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', 'merk', 'merk ASC');
                                         foreach ($subcat as $sub) {
-                                            $seoproduct = str_replace(" ", "-", $sub['name']);
-                                            $seoproduct = strtolower($seoproduct);
-                                            $seomerk = strtolower($sub['merk']);
+                                            $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
+                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
                                             echo "
 															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
 														";
@@ -217,11 +215,17 @@ $session = new Session;
                     <?php
                         $rand = $session->get('rand');
                         $bestel = array(":rand" => $rand);
-                        $total = $db->select('bestelling', 'bestel = :rand AND status = 0', '', $bestel, 'rowcount');
+                        $total = $db->select('bestelling', 'bestel = :rand AND status = 0', '', $bestel);
+                        $totalpart = 0;
+                        foreach ($total as $qty) {
+                            $totalpart += $qty['qty'];
+                        }
                         ?>
                     <a class="badge" data-toggle="modal" data-target="#modal" id="<?php echo $rand ?>"
                         onclick="shopcart(this.id,'shop');" aria-hidden="true"><i
-                            class="material-icons">shopping_cart</i><?php echo $total ?></a>
+                            class="material-icons">shopping_cart</i>
+                        <font color='red'><?php echo $totalpart ?></font>
+                    </a>
                 </li>
                 <?php
                 } else { //einde gebruikers

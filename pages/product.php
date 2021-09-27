@@ -80,8 +80,8 @@ if (isset($_GET['product'])) {
                         </li>
                         <?php } else {
                                     foreach ($img as $image) { ?>
-                        <li data-thumb="<?php echo $image['img'] ?? $defimg ?>">
-                            <img src="<?php echo $image['img'] ?? $defimg ?>" />
+                        <li data-thumb="<?php echo $image['img'] ?? $defimg ?>" loading="lazy">
+                            <img src="<?php echo $image['img'] ?? $defimg ?>" loading="lazy" />
                         </li>
                         <?php }
                                 } ?>
@@ -103,7 +103,7 @@ if (isset($_GET['product'])) {
                 <div class="id">
                     <h4>Category: <?php echo $prod['cat'] ?></h4>
                 </div>
-                <?php $sk = strtolower($prod['merk']); ?>
+                <?php $sk = str_replace(" ", "-", strtolower($prod['merk'])); ?>
                 <div class="id">
                     <h4>Brand: <a href="<?php echo "../" . $sk ?>.html"><?php echo $prod['merk'] ?></a>
                     </h4>
@@ -134,9 +134,9 @@ if (isset($_GET['product'])) {
                     <div class="clearfix"></div>
                     <div class="prdt-cost">
                         <ul>
-                            <?php echo $clouds ?>
+                            <?php echo $clouds ?? "" ?>
                             <div class="clearfix"></div>
-                            <?php echo $totbonus;
+                            <?php echo $totbonus ?? "";
                                     $prijs = $clknop['prijs'] ?? ""; ?>
                             <input type="hidden" value="<?php echo $prod['prijs'] ?>" id='check'>
                             <input type="hidden" value="<?php echo $prijs ?>" id='clcheck'>
@@ -164,7 +164,7 @@ if (isset($_GET['product'])) {
 
 <div class="featured">
     <div class="container">
-        <h3>Our Selection <?php echo $prod['cat'] ?></h3>
+        <h3>Our Selection from <b><?php echo $prod['cat'] ?></b></h3>
         <div class="feature-grids">
             <!-- Random producten -->
             <?php
@@ -173,16 +173,15 @@ if (isset($_GET['product'])) {
                     foreach ($rel2 as $related2) {
                         $bim = array(':pid' => $related2['id']);
                         $img = $db->select('images', 'pid = :pid', '1', $bim, '', '*', '', 'RAND()');
-                        $seoproduct = str_replace(" ", "-", $related2['name']);
-                        $seoproduct = strtolower($seoproduct);
-                        $seomerk = strtolower($related2['merk']);
+                        $seoproduct = str_replace(" ", "-", strtolower($related2['name']));
+                        $seomerk = str_replace(" ", "-", strtolower($related2['merk']));
                     ?>
             <a href="<?php echo '../' . $seomerk . '/' . $seoproduct; ?>.html">
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
                         <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
-                            alt="<?php echo $related2['name'] ?>" />
+                            alt="<?php echo $related2['name'] ?>" loading="lazy" />
                     </div>
                     <div class="product-info">
                         <div class="product-info-cust prt_name">

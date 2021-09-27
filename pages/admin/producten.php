@@ -165,7 +165,7 @@ Klik op een tabel om te bewerken
                     $.ajax({
                         type: "POST",
                         url: "../x/edit",
-                        data: 'field=' + field + '&waarde=' + val + '&edit=product',
+                        data: 'field=' + field + '&waarde=' + val + '&edit=products',
                         success: function(data) {
                             message_status.show();
                             message_status.text(data);

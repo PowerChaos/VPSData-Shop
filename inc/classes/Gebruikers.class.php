@@ -194,12 +194,14 @@ class Gebruikers
 		$user = $this->db->select('gebruikers', 'naam = :email', '', $bind, 'fetch');
 		$passcheck = $this->hash->verify_password($pass, $user['wachtwoord']);
 		if ($passcheck) {
+			$random = uniqid();
 			$this->db->update("gebruikers", $update, "naam=:email", $bind);
 			$this->session->set('loggedin', '1');
 			$this->session->set('id', $user['id']);
 			$this->session->set('naam', $user['naam']);
 			$this->session->set('hash', $user['wachtwoord']);
 			$this->session->set('groep', $user['groep']);
+			$this->session->set('rand', $random);
 			switch ($user['rechten']) {
 				case '3':
 					$this->session->set('admin', '1');
@@ -227,7 +229,7 @@ class Gebruikers
 			$this->session->set('faillogin', $fails);
 			$this->session->set('timer', time());
 			if ($fails >= '5') {
-				echo "<meta http-equiv=\"refresh\" content=\"0;URL=http://{$_SERVER['SERVER_NAME']}/login\" />";
+				echo "<meta http-equiv=\"refresh\" content=\"0;URL=../login\" />";
 			}
 		}
 	}

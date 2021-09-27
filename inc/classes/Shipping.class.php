@@ -342,6 +342,12 @@ class Shipping
             "ES" => array("naam" => "Spain", "prijs" => "22"),
             "SE" => array("naam" => "Sweden", "prijs" => "25"),
         );
-        return in_array($land, $dpd) ? $dpd : false;
+        if (array_key_exists($land, $dpd)) {
+            return $dpd[$land]['prijs'];
+        } else {
+            echo 'does not exists';
+            print_r($dpd);
+            print_r($land);
+        }
     }
 }
