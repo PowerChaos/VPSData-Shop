@@ -1,11 +1,17 @@
 <?php
-require_once (getenv("DOCUMENT_ROOT")."/functions/include.php");
-require_once (getenv("DOCUMENT_ROOT")."/functions/database.php");
-require_once (getenv("DOCUMENT_ROOT")."/functions/paymentwall.php");
+$db = new Db;
+$session = new Session;
+$perm = new Gebruikers;
+$shipvalue = $_POST['ship']??"";
+$payvalue = $_POST['pay']??"";
 
-$split_data = explode(':', $_POST[ship]);
+$split_data = explode(':', $shipvalue);
 $extra = $split_data[1];
 $ship = $split_data[0];
+
+$split_datapay = explode(':',$payvalue);
+$payam = $split_datapay[1];
+$pay = $split_datapay[0];
 
 $stmt = $db->prepare("SELECT * FROM bestelling WHERE bestel = :pid AND status = '0'");
 $stmt->execute(array(':pid' => $_SESSION[rand]));
@@ -13,55 +19,33 @@ $adress = $db->prepare("SELECT * FROM gebruikers WHERE id = :pid");
 $adress->execute(array(':pid' => $_SESSION['id']));
 $location = $adress->fetch(PDO::FETCH_ASSOC);
 $result = $stmt->fetchall(PDO::FETCH_ASSOC);
-$coordinates1 = get_coordinates('Nispen', 'Antwerpseweg 101', '4709','nl');
-$coordinates2 = get_coordinates($location[gemeente],$location[adress].' '.$location[nummer], $location[postcode],$location[land]);
-if ( !$coordinates1 || !$coordinates2 )
-{
-	echo var_dump($coordinates2);
-   $totprice = '0';
-}
-else
-{
-    $dist = GetDrivingDistance($coordinates1['lat'], $coordinates2['lat'], $coordinates1['long'], $coordinates2['long']);
-	$split_data = explode(' ', $dist[distance]);
-	$dis = $split_data[0];
-	$dis = str_replace(".","",$dis);
-	$dis = explode(',', $dis);
-	if ($dis[0] <= '50'):
-    $totprice = '15';
-	elseif ($dis[0] <= '100'):
-    $totprice = '35';
-	elseif ($dis[0] <= '150'):
-    $totprice = '50';
-	else:
-	$totprice = '0';
-endif;
-	}
+if $perm->check('user'){
 ?>
 
-<div class='alert alert-info'> Danku voor uw bestelling Nummer <font color='red'><?php echo $_SESSION[rand] ?></font></div>
+<div class='alert alert-info'> Danku voor uw bestelling Nummer <font color='red'><?php echo $_SESSION[rand] ?></font>
+</div>
 <table class="table table-bordered table-striped table-responsive">
-	<thead>
-		<tr>
-			<th style="width:40%">
-				Product
-			</th>
-			<th style="width:10%">
-				Kleur
-			</th>
-			<th style="width:10%">
-				Hoeveelheid
-			</th>
-			<th style="width:20%">
-				Prijs
-			</th>
-			<th style="width:20%">
-				Clouds
-			</th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php
+    <thead>
+        <tr>
+            <th style="width:40%">
+                Product
+            </th>
+            <th style="width:10%">
+                Kleur
+            </th>
+            <th style="width:10%">
+                Hoeveelheid
+            </th>
+            <th style="width:20%">
+                Prijs
+            </th>
+            <th style="width:20%">
+                Clouds
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
 	$prijs = '0';
 	$clouds = '0';
 	$counter = '1';
@@ -103,7 +87,7 @@ $clknop = $cl->fetch(PDO::FETCH_ASSOC);
 	$counter++;
 	}
 	?>
-	</tbody>
+    </tbody>
 </table>
 <?php
 //verzending switch
@@ -195,10 +179,14 @@ mail_test($_SESSION[rand],'1',$location[naam]);
 mail_test($_SESSION[rand]);
 unset($_SESSION['rand']);
 ?>
-<div class='alert alert-warning text-center'> Totale prijs voor deze bestelling is &euro; <?php echo ($prijs + ($extra * 1)) ?> waarvan &euro;<?php echo ($extra * 1)?> Leverings Kosten</div>
-  <div class="panel-group">
+<div class='alert alert-warning text-center'> Totale prijs voor deze bestelling is &euro;
+    <?php echo ($prijs + ($extra * 1)) ?> waarvan &euro;<?php echo ($extra * 1)?> Leverings Kosten</div>
+<div class="panel-group">
     <div class="panel panel-primary">
-      <div class="panel-heading"><?php echo $shipping ?></div>
-      <div class="panel-body"><?php echo $betaling ?></div>
+        <div class="panel-heading"><?php echo $shipping ?></div>
+        <div class="panel-body"><?php echo $betaling ?></div>
     </div>
-  </div>
+</div>
+<?php
+}
+?>
