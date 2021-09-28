@@ -45,8 +45,8 @@ $defimg = Config::DEFIMG;
         </div>
         <div class="col-md-9 welcome-right">
             <h3>VPS Data is here for all your needs</h3>
-            <p>Are you looking for some fillamnets? or just browsing to see what we offer ?<br>We got all your need to
-                get you started<br>From Fillamlents to resin and even bulk orders.</p>
+            <p>Are you looking for some fillaments? or just browsing to see what we offer ?<br>We got all your need to
+                get you started<br>From fillaments to resin and even bulk orders.</p>
         </div>
     </div>
 </div>

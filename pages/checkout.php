@@ -115,7 +115,7 @@ if ($perm->check('user')) {
                 <option value='Afhaal:0'>Local Store</option>
                 <?php
                     if ($delivery) {
-                        echo "<option value='Post:{$verzending}'>DPD Delivery Europe ( + &euro; {$verzending})";
+                        echo "<option value='DPD:{$verzending}'>DPD Delivery Europe ( + &euro; {$verzending})";
                     }
                     ?>
                 </option>
@@ -174,7 +174,7 @@ $(document).ready(function() {
     $('#bestel').on('click', function() {
         var dat = $('#shipping').val();
         var pay = $('#pay').val();
-        if ((dat == "Post:<?php echo $verzending ?>") && (pay == "Cash:0")) {
+        if ((dat == "DPD:<?php echo $verzending ?>") && (pay == "Cash:0")) {
             alert('Cash is only to pickup from the local store');
             return false;
         }
