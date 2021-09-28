@@ -49,7 +49,7 @@ $session = new Session;
         <div class="navbar-collapse collapse" id="navigatie">
             <ul class="nav yamm navbar-nav">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Brands<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">category<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
                             <div class="yamm-content">
@@ -73,7 +73,7 @@ $session = new Session;
                                         $cate = array(":cat" => $naam);
                                         $subcat = $db->select('products', 'cat = :cat', '', $cate, '', '*', 'merk', 'merk ASC');
                                         foreach ($subcat as $sub) {
-                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
+                                            $seomerk = str_replace(" ", "-", strtolower($sub['merk']));
                                             echo "
 															<li><a href='../{$seomerk}.html'>{$sub['merk']}</a></li>
 														";
@@ -94,7 +94,7 @@ $session = new Session;
                             <div class="yamm-content">
                                 <div class="row">
                                     <?php
-                                    $category = $db->select('products', 'cat != \'Fillament\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
+                                    $category = $db->select('products', '', '', '', 'fetchall', '*', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
                                     $count = ($count != '0') ?? '1';
                                     $div = ceil(12 / $count);
@@ -113,46 +113,7 @@ $session = new Session;
                                         $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', 'merk', 'merk ASC');
                                         foreach ($subcat as $sub) {
                                             $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
-                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
-                                            echo "
-															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
-														";
-                                        }
-                                        echo "</ul>";
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fillaments<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="yamm-content">
-                                <div class="row">
-                                    <?php
-                                    $category = $db->select('products', 'cat = \'fillament\'', '', '', 'fetchall', '*', 'cat', 'cat ASC');
-                                    $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
-                                    $count = ($count != '0') ?? '1';
-                                    $div = ceil(12 / $count);
-                                    $div = ($div % 2 == "0") ?? $div + 1;
-                                    foreach ($category as $cat) {
-                                        echo "<ul class='col-md-$div list-unstyled'>";
-                                        $naam = $cat['merk'];
-                                        //echo cats
-                                        echo "
-                                                                                        <li><h4>$naam</h4></li>
-                                                                                        <li class='divider'></li>
-                                                                                        ";
-                                        //echo subcats
-                                        //subcats query en count
-                                        $cate = array(":cat" => $naam);
-                                        $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', 'merk', 'merk ASC');
-                                        foreach ($subcat as $sub) {
-                                            $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
-                                            $seomerk = $seoproduct = str_replace(" ", "-", strtolower($sub['merk']));
+                                            $seomerk = str_replace(" ", "-", strtolower($sub['merk']));
                                             echo "
 															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
 														";

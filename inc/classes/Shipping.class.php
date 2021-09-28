@@ -345,9 +345,7 @@ class Shipping
         if (array_key_exists($land, $dpd)) {
             return $dpd[$land]['prijs'];
         } else {
-            echo 'does not exists';
-            print_r($dpd);
-            print_r($land);
+            return false;
         }
     }
 }

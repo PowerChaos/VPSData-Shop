@@ -1,7 +1,10 @@
 <?php
 $db = new Db;
-$kleur = $_POST['kleur'] ?? "";
+$split = $_POST['kleur'] ?? "";
 $prod = $_POST['prod'] ?? "";
+$split_data = explode(':', $split);
+$kleur = $split_data[1];
+$prijsje = $split_data[0];
 
 $tijd = strtotime("-1 hour", time());
 $clean = array(':time' => $tijd);
@@ -56,15 +59,30 @@ if ($kleur) {
 ?>
 <script>
 $(document).ready(function() {
+    let prijsje = <?php echo $prijsje ?>;
+    let dat = $('#qty').val();
+    let disc = $('#disc').text();
+    let free = Math.round(($('#clcheck').val() * dat) * 100) / 100;
+    let prijs = Math.round(((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat) * 100) / 100;
+    let clouds = Math.floor((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
+    let bonus = Math.floor((prijs / 100) * disc);
+    let tot = Math.floor(clouds + bonus);
+    $('#clouds').html(clouds);
+    $('#bon').html(tot);
+    $('#prijs').html(prijs);
+    $('#free').html(free);
+
     //clouds en prijs update
     $('#qty').on('change', function() { //begin Rating Waarde
-        var dat = $('#qty').val();
-        var disc = $('#disc').text();
-        var free = Math.round(($('#clcheck').val() * dat) * 100) / 100;
-        var prijs = Math.round(($('#check').val() * dat) * 100) / 100;
-        var clouds = Math.floor($('#check').val() * dat);
-        var bonus = Math.floor((prijs / 100) * disc);
-        var tot = clouds + bonus;
+        let prijsje = <?php echo $prijsje ?>;
+        let dat = $('#qty').val();
+        let disc = $('#disc').text();
+        let free = Math.round(($('#clcheck').val() * dat) * 100) / 100;
+        let prijs = Math.round(((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat) * 100) /
+            100;
+        let clouds = Math.floor((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
+        let bonus = Math.floor((prijs / 100) * disc);
+        let tot = Math.floor(clouds + bonus);
         $('#clouds').html(clouds);
         $('#bon').html(tot);
         $('#prijs').html(prijs);

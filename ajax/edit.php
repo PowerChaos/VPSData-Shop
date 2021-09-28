@@ -34,6 +34,7 @@ $table = $_POST['edit'] ?? "";
 $field = $_POST['field'] ?? "";
 $waarde = $_POST['waarde'] ?? "";
 
+
 if ($table) {
 
 	if ($table == "gebruikers") {

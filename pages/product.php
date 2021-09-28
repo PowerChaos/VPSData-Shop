@@ -57,7 +57,7 @@ if (isset($_GET['product'])) {
         $getuser = $db->select('gebruikers', 'id = :uid', '', $ubind, 'fetch');
         $dbind = array(':clouds' => $getuser['punten']);
         $disc = $db->select('discount', 'clouds <= :clouds', '1', $dbind, '', '*', '', 'clouds DESC');
-        $korting = floor($prod['prijs']);
+        $korting = floor($prod['prijs'] + $amount[0]['prijs']);
         $discount = $disc[0]['discount'];
         $bonus = ($korting / 100) * $discount;
         $clouds = " <div class='clearfix'></div> <li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i></li>";
@@ -125,8 +125,13 @@ if (isset($_GET['product'])) {
                     <?php
                             echo "Select Color : <select id='kleur' name='kleur'>";
                             foreach ($amount as $stok) {
-                                echo "<option value='$stok[naam]'>$stok[naam]</option>";
+                                if ($stok['prijs'] > '0') {
+                                    echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( + € $stok[prijs] )</option>";
+                                } else {
+                                    echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam]</option>";
+                                }
                             }
+
                             ?>
                     </select>
                     <div class='clearfix'></div><br>
@@ -143,7 +148,7 @@ if (isset($_GET['product'])) {
                             <button type="button" class="btn-lg btn-primary text-center kleur" data-toggle="modal"
                                 data-target="#modal" id="<?php echo $prod['id'] ?>"
                                 onclick="shop(this.id,'toevoegen')">Buy now for &euro; <prijs id='prijs'>
-                                    <?php echo $prod['prijs'] ?></prijs>
+                                    <?php echo $prod['prijs'] + $amount[0]['prijs'] ?></prijs>
                                 <?php if ($prijs) { ?>
                                 or <free id='free'><?php echo $prijs ?></free> <i class='material-icons'>3d_rotation</i>
                                 <?php } ?>
@@ -232,7 +237,7 @@ $(document).ready(function() {
 
     //Select Update
     $("#aantal").load("../x/stock", {
-        kleur: "geen",
+        kleur: "<?php echo $amount[0]['prijs'] . ':' . $amount[0]['naam'] ?>",
         prod: "<?php echo $prod['id'] ?>",
     });
     $('#kleur').on('change', function() { //begin Rating Waarde

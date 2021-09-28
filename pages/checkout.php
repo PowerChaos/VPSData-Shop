@@ -113,7 +113,11 @@ if ($perm->check('user')) {
             Select Delivery option:
             <select id='shipping' name='shipping'>
                 <option value='Afhaal:0'>Local Store</option>
-                <option value='Post:<?php echo $verzending ?>'>DPD Delivery Europe ( + &euro; <?php echo $verzending ?>)
+                <?php
+                    if ($delivery) {
+                        echo "<option value='Post:{$verzending}'>DPD Delivery Europe ( + &euro; {$verzending})";
+                    }
+                    ?>
                 </option>
             </select>
         </div>
