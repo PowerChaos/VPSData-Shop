@@ -3,7 +3,7 @@ $db = new Db;
 $perm = new Gebruikers;
 
 if ($perm->check('admin')) {
-	$result = $db->select('bestelling', 'status > 0', '', '', '', '*', 'bestel', 'status ASC,datum DESC');
+    $result = $db->select('bestelling', 'status > 0', '', '', '', '*', 'bestel', 'status ASC,datum DESC');
 ?>
 <div class="container">
     <table class="table table-bordered table-striped table-responsive">
@@ -28,20 +28,20 @@ if ($perm->check('admin')) {
         </thead>
         <tbody>
             <?php
-				foreach ($result as $item) {
-					switch ($item['status']) {
-						case '1':
-							$status = "Niet Betaald - Wachten op Betaling";
-							break;
-						case '2':
-							$status = "Betaald - Wachten op Levering";
-							break;
-						case '3':
-							$status = "Betaald en Afgeleverd - Alles in orde";
-							break;
-					}
-					$datum = date("d-m-Y \o\m H:i", $item['datum']);
-					echo "
+                foreach ($result as $item) {
+                    switch ($item['status']) {
+                        case '1':
+                            $status = "Niet Betaald - Wachten op Betaling";
+                            break;
+                        case '2':
+                            $status = "Betaald - Wachten op Levering";
+                            break;
+                        case '3':
+                            $status = "Betaald en Afgeleverd - Alles in orde";
+                            break;
+                    }
+                    $datum = date("d-m-Y \o\m H:i", $item['datum']);
+                    echo "
 				<tr>
 			<td style='width:20%'>
 			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('history',this.id);\">{$item['bestel']}</a>
@@ -56,12 +56,16 @@ if ($perm->check('admin')) {
 			{$datum}
 			</td>
 			<td style='width:20%'>
-			<a href='#' id='{$item['bestel']}' onclick=\"history('{$item['status']}',this.id);\">{$status}</a>
+			<a href='#' id='{$item['bestel']}' onclick=\"history('{$item['status']}',this.id);\">{$status}</a>";
+                    if ($item['status'] == '1') {
+                        echo "<br><a href='#' id='{$item['bestel']}' onclick=\"history('delete',this.id);\"><i class='material-icons'>backspace</i></a>";
+                    }
+                    echo " 
 			</td>
 		</tr>
 		";
-				}
-				?>
+                }
+                ?>
         </tbody>
     </table>
     <script>
@@ -76,68 +80,42 @@ if ($perm->check('admin')) {
     }); //einde document Ready
 
     function history(status, dat) {
+        $confirming = "";
         switch (status) {
             case '1':
                 if (confirm(' wilt u deze order aanpassen naar de volgende status?\nBetaald - Wachten op Levering')) {
-                    $.ajax({
-                        type: "POST",
-                        url: "../x/order",
-                        data: 'bestelling=' + dat + '&history=' + status,
-                        success: function(data) {
-                            $("#modal").modal('show');
-                            $("#modalcode").html(data);
-                            $('#modal').on('hidden.bs.modal', function() {
-                                window.location.reload();
-                            })
-                        }
-                    });
+                    $confirming = '1'
                 }
                 break;
             case '2':
                 if (confirm(
                         ' wilt u deze order aanpassen naar de volgende status?\n	Betaald en Afgeleverd - Alles in orde'
                     )) {
-                    $.ajax({
-                        type: "POST",
-                        url: "../x/order",
-                        data: 'bestelling=' + dat + '&history=' + status,
-                        success: function(data) {
-                            $("#modal").modal('show');
-                            $("#modalcode").html(data);
-                            $('#modal').on('hidden.bs.modal', function() {
-                                window.location.reload();
-                            })
-                        }
-                    });
+                    $confirming = '1'
                 }
                 break;
-            case '3':
+            case 'delete':
                 if (confirm('Wilt u deze bestelling Verwijderen ? Dit kan niet worden ongedaan gemaakt')) {
-                    $.ajax({
-                        type: "POST",
-                        url: "../x/order",
-                        data: 'bestelling=' + dat + '&history=' + status,
-                        success: function(data) {
-                            $("#modal").modal('show');
-                            $("#modalcode").html(data);
-                            $('#modal').on('hidden.bs.modal', function() {
-                                window.location.reload();
-                            })
-                        }
-                    });
+                    $confirming = '1'
                 }
                 break;
-            default:
-                $.ajax({
-                    type: "POST",
-                    url: "../x/order",
-                    data: 'bestelling=' + dat + '&history=' + status,
-                    success: function(data) {
-                        $("#modal").modal('show');
-                        $("#modalcode").html(data);
-                    }
-                });
+            case 'history':
+                $confirming = '1'
                 break;
+        }
+        if ($confirming) {
+            $.ajax({
+                type: "POST",
+                url: "../x/order",
+                data: 'bestelling=' + dat + '&history=' + status,
+                success: function(data) {
+                    $("#modal").modal('show');
+                    $("#modalcode").html(data);
+                    $('#modal').on('hidden.bs.modal', function() {
+                        window.location.reload();
+                    })
+                }
+            });
         }
     }
     </script>

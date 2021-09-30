@@ -166,8 +166,8 @@ function remove(val, dat, name) {
     }
 }
 
-function bestel(val, dat, pay) {
-
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
 }
 $(document).ready(function() {
     //Bestel Bevestigen
@@ -213,7 +213,7 @@ $(document).ready(function() {
         var arr = dat.split(':');
         var arr2 = pay.split(':');
         var ship = (arr[1] * 1) + (arr2[1] * 1);
-        var tot = prijs + ship;
+        var tot = roundToTwo(prijs + ship);
         $('#total').html(tot);
     });
 
@@ -224,12 +224,14 @@ $(document).ready(function() {
         var arr = dat.split(':');
         var arr2 = pay.split(':');
         var ship = (arr[1] * 1) + (arr2[1] * 1);
-        var tot = prijs + ship;
+        var tot = roundToTwo(prijs + ship);
         $('#total').html(tot);
     });
 
 }); //einde document Ready
 </script>
+<script src='https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=EUR'
+    data-sdk-integration-source='button-factory'></script>
 <?php
 } else {
     $session->flashdata('error', 'Please login to use this page');

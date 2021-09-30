@@ -58,6 +58,9 @@ if ($kleur) {
 	}
 ?>
 <script>
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
+}
 $(document).ready(function() {
     let prijsje = <?php echo $prijsje ?>;
     let dat = $('#qty').val();

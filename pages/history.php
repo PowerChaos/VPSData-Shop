@@ -86,7 +86,11 @@ if ($perm->check('user')) {
 			{$datum}
 			</td>
 			<td style='width:20%'>
-			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('status',this.id);\">{$status}</a>
+			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('status',this.id);\">{$status}</a>";
+                    if ($item['status'] == '1') {
+                        echo "<br><a href='#' id='{$item['bestel']}' onclick=\"history('delete',this.id);\"><i class='material-icons'>backspace</i></a>";
+                    }
+                    echo "
 			</td>
 		</tr>
 		";
