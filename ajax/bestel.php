@@ -8,6 +8,17 @@ if ($order == 'paypal') {
 	$paypal = array(':bestel' => $bestelling);
 	$paypalupdate = array("status" => "2");
 	$db->update("bestelling", $paypalupdate, "bestel = :bestel", $paypal);
+
+	$result = $db->select('bestelling', 'bestel = :bestel AND status = 2', '', $paypal);
+	$uid = $result[0]['uid'];
+	$getuserid = array(':id' => $uid);
+	$getpoints = $db->select('gebruikers', 'id = :id', '', $getuserid, 'fetch');
+	$points = $getpoints['punten'];
+	foreach ($result as $count) {
+		$points += $count['clouds'];
+	}
+	$pointsupdate = array("punten" => $points);
+	$db->update("gebruikers", $pointsupdate, "id =:id", $getuserid);
 } elseif ($perm->check('user')) {
 
 	$shipvalue = $_POST['ship'] ?? "";
@@ -26,7 +37,8 @@ if ($order == 'paypal') {
 	$bbes = array(':bestel' => $rand);
 	$result = $db->select('bestelling', 'bestel = :bestel AND status = 0', '', $bbes);
 	$userbind = array(':id' => $user);
-	$userdb = $db->select('gebruikers', 'uid = :id', '', $userbind, 'fetch');
+	$userdb = $db->select('gebruikers', 'id = :id', '', $userbind, 'fetch');
+	$totpunt = $userdb['punten'];
 
 ?>
 
@@ -100,9 +112,12 @@ if ($order == 'paypal') {
 		case 'DPD':
 			$shipping = "Thank you for ordering , it will be shipped with DPD as soon as possible";
 			break;
+		case 'Support':
+			$shipping = "after shipping calculation will we refund the difference<br>please contact support with order id <br><pre> $rand </pre>.";
+			break;
 	}
 	//betaling switch
-	$payupdate = array("status" => '1', 'levering' => $ship, 'betaling' => $pay);
+	$payupdate = array("status" => '1', 'levering' => $ship, 'betaling' => $pay, 'leverkosten' => $extra, 'betaalkosten' => $payam);
 	$db->update("bestelling", $payupdate, "bestel = :bestel", $bbes);
 	$tp = round($prijs + $extra + $payam, 2);
 	switch ($pay) {
@@ -114,10 +129,10 @@ if ($order == 'paypal') {
 	<pre>
 	IBAN: BE24 9733 8346 0838
 	BIC: ARSPBE22
-	MEDEDELING: $rand
+	NOTICE: $rand
 	</pre> <br>As soon our bank confirm the wire transfer we ship the products.";
 			break;
-		case 'paypal':
+		case 'Paypal':
 			$betaling = "
 			<div id='smart-button-container'>
       <div style='text-align: center;'>
@@ -174,14 +189,14 @@ if ($order == 'paypal') {
     initPayPalButton();
   </script>";
 			break;
-		case 'Clouds':
-			$payupdate = array("status" => '2', 'levering' => $ship, 'betaling' => $pay);
-			$db->update("bestelling", $payupdate, "pid =:pid AND naam = :kleur AND stock > 0", $bbes);
+		case 'Points':
+			$cloudbetaling = array("status" => '2', 'levering' => $ship, 'betaling' => $pay, 'leverkosten' => "0", 'betaalkosten' => "0", 'prijs' => $payam);
+			$db->update("bestelling", $cloudbetaling, "bestel = :bestel", $bbes);
 
-			$cloudstotal = $userdb['punten'] - $clouds;
-			$cloudupdate = array("punten" => $cloudstotal);
+			$totpunt -= $payam;
+			$cloudupdate = array("punten" => $totpunt);
 			$db->update("gebruikers", $cloudupdate, "id =:id", $userbind);
-			$betaling = "This product is ordered for  $clouds <i class='material-icons'>3d_rotation</i> including shipping.<br><br>in case of pickup please provide following number <pre>$rand</pre>";
+			$betaling = "This product is ordered for  $payam <i class='material-icons'>3d_rotation</i> including shipping.<br><br>in case of pickup please provide following number <pre>$rand</pre>";
 			break;
 	}
 	//mail_test($rand);

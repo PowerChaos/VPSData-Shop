@@ -66,9 +66,9 @@ inactieve Promo's worden opgeruimt na 3 maanden
                 $table = "";
                 foreach ($bonus as $info) {
                     $discount = "
-												<td style='width:33%' class='info' id='pid:$info[id]' contenteditable='true'>$info[pid]</td>
-												<td style='width:33%' class='warning' id='prijs:$info[id]' contenteditable='true'>$info[prijs]</td>
-												<td style='width:34%' class='danger' id='datum:$info[id]' contenteditable='true'>" . date('d-m-Y', $info['datum']) . "</td>";
+												<td style='width:33%' class='info' id='pid:$info[id]' contenteditable='true' promo='bonus'>$info[pid]</td>
+												<td style='width:33%' class='warning' id='prijs:$info[id]' contenteditable='true' promo='bonus'>$info[prijs]</td>
+												<td style='width:34%' class='danger' id='datum:$info[id]' contenteditable='true' promo='bonus'>" . date('d-m-Y', $info['datum']) . "</td>";
                     $table .= "<tr>";
                     $table .=  "$discount";
                     $table .=  "</tr>";
@@ -96,7 +96,7 @@ inactieve Promo's worden opgeruimt na 3 maanden
                 $discounts = $db->select('discount', '', '', '', '', '*', '', 'clouds DESC');
                 $table2 = "";
                 foreach ($discounts as $info2) {
-                    $discount2 = "<td class='danger' contenteditable='true' id='discount:$info2[id]'>$info2[discount]</td><td class='danger' id='clouds:$info2[id]' contenteditable='true'>$info2[clouds]</td>";
+                    $discount2 = "<td class='danger' contenteditable='true' promo='discount' id='discount:$info2[id]'>$info2[discount]</td><td class='danger' id='clouds:$info2[id]' contenteditable='true' promo='discount'>$info2[clouds]</td>";
                     $table2 .= "<tr>";
                     $table2 .=  "$discount2";
                     $table2 .=  "</tr>";
@@ -129,12 +129,13 @@ inactieve Promo's worden opgeruimt na 3 maanden
         $("td[contenteditable=true]").keypress(function(e) {
             var message_status = $("#statusproduct");
             if (e.which == 13) {
+                var edit = $(this).attr("promo");
                 var field = $(this).attr("id");
                 var val = $(this).text();
                 $.ajax({
                     type: "POST",
                     url: "../x/edit",
-                    data: 'field=' + field + '&waarde=' + val + '&edit=bonus',
+                    data: 'field=' + field + '&waarde=' + val + '&edit=' + edit,
                     success: function(data) {
                         message_status.show();
                         message_status.text(data);

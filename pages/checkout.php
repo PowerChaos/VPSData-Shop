@@ -67,13 +67,13 @@ if ($perm->check('user')) {
                 $clouds = '0';
                 $t = '0';
                 $amount = '0';
-                $tm = time();
+                $tijdslot = time();
                 foreach ($order as $item) {
                     $bpid = array(':pid' => $item['pid']);
-                    $btime = array(':pid2 ' => $item['pid'], ':tm' => $tm);
                     $product = $db->select('products', 'id = :pid', '', $bpid, 'fetch');
-                    $clknop = $db->select('bonus', 'pid = :pid2 AND datum > :tm', '', $btime, 'fetch');
-                    $clprijs = $clknop['prijs'] ?? "0";
+                    $btime = array(':prod' => $product['id'], ':tm' => $tijdslot);
+                    $clknop = $db->select('bonus', 'pid = :prod AND datum > :tm', '', $btime, 'fetch');
+                    $clprijs = $clknop['prijs'] ?? "1";
                     echo "
 				<tr>
 			<td style='width:40%'>
@@ -101,9 +101,11 @@ if ($perm->check('user')) {
                 $paypalfee = round((($prijs / 100) * 5), 2);
                 $delivery = $ship->dpd($land['land']);
                 $verzending = $delivery;
-                while ($amount > '25') {
+                $support = "100";
+                while ($amount > '20') {
+                    $support += $support;
                     $verzending += $delivery;
-                    $amount -= '25';
+                    $amount -= '20';
                 }
                 ?>
         </tbody>
@@ -116,6 +118,8 @@ if ($perm->check('user')) {
                 <?php
                     if ($delivery) {
                         echo "<option value='DPD:{$verzending}'>DPD Delivery Europe ( + &euro; {$verzending})";
+                    } else {
+                        echo "<option value='Support:100'>Contact support for shipping rates ( + &euro; {$support})";
                     }
                     ?>
                 </option>
@@ -126,15 +130,14 @@ if ($perm->check('user')) {
             <select id='pay' name='pay'>
                 <option value='Cash:0'>Cash (Local Store)</option>
                 <option value='Overschrijving:0'>Wire Transfer</option>
-                <option value='paypal:<?php echo $paypalfee ?>'>Paypal ( + &euro;<?php echo $paypalfee ?> )</option>
-                <?php echo (($t == "1") and ($land['punten'] >= $clouds) and ($clouds > '0')) ? "<option value='Clouds' style='background-color: silver'>Pay with <i class='material-icons'>3d_rotation</i></option>" : ""; ?>
+                <option value='Paypal:<?php echo $paypalfee ?>'>Paypal ( + &euro;<?php echo $paypalfee ?> )</option>
+                <?php echo (($t == "1") and ($land['punten'] >= $clouds) and ($clouds > '1')) ? "<option value='Points:{$clouds}' style='background-color: silver'>Pay {$clouds} 3D Points</option>" : ""; ?>
             </select>
         </div>
     </div>
     <br>
     <?php echo ($prijs > "0") ? "<a href='#' id='bestel' class='btn btn-success btn-block bestel'>Order now for &euro; <prijs id='total'>$prijs</prijs></a>" : "<div class='alert alert-info text-center'>Please add a product first</div>"; ?>
-    <?php echo ($clouds > "0") ? "<a href='#' id='clouds' class='btn btn-info btn-block clouds'>Order now for  $clouds <i class='material-icons'>3d_rotation</i></a>" : ""; ?>
-    <?php if (($clouds > '0') && ($t > '1')) { ?>
+    <?php if (($clouds > '1') && ($t > '1')) { ?>
     <div class="shoping">
         <div class="container">
             <div class="shpng-grids">
@@ -174,27 +177,26 @@ $(document).ready(function() {
     $('#bestel').on('click', function() {
         var dat = $('#shipping').val();
         var pay = $('#pay').val();
-        if ((dat == "DPD:<?php echo $verzending ?>") && (pay == "Cash:0")) {
+        if ((dat != "Afhaal:0") && (pay == "Cash:0")) {
             alert('Cash is only to pickup from the local store');
             return false;
         }
-        if (confirm('Bent u zeker dat u dit wilt bestellen ? ')) {
-
-            $.ajax({
-                type: "POST",
-                url: "../x/bestel",
-                data: 'confirm=bestel&ship=' + dat + '&pay=' + pay,
-                success: function(data) {
-                    $('#success').html(data);
-                }
-            });
-        }
-    });
-
-    $('#clouds').on('click', function() {
-        var dat = $('#shipping').val();
-        var pay = $('#pay').val();
-        if (confirm('Are you sure you want to spend your points on this product ?')) {
+        if (pay == 'Points:<?php echo $clouds ?>') {
+            if (confirm(
+                    'Are you sure you want to spend <?php echo $clouds ?> 3D Points on this product ?'
+                )) {
+                $.ajax({
+                    type: "POST",
+                    url: "../x/bestel",
+                    data: 'confirm=bestel&ship=' + dat + '&pay=' + pay,
+                    success: function(data) {
+                        $('#success').html(data);
+                    }
+                });
+            }
+            return false;
+        };
+        if (confirm('Please confirm that you like to order')) {
             $.ajax({
                 type: "POST",
                 url: "../x/bestel",

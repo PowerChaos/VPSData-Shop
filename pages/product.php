@@ -58,7 +58,7 @@ if (isset($_GET['product'])) {
         $dbind = array(':clouds' => $getuser['punten']);
         $disc = $db->select('discount', 'clouds <= :clouds', '1', $dbind, '', '*', '', 'clouds DESC');
         $korting = floor($prod['prijs'] + $amount[0]['prijs']);
-        $discount = $disc[0]['discount'];
+        $discount = $disc[0]['discount'] ?? "1";
         $bonus = ($korting / 100) * $discount;
         $clouds = " <div class='clearfix'></div> <li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i></li>";
         $tot = floor($korting + $bonus);

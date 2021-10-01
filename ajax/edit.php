@@ -45,5 +45,8 @@ if ($table) {
 			exit;
 		}
 	}
+	if ($table == 'bonus') {
+		$waarde = strtotime($waarde);
+	}
 	$db->ajaxedit($table, $waarde, $field);
 }

@@ -59,6 +59,12 @@ if ($perm->check('user')) {
         <tbody>
             <?php
                 foreach ($result as $item) {
+                    $bescheck = array(':id' => $item['bestel']);
+                    $pricecalc = $db->select('bestelling', 'bestel = :id AND status > 0', '', $bescheck);
+                    $pay = $pricecalc[0]['betaalkosten'] + $pricecalc[0]['leverkosten'] ?? "0";
+                    foreach ($pricecalc as $price) {
+                        $pay += $price['prijs'];
+                    }
                     switch ($item['status']) {
                         case '1':
                             $status = "Not paid - Waiting for payment";
@@ -71,6 +77,7 @@ if ($perm->check('user')) {
                             break;
                     }
                     $datum = date("d-m-Y \o\m H:i", $item['datum']);
+                    $euro = ($item['betaling'] == 'Points') ? $pay . " <i class='material-icons'>3d_rotation</i>" : "&euro; " . $pay;
                     echo "
 				<tr>
 			<td style='width:20%'>
@@ -80,24 +87,27 @@ if ($perm->check('user')) {
 			{$item['levering']}
 			</td>
 			<td style='width:20%'>
-			{$item['betaling']}
+			{$item['betaling']} ( {$euro} )
 			</td>
 			<td style='width:20%'>
 			{$datum}
 			</td>
-			<td style='width:20%'>
-			<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('status',this.id);\">{$status}</a>";
+			<td style='width:20%'>";
                     if ($item['status'] == '1') {
-                        echo "<br><a href='#' id='{$item['bestel']}' onclick=\"history('delete',this.id);\"><i class='material-icons'>backspace</i></a>";
+                        echo "<a href='#' id='{$item['bestel']}' data-toggle='modal' data-target='#modal' onclick=\"history('status',this.id);\">{$status}</a>
+            <br><a href='#' id='{$item['bestel']}' onclick=\"history('delete',this.id);\"><i class='material-icons'>backspace</i></a>";
+                    } else {
+                        echo $status;
                     }
-                    echo "
-			</td>
+                    echo "</td>
 		</tr>
 		";
                 }
                 ?>
         </tbody>
     </table>
+    <script src='https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=EUR'
+        data-sdk-integration-source='button-factory'></script>
     <script>
     $(document).ready(function() {
         //Bestel Bevestigen
@@ -117,6 +127,11 @@ if ($perm->check('user')) {
             success: function(data) {
                 $("#modal").modal('show');
                 $("#modalcode").html(data);
+                if (status == 'status') {
+                    $('#modal').on('hidden.bs.modal', function() {
+                        window.location.reload();
+                    })
+                }
             }
         });
     }
