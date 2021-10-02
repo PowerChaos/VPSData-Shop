@@ -62,6 +62,9 @@ function bewerk(val, dat) {
             //alert ("del: " +dat+ " en waarde: " +val);
             $("#modal").modal('show');
             $("#modalcode").html(data);
+            $('#modal').on('hidden.bs.modal', function() {
+                window.location.reload();
+            })
 
         }
     });

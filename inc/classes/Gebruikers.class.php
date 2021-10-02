@@ -192,6 +192,9 @@ class Gebruikers
 		$update = array("wachtwoord" => $this->hash->create_hash($pass));
 		$bind = array(":email" => $email);
 		$user = $this->db->select('gebruikers', 'naam = :email', '', $bind, 'fetch');
+		if (!$user){
+		return $this->session->flashdata('error', $email . ' is not a valid email address');
+		}
 		$passcheck = $this->hash->verify_password($pass, $user['wachtwoord']);
 		if ($passcheck) {
 			$random = uniqid();

@@ -57,9 +57,9 @@ $session = new Session;
                                     <?php
                                     $category = $db->select('products', '', '', '', '', 'cat', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
-                                    $count = ($count != '0') ?? '1';
+                                    $count = $count ?? '1';
                                     $div = ceil(12 / $count);
-                                    $div = ($div % 2 == "0") ?? $div + 1;
+                                    $div = ($div % 2 != "0") ?? $div + 1;
                                     foreach ($category as $cat) {
                                         echo "<ul class='col-md-$div list-unstyled'>";
                                         $naam = $cat['cat'];
@@ -96,9 +96,9 @@ $session = new Session;
                                     <?php
                                     $category = $db->select('products', '', '', '', 'fetchall', '*', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
-                                    $count = ($count != '0') ?? '1';
+                                    $count = $count ?? '1';
                                     $div = ceil(12 / $count);
-                                    $div = ($div % 2 == "0") ?? $div + 1;
+                                    $div = ($div % 2 != "0") ?? $div + 1;
                                     foreach ($category as $cat) {
                                         echo "<ul class='col-md-$div list-unstyled'>";
                                         $naam = $cat['merk'];
@@ -110,7 +110,7 @@ $session = new Session;
                                         //echo subcats
                                         //subcats query en count
                                         $cate = array(":cat" => $naam);
-                                        $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', 'merk', 'merk ASC');
+                                        $subcat = $db->select('products', 'merk = :cat', '', $cate, 'fetchall', '*', '', 'merk ASC');
                                         foreach ($subcat as $sub) {
                                             $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
                                             $seomerk = str_replace(" ", "-", strtolower($sub['merk']));

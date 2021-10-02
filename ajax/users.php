@@ -31,8 +31,9 @@
 $session = new Session;
 $db = new Db;
 $bewerk = $_POST['bewerk'] ?? "";
+$waarde = $_POST['waarde'] ?? "";
+$id = $_POST['id'] ?? "";
 if ($bewerk == "blokeer") {
-    $id = $_POST['id'];
     if ($id > 1) {
         $update = array("rechten" => "b");
         $bind = array(":id" => $id);
@@ -43,7 +44,6 @@ if ($bewerk == "blokeer") {
     }
 }
 if ($bewerk == "deblokeer") {
-    $id = $_POST['id'];
     if ($id > 1) {
         $update = array("rechten" => "0");
         $bind = array(":id" => $id);
@@ -54,7 +54,6 @@ if ($bewerk == "deblokeer") {
     }
 }
 if ($bewerk == "delete") {
-    $id = $_POST['id'];
     if ($id > 1) {
         $bind = array(":id" => $id);
         $db = new db;
@@ -85,7 +84,7 @@ if ($_POST['groep'] == "blokeer") {
     <thead>
         <tr>
             <th>
-                <center>Blokeer <font color='red'>id <?php echo $_POST['waarde']; ?></font>
+                <center>Blokeer <font color='red'>id <?php echo $waarde; ?></font>
                 </center>
             </th>
         </tr>
@@ -93,10 +92,9 @@ if ($_POST['groep'] == "blokeer") {
     <tbody>
         <tr class='info'>
             <td>
-                <center><button TYPE="submit" class='btn btn-danger' VALUE="blokeer"
-                        id="<?php echo $_POST['waarde']; ?>" onclick="werkbij(this.id,'blokeer');"><i
-                            class='material-icons' title='Blokeer' aria-hidden='true'>lock</i><span
-                            class="sr-only">Blokeer</span></button></center>
+                <center><button TYPE="submit" class='btn btn-danger' VALUE="blokeer" id="<?php echo $waarde; ?>"
+                        onclick="werkbij(this.id,'blokeer');"><i class='material-icons' title='Blokeer'
+                            aria-hidden='true'>lock</i><span class="sr-only">Blokeer</span></button></center>
             </td>
         </tr>
     </tbody>
@@ -109,7 +107,7 @@ if ($_POST['groep'] == "blokeer") {
     <thead>
         <tr>
             <th>
-                <center>deBlokeer <font color='red'>id <?php echo $_POST['waarde']; ?></font>
+                <center>deBlokeer <font color='red'>id <?php echo $waarde; ?></font>
                 </center>
             </th>
         </tr>
@@ -117,10 +115,9 @@ if ($_POST['groep'] == "blokeer") {
     <tbody>
         <tr class='info'>
             <td>
-                <center><button TYPE="submit" class='btn btn-success' VALUE="deblokeer"
-                        id="<?php echo $_POST['waarde']; ?>" onclick="werkbij(this.id,'deblokeer');"><i
-                            class='material-icons' title='deBlokeer' aria-hidden='true'>lock_open</i><span
-                            class="sr-only">deBlokeer</span></button></center>
+                <center><button TYPE="submit" class='btn btn-success' VALUE="deblokeer" id="<?php echo $waarde; ?>"
+                        onclick="werkbij(this.id,'deblokeer');"><i class='material-icons' title='deBlokeer'
+                            aria-hidden='true'>lock_open</i><span class="sr-only">deBlokeer</span></button></center>
             </td>
         </tr>
     </tbody>
@@ -133,7 +130,7 @@ if ($_POST['groep'] == "blokeer") {
     <thead>
         <tr>
             <th>
-                <center>verwijder <font color='red'>id <?php echo $_POST['waarde']; ?></font>
+                <center>verwijder <font color='red'>id <?php echo $waarde; ?></font>
                 </center>
             </th>
         </tr>
@@ -141,7 +138,7 @@ if ($_POST['groep'] == "blokeer") {
     <tbody>
         <tr class='info'>
             <td>
-                <center><button TYPE="submit" class='btn btn-danger' VALUE="delete" id="<?php echo $_POST['waarde']; ?>"
+                <center><button TYPE="submit" class='btn btn-danger' VALUE="delete" id="<?php echo $waarde; ?>"
                         onclick="werkbij(this.id,'delete');"><i class='material-icons' title='verwijder'
                             aria-hidden='true'>delete_forever</i><span class="sr-only">verwijder</span></button>
                 </center>
@@ -155,12 +152,12 @@ if ($_POST['groep'] == "blokeer") {
 ?>
 <form action="../a/gebruikers" method="POST" class='text-center'>
     <input type="hidden" name="users" value="rechten">
-    <input type="hidden" name="id" value="<?php echo $_POST['waarde'] ?>">
+    <input type="hidden" name="id" value="<?php echo $waarde ?>">
     <table border=1 class="table table-striped table-bordered table-hover text-center">
         <thead>
             <tr>
                 <th>
-                    <center>Pas Rechten aan voor <font color='red'>id <?php echo $_POST['waarde']; ?></font>
+                    <center>Pas Rechten aan voor <font color='red'>id <?php echo $waarde; ?></font>
                     </center>
                 </th>
             </tr>
@@ -190,7 +187,7 @@ if ($_POST['groep'] == "blokeer") {
 ?>
 <form action="../a/gebruikers" method="POST" class='text-center'>
     <input type="hidden" name="users" value="hernoem">
-    <input type="hidden" name="id" value="<?php echo $_POST['waarde'] ?>">
+    <input type="hidden" name="id" value="<?php echo $waarde ?>">
     <table border=1 class="table table-striped table-bordered table-hover text-center">
         <thead>
             <tr>
@@ -251,12 +248,12 @@ if ($_POST['groep'] == "blokeer") {
 ?>
 <form action="../a/gebruikers" method="POST" class='text-center'>
     <input type="hidden" name="users" value="wachtwoord">
-    <input type="hidden" name="id" value='<?php echo $_POST['waarde'] ?>'>
+    <input type="hidden" name="id" value='<?php echo $waarde ?>'>
     <table border=1 class="table table-striped table-bordered table-hover text-center">
         <thead>
             <tr>
                 <th>
-                    <center>Nieuw Wachtwoord voor <font color='red'>id <?php echo $_POST['waarde'] ?></font>
+                    <center>Nieuw Wachtwoord voor <font color='red'>id <?php echo $waarde ?></font>
                     </center>
                 </th>
             </tr>

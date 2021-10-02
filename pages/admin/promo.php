@@ -45,16 +45,18 @@ inactieve Promo's worden opgeruimt na 3 maanden
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th style='width:33%'>Product ID</th>
-                <th style='width:33%'>Prijs in <i class='material-icons'>3d_rotation</i></th>
-                <th style='width:34%'>Verval Datum</th>
+                <th style='width:30%'>Product ID</th>
+                <th style='width:30%'>Prijs in <i class='material-icons'>3d_rotation</i></th>
+                <th style='width:30%'>Verval Datum</th>
+                <th style='width:10%'>verwijder</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th style='width:33%'>Product ID</th>
-                <th style='width:33%'>Prijs in <i class='material-icons'>3d_rotation</i></th>
-                <th style='width:34%'>Verval Datum</th>
+                <th style='width:30%'>Product ID</th>
+                <th style='width:30%'>Prijs in <i class='material-icons'>3d_rotation</i></th>
+                <th style='width:30%'>Verval Datum</th>
+                <th style='width:10%'>verwijder</th>
             </tr>
         </tfoot>
         <tbody>
@@ -66,29 +68,35 @@ inactieve Promo's worden opgeruimt na 3 maanden
                 $table = "";
                 foreach ($bonus as $info) {
                     $discount = "
-												<td style='width:33%' class='info' id='pid:$info[id]' contenteditable='true' promo='bonus'>$info[pid]</td>
-												<td style='width:33%' class='warning' id='prijs:$info[id]' contenteditable='true' promo='bonus'>$info[prijs]</td>
-												<td style='width:34%' class='danger' id='datum:$info[id]' contenteditable='true' promo='bonus'>" . date('d-m-Y', $info['datum']) . "</td>";
+												<td style='width:30%' class='info' id='pid:$info[id]' contenteditable='true' promo='bonus'>$info[pid]</td>
+												<td style='width:30%' class='warning' id='prijs:$info[id]' contenteditable='true' promo='bonus'>$info[prijs]</td>
+												<td style='width:30%' class='danger' id='datum:$info[id]' contenteditable='true' promo='bonus'>" . date('d-m-Y', $info['datum']) . "</td>
+                                                <td style='width:10%' class='danger'><a href='#' data-toggle='modal' data-target='#modal' id='$info[id]' onclick=\"remove(this.id,'promo');\"><i class='material-icons' title='verwijder' aria-hidden='true'>delete_forever</i></a></td>";
                     $table .= "<tr>";
-                    $table .=  "$discount";
-                    $table .=  "</tr>";
+                    $table .= $discount;
+                    $table .= "</tr>";
                 }
                 echo $table;
                 ?>
         </tbody>
     </table>
+    <button type="button" class="btn-lg btn-primary text-center" data-toggle="modal" data-target="#modal" id="bonus"
+        onclick="product(this.id,'toevoegen');"><i class="material-icons" title="Bonus Toevoegen"
+            aria-hidden="true">3d_rotation</i><span class="sr-only">Bonus Item Toevoegen</span></button>
     <div class="alert alert-info">Bonus Points Ranks</div>
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
                 <th>Bonus &#37;</th>
                 <th>Minimum <i class='material-icons'>3d_rotation</i> Nodig</th>
+                <th>verwijder</th>
             </tr>
         </thead>
         <tfoot>
             <tr>
                 <th>Bonus &#37;</th>
                 <th>Minimum <i class='material-icons'>3d_rotation</i> Nodig</th>
+                <th>verwijder</th>
             </tr>
         </tfoot>
         <tbody>
@@ -96,10 +104,12 @@ inactieve Promo's worden opgeruimt na 3 maanden
                 $discounts = $db->select('discount', '', '', '', '', '*', '', 'clouds DESC');
                 $table2 = "";
                 foreach ($discounts as $info2) {
-                    $discount2 = "<td class='danger' contenteditable='true' promo='discount' id='discount:$info2[id]'>$info2[discount]</td><td class='danger' id='clouds:$info2[id]' contenteditable='true' promo='discount'>$info2[clouds]</td>";
+                    $discount2 = "<td class='danger' contenteditable='true' promo='discount' id='discount:$info2[id]'>$info2[discount]</td>
+                    <td class='danger' id='clouds:$info2[id]' contenteditable='true' promo='discount'>$info2[clouds]</td>
+                    <td class='danger'><a href='#' data-toggle='modal' data-target='#modal' id='$info2[id]' onclick=\"remove(this.id,'bonus');\"><i class='material-icons' title='verwijder' aria-hidden='true'>delete_forever</i></a></td>";
                     $table2 .= "<tr>";
-                    $table2 .=  "$discount2";
-                    $table2 .=  "</tr>";
+                    $table2 .= $discount2;
+                    $table2 .= "</tr>";
                 }
                 echo $table2;
                 ?>
@@ -121,6 +131,20 @@ inactieve Promo's worden opgeruimt na 3 maanden
                 })
 
 
+            }
+        });
+    }
+
+    function remove(val, dat) {
+        $.ajax({
+            type: "POST",
+            url: "../x/remove",
+            data: 'groep=' + dat + '&waarde=' + val,
+            success: function(data) {
+                //alert(data);
+                //alert ("del: " +dat+ " en waarde: " +val);
+                $("#modal").modal('show');
+                $("#modalcode").html(data);
             }
         });
     }

@@ -123,7 +123,7 @@ if (isset($_GET['product'])) {
                 </form>
                 <div class="cost">
                     <?php
-                            echo "Select Color : <select id='kleur' name='kleur'>";
+                            echo "Select Option : <select id='kleur' name='kleur'>";
                             foreach ($amount as $stok) {
                                 if ($stok['prijs'] > '0') {
                                     echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( + € $stok[prijs] )</option>";

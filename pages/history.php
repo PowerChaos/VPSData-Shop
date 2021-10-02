@@ -127,7 +127,7 @@ if ($perm->check('user')) {
             success: function(data) {
                 $("#modal").modal('show');
                 $("#modalcode").html(data);
-                if (status == 'status') {
+                if (status == 'status' || status == 'delete') {
                     $('#modal').on('hidden.bs.modal', function() {
                         window.location.reload();
                     })

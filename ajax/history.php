@@ -67,6 +67,10 @@ if ($perm->check('user')) {
     <?php echo $leverkosten; ?> and payment fee of &euro; <?php echo $betaalkosten ?></div>
 <?php
 	switch ($_POST['history']) {
+		case 'delete':
+			$db->delete('bestelling', 'bestel = :bestel AND status = 1', $bes);
+			echo "<div class='alert alert-success'>Your order has beein canceled and removed from our records</div>";
+			break;
 		case 'history':
 			break;
 		case 'status':
