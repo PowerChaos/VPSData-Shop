@@ -33,19 +33,19 @@ $perm = new Gebruikers;
 $table = $_POST['edit'] ?? "";
 $field = $_POST['field'] ?? "";
 $waarde = $_POST['waarde'] ?? "";
+$split_data = explode(':', $field);
+$value = $split_data[0];
 
 
 if ($table) {
 
 	if ($table == "gebruikers") {
-		$split_data = explode(':', $field);
-		$value = $split_data[0];
 		if (($value == 'phone') && !$perm->validphone($waarde)) {
 			echo $waarde . ' is not a valid, please use +32 493 48 30 33 format';
 			exit;
 		}
 	}
-	if ($table == 'bonus') {
+	if ($table == 'bonus' && $value == "datum") {
 		$waarde = strtotime($waarde);
 	}
 	$db->ajaxedit($table, $waarde, $field);
