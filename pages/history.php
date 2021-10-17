@@ -120,20 +120,32 @@ if ($perm->check('user')) {
     }); //einde document Ready
 
     function history(status, dat) {
-        $.ajax({
-            type: "POST",
-            url: "../x/history",
-            data: 'bestelling=' + dat + '&history=' + status,
-            success: function(data) {
-                $("#modal").modal('show');
-                $("#modalcode").html(data);
-                if (status == 'status' || status == 'delete') {
-                    $('#modal').on('hidden.bs.modal', function() {
-                        window.location.reload();
-                    })
+        switch (status) {
+            case 'delete':
+                if (confirm('Please confirm that you like to cancel this order , this can not be undone')) {
+                    $confirming = '1'
                 }
-            }
-        });
+                break;
+            default:
+                $confirming = '1'
+                break;
+        }
+        if ($confirming) {
+            $.ajax({
+                type: "POST",
+                url: "../x/history",
+                data: 'bestelling=' + dat + '&history=' + status,
+                success: function(data) {
+                    $("#modal").modal('show');
+                    $("#modalcode").html(data);
+                    if (status == 'status' || status == 'delete') {
+                        $('#modal').on('hidden.bs.modal', function() {
+                            window.location.reload();
+                        })
+                    }
+                }
+            });
+        }
     }
     </script>
 </div>

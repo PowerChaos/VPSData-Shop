@@ -61,13 +61,13 @@ if ($perm->check('admin')) {
                 foreach ($result as $item) {
                     switch ($item['status']) {
                         case '1':
-                            $status = "Niet Betaald - Wachten op Betaling";
+                            $status = "Niet Betaald";
                             break;
                         case '2':
-                            $status = "Betaald - Wachten op Levering";
+                            $status = "Betaald";
                             break;
                         case '3':
-                            $status = "Betaald en Afgeleverd - Alles in orde";
+                            $status = "Betaald en Afgeleverd";
                             break;
                     }
                     $datum = date("d-m-Y \o\m H:i", $item['datum']);
@@ -85,8 +85,12 @@ if ($perm->check('admin')) {
 			<td style='width:20%'>
 			{$datum}
 			</td>
-			<td style='width:20%'>
-			<a href='#' id='{$item['bestel']}' onclick=\"history('{$item['status']}',this.id);\">{$status}</a>";
+			<td style='width:20%'>";
+                    if ($item['status'] != '3') {
+                        echo "<a href='#' id='{$item['bestel']}' onclick=\"history('{$item['status']}',this.id);\">{$status}</a>";
+                    } else {
+                        echo "{$status}";
+                    }
                     if ($item['status'] == '1') {
                         echo "<br><a href='#' id='{$item['bestel']}' onclick=\"history('delete',this.id);\"><i class='material-icons'>backspace</i></a>";
                     }
