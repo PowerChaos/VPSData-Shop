@@ -2,6 +2,7 @@
 $db = new Db;
 $session = new Session;
 $perm = new Gebruikers;
+$mail = new email;
 $order = $_POST['confirm'] ?? "";
 $bestelling = $_POST['order'] ?? "";
 if ($order == 'paypal') {
@@ -199,7 +200,8 @@ if ($order == 'paypal') {
 			$betaling = "This product is ordered for  $payam <i class='material-icons'>3d_rotation</i> including shipping.<br><br>in case of pickup please provide following number <pre>$rand</pre>";
 			break;
 	}
-	//mail_test($rand);
+	$mail->send($rand);
+	$mail->send($rand, '1', $userdb['naam']);
 	$session->delete('rand');
 	$session->set('rand', uniqid())
 	?>

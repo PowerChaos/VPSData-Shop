@@ -132,7 +132,7 @@ class Gebruikers
 		//are we left with digits only?
 		return $this->isDigits($telephone, $minDigits, $maxDigits);
 	}
-	function register($promo = '50', $email, $pass, $repass, $vn, $an, $tel, $ad, $num, $bus, $gem, $postcode, $land, $bot, $botcheck)
+	function register($promo = '50', $email, $pass, $repass, $vn, $an, $tel, $ad, $num, $bus, $gem, $postcode, $land, $vat, $bot, $botcheck)
 	{
 		$email = addslashes($email);
 		if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -173,7 +173,8 @@ class Gebruikers
 				"bus" 			=> $bus,
 				"gemeente" 	=> $gem,
 				"postcode" 	=> $postcode,
-				"land" 		=> $land
+				"land" 		=> $land,
+				"vat" 		=> $vat
 			);
 			$this->db->insert("gebruikers", $information);
 			return $this->session->flashdata('error', 'Succesfull Registered , you can now login');

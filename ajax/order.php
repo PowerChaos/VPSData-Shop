@@ -1,6 +1,7 @@
 <?php
 $perm = new Gebruikers;
 $db = new Db;
+$mail = new email;
 $bestelling = $_POST['bestelling'] ?? "";
 $bes = array(':bestel' => $bestelling);
 $result = $db->select('bestelling', 'bestel = :bestel AND status > 0', '', $bes);
@@ -20,11 +21,13 @@ if ($perm->check('admin')) {
             $status = array("status" => "2");
             $db->update('bestelling', $status, 'bestel = :bestel', $bes);
             $betaling = "<div class='alert'>status aangepast naar<br><pre>Betaald - Wachten op Levering</pre></div>";
+            $mail->send($bestelling, '2', $getuser['naam']);
             break;
         case '2':
             $status = array("status" => "3");
             $db->update('bestelling', $status, 'bestel = :bestel', $bes);
             $betaling = "<div class='alert'>status aangepast naar<br><pre>Betaald en afgeleverd - Alles in orde</pre></div>";
+            $mail->send($bestelling, '3', $getuser['naam']);
             break;
         case 'delete':
             $db->delete('bestelling', 'bestel = :bestel AND status = 1', $bes);

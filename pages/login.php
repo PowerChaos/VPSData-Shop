@@ -44,7 +44,7 @@ if ($session->get('faillogin') >= '5') {
 } else if (!$reg->check('user')) {
     $register = $_POST['register'] ?? "";
     if ($register == 'register') {
-        echo $reg->register('50', $_POST['user'], $_POST['pass1'], $_POST['pass2'], $_POST['vn'], $_POST['an'], $_POST['tel'], $_POST['adress'], $_POST['number'], $_POST['bus'], $_POST['gemeente'], $_POST['postcode'], $_POST['land'], $_POST['code'], $_POST['checkcode']);
+        echo $reg->register('50', $_POST['user'], $_POST['pass1'], $_POST['pass2'], $_POST['vn'], $_POST['an'], $_POST['tel'], $_POST['adress'], $_POST['number'], $_POST['bus'], $_POST['gemeente'], $_POST['postcode'], $_POST['land'], $_POST['vat'], $_POST['code'], $_POST['checkcode']);
     }
 ?>
 <div class="shoping">
@@ -178,7 +178,7 @@ if ($session->get('faillogin') >= '5') {
                     </div>
                     <div class="row">
                         <div class="form-group">
-                            <div class="col-md-12 col-sm-12">
+                            <div class="col-md-6 col-sm-6">
                                 <label for="land">Country*</label>
                                 <select class="form-control" name="land">
                                     <option>Select Country</option>
@@ -188,6 +188,10 @@ if ($session->get('faillogin') >= '5') {
                                         }
                                         ?>
                                 </select>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="vat">VAT</label>
+                                <input name="vat" type="text" class="form-control" placeholder="BE0743874489">
                             </div>
                         </div>
                     </div>

@@ -39,6 +39,10 @@ $order = $db->select('bestelling', 'bestel = :rand AND status = 0', '', $brand);
 $land = $db->select('gebruikers', 'id = :id', '', $bid, 'fetch');
 
 if ($perm->check('user')) {
+    if ($land['vat']) {
+        echo "<div class='alert alert-warning text-center'>Please register on <a href='https://cp.vpsdata.be'> our billing system </a> and contact our support with your order number to get a valid invoice.<br>
+        The webshop is only for non business accounts, prices always include tax and only a payment confirmation will be send ( no invoice ) </div>";
+    }
 ?>
 <div class="container" id="success">
     <table class="table table-bordered table-striped table-responsive">
@@ -232,7 +236,8 @@ $(document).ready(function() {
 
 }); //einde document Ready
 </script>
-<script src='https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=EUR'
+<script
+    src='https://www.paypal.com/sdk/js?client-id=AbTs5Wq7-ieArfQRPSS27DTUGDW_OTHupSXeIve1wIBkLrpAWsmuiCg4h-jwDSUvJPehJ8zA3IBeF2my&enable-funding=venmo&currency=EUR'
     data-sdk-integration-source='button-factory'></script>
 <?php
 } else {

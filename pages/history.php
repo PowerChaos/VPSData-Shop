@@ -67,13 +67,13 @@ if ($perm->check('user')) {
                     }
                     switch ($item['status']) {
                         case '1':
-                            $status = "Not paid - Waiting for payment";
+                            $status = "Waiting for payment";
                             break;
                         case '2':
                             $status = "Paid - Waiting for shipping";
                             break;
                         case '3':
-                            $status = "Paid and shipped - Order Completed";
+                            $status = "Order Completed";
                             break;
                     }
                     $datum = date("d-m-Y \o\m H:i", $item['datum']);
@@ -106,7 +106,8 @@ if ($perm->check('user')) {
                 ?>
         </tbody>
     </table>
-    <script src='https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=EUR'
+    <script
+        src='https://www.paypal.com/sdk/js?client-id=AbTs5Wq7-ieArfQRPSS27DTUGDW_OTHupSXeIve1wIBkLrpAWsmuiCg4h-jwDSUvJPehJ8zA3IBeF2my&enable-funding=venmo&currency=EUR'
         data-sdk-integration-source='button-factory'></script>
     <script>
     $(document).ready(function() {

@@ -39,9 +39,9 @@ if ($perm->check('user')) {
         <h4>This page shows you a overview how our point system works</h4>
         <hr />
         <p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i><br />
-            This <i class='material-icons'>3d_rotation</i></i> can you trade for free products or discounts.<br />
-            if you get a certain amount of <i class='material-icons'>3d_rotation</i> then you get even extra bonus
-            points</p>
+            This <i class='material-icons'>3d_rotation</i></i> can you trade for free products.<br />
+            if you get a certain amount of <i class='material-icons'>3d_rotation</i> then you get even extra bonus <i
+                class='material-icons'>3d_rotation</i></p>
     </div>
     <div class="table-responsive">
         <?php

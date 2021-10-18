@@ -52,17 +52,22 @@ Click on a field to edit it , press ENTER to confirm the new field value
             <!-- Form -->
             <div class="row">
                 <div class="form-group">
-                    <div class="col-md-12 col-sm-12">
+                    <div class="col-md-8 col-sm-8">
                         <label for="user">E-mail:</label>
                         <input id="naam:<?php echo $id ?>" class="form-control" contenteditable="false" readonly
                             value="<?php echo $result['naam'] ?>">
+                    </div>
+                    <div class="col-md-4 col-sm-4">
+                        <label for="tax">vat</label>
+                        <input id="vat:<?php echo $id ?>" class="form-control" contenteditable="false" readonly
+                            value="<?php echo $result['vat'] ?>">
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="form-group">
                     <div class="col-md-8 col-sm-8">
-                        <label for="tel">Telefoonnummer</label>
+                        <label for="tel">Phone Number</label>
                         <input id="phone:<?php echo $id ?>" class="form-control" contenteditable="true"
                             value="<?php echo $result['phone'] ?>">
                     </div>
