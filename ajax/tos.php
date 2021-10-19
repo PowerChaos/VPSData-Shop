@@ -480,6 +480,6 @@ switch ($footer) {
 <?php
         break;
     case "contact":
-        echo "u kan een email sturen naar <pre>info@vpsdata.be</pre> <br> u kan ons ook contacteren via <pre>https://vpsdata.be</pre>";
+        echo "You can contact us by sending a email to <pre>info@vpsdata.be</pre> <br> Feel free to visit our main page to contact us <pre>https://vpsdata.be</pre>";
         break;
 }

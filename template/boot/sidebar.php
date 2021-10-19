@@ -41,7 +41,7 @@ $session = new Session;
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="../home"> <img src="../img/header.png" alt="VPS Data - Webshop">
+            <a href="../home"> <img src="../img/header.png" alt="VPS Data - Webshop" id="logo">
             </a>
             <!-- <a class="navbar-brand" href="../home"><b>Vaporama - World of Vaping</b></a> -->
         </div>
@@ -129,7 +129,7 @@ $session = new Session;
 
             </ul> <!-- Einde NavBar -->
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="../bonus"><i class="material-icons">add_shopping_cart</i>3D Points Shop</a></li>
+                <li><a href="../bonus"><i class='material-icons'>3d_rotation</i> Shop</a></li>
                 <?php
                 if ($perm->check('admin')) {
                 ?>
@@ -152,15 +152,7 @@ $session = new Session;
                 }
                 if ($perm->check('user')) { //gebruikers
                 ?>
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="material-icons">more_vert</i>
-                        General
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="../history"><i class="material-icons">history</i> Order History</a></li>
-                        <li><a href="../clouds"><i class='material-icons'>3d_rotation</i>3D Points</a></li>
-                    </ul>
-                </li>
+                <li><a href="../history"><i class="material-icons">history</i> Order History</a></li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i
                             class="material-icons">person</i><?php echo $_SESSION['naam'] ?>

@@ -59,6 +59,12 @@ if ($perm->check('admin')) {
         <tbody>
             <?php
                 foreach ($result as $item) {
+                    $bescheck = array(':id' => $item['bestel']);
+                    $pricecalc = $db->select('bestelling', 'bestel = :id AND status > 0', '', $bescheck);
+                    $pay = $pricecalc[0]['betaalkosten'] + $pricecalc[0]['leverkosten'] ?? "0";
+                    foreach ($pricecalc as $price) {
+                        $pay += $price['prijs'];
+                    }
                     switch ($item['status']) {
                         case '1':
                             $status = "Niet Betaald";
@@ -71,6 +77,7 @@ if ($perm->check('admin')) {
                             break;
                     }
                     $datum = date("d-m-Y \o\m H:i", $item['datum']);
+                    $euro = ($item['betaling'] == 'Points') ? $pay . " <i class='material-icons'>3d_rotation</i>" : "&euro; " . $pay;
                     echo "
 				<tr>
 			<td style='width:20%'>
@@ -80,7 +87,7 @@ if ($perm->check('admin')) {
 			{$item['levering']}
 			</td>
 			<td style='width:20%'>
-			{$item['betaling']}
+			{$item['betaling']} ( {$euro} )
 			</td>
 			<td style='width:20%'>
 			{$datum}

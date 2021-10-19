@@ -51,8 +51,8 @@ if ($session->get('faillogin') >= '5') {
     <div class="container">
         <div class="shpng-grids">
             <div class="col-md-12 shpng-grid">
-                <h3>Free 3D points</h3>
-                <p>Get 50 Free 3D points when registering </p>
+                <h3>Free <i class='material-icons'>3d_rotation</i></h3>
+                <p>Get 50 Free <i class='material-icons'>3d_rotation</i> when registering </p>
             </div>
             <div class="clearfix"></div>
         </div>

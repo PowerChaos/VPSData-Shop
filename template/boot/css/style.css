@@ -2472,3 +2472,12 @@ a.add-cart {
   margin-top: 0;
 }
 }
+/* custom */
+.material-icon{
+vertical-align: middle;
+}
+#logo{
+    height: 60px;
+    max-height: 60px;
+    width: auto;
+}

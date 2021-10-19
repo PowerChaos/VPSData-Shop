@@ -73,7 +73,7 @@ switch ($confirm) {
         break;
     case "shopcart":
         $db->delete('bestelling', 'id=:id', $img);
-        $session->flashdata('error', 'Product id ' . $id . ' is uit bestel lijst verwijderd');
+        $session->flashdata('error', 'Product id ' . $id . ' is succesfull removed from shopping cart');
         break;
     case "promo":
         $db->delete('bonus', 'id=:id', $img);

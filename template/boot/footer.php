@@ -33,7 +33,6 @@
 
 $session = new Session;
 ?>
-
 <!---->
 <div class="clearfix"></div>
 <div class="copywrite">

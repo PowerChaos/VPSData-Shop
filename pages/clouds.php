@@ -38,10 +38,12 @@ if ($perm->check('user')) {
     <div>
         <h4>This page shows you a overview how our point system works</h4>
         <hr />
-        <p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i><br />
-            This <i class='material-icons'>3d_rotation</i></i> can you trade for free products.<br />
+        <p>for each &euro; spend do you get exactly 1 <i class='material-icons'>3d_rotation</i></i><br />
+            This <i class='material-icons'>3d_rotation</i>can you trade for free products in our <a href='../bonus'><i
+                    class='material-icons'>3d_rotation</i> shop.</a><br />
             if you get a certain amount of <i class='material-icons'>3d_rotation</i> then you get even extra bonus <i
-                class='material-icons'>3d_rotation</i></p>
+                class='material-icons'>3d_rotation</i><br />
+            Promotions are not fixed, they are for limited time only and will expire at certain dates.</p>
     </div>
     <div class="table-responsive">
         <?php

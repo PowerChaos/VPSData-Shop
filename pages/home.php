@@ -146,21 +146,24 @@ $defimg = Config::DEFIMG;
     </div>
 </div>
 <!---->
-
 <div class="shoping">
     <div class="container">
         <div class="shpng-grids">
             <div class="col-md-4 shpng-grid">
-                <h3>Premium Delivery</h3>
-                <p>We only deliver to europe<br>other regions need to contact us for shipping prices</p>
+                <h3>DHL Delivery</h3>
+                <p>We only deliver to europe<br><a href='#' data-toggle="modal" data-target="#modal" id="contact"
+                        onclick="tos(this.id);" aria-hidden="true">Contact us</a> for other country's</p>
             </div>
             <div class="col-md-4 shpng-grid">
                 <h3>Quality Service</h3>
-                <p>Our products are of great quality<br>We also use them ourself<br>Also avaible in bulk orders</p>
+                <p>Great quality for Great price<br>We also use them ourself<br><a href='#' data-toggle="modal"
+                        data-target="#modal" id="contact" onclick="tos(this.id);" aria-hidden="true">Contact us</a> for
+                    bulk orders</p>
             </div>
             <div class="col-md-4 shpng-grid">
                 <h3>Payments</h3>
-                <p>Easy simple system<br>Paypal of direct orders<br>Other payments possible in our billing system</p>
+                <p>Paypal, Cash, Wire Transfer or Bitcoin<br>Other payments possible in our
+                    billing system</p>
             </div>
             <div class="clearfix"></div>
         </div>

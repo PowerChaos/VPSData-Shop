@@ -60,7 +60,7 @@ if (isset($_GET['product'])) {
         $korting = floor($prod['prijs'] + $amount[0]['prijs']);
         $discount = $disc[0]['discount'] ?? "1";
         $bonus = ($korting / 100) * $discount;
-        $clouds = " <div class='clearfix'></div> <li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i></li>";
+        $clouds = " <div class='clearfix'></div><li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i> from this product</li>";
         $tot = floor($korting + $bonus);
         $totbonus = "<li>+ <d id='disc'>$discount</d> % Bonus =  <t id='bon'>$tot</t> <i class='material-icons'>3d_rotation</i></li><div class='clearfix'></div>";
     }
@@ -156,6 +156,7 @@ if (isset($_GET['product'])) {
                         </ul>
                     </div>
                     <div class="clearfix"></div>
+                    <a href='../bonus'>more info over <i class='material-icons'>3d_rotation</i></a>
                 </div>
                 <div class="single-bottom1">
                     <h6>Product Description</h6>
