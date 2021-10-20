@@ -103,5 +103,5 @@ een shop gebaseerd op mijn Basis CMS
 
 execute de SQL script en je kan beginnen 
 
-gebruiker : admin 
-wachtwoord : 123456
+gebruiker : test@test.com
+wachtwoord : testing
