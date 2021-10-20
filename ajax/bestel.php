@@ -1,219 +1,204 @@
 <?php
-$db = new Db;
-$session = new Session;
-$perm = new Gebruikers;
-$mail = new email;
-$order = $_POST['confirm'] ?? "";
-$bestelling = $_POST['order'] ?? "";
-if ($order == 'paypal') {
-	$paypal = array(':bestel' => $bestelling);
-	$paypalupdate = array("status" => "2");
-	$db->update("bestelling", $paypalupdate, "bestel = :bestel", $paypal);
+require_once (getenv("DOCUMENT_ROOT")."/functions/include.php");
+require_once (getenv("DOCUMENT_ROOT")."/functions/database.php");
+require_once (getenv("DOCUMENT_ROOT")."/functions/paymentwall.php");
 
-	$result = $db->select('bestelling', 'bestel = :bestel AND status = 2', '', $paypal);
-	$uid = $result[0]['uid'];
-	$getuserid = array(':id' => $uid);
-	$getpoints = $db->select('gebruikers', 'id = :id', '', $getuserid, 'fetch');
-	$points = $getpoints['punten'];
-	foreach ($result as $count) {
-		$points += $count['clouds'];
+$split_data = explode(':', $_POST[ship]);
+$extra = $split_data[1];
+$ship = $split_data[0];
+
+$stmt = $db->prepare("SELECT * FROM bestelling WHERE bestel = :pid AND status = '0'");
+$stmt->execute(array(':pid' => $_SESSION[rand]));
+$adress = $db->prepare("SELECT * FROM gebruikers WHERE id = :pid");
+$adress->execute(array(':pid' => $_SESSION['id']));
+$location = $adress->fetch(PDO::FETCH_ASSOC);
+$result = $stmt->fetchall(PDO::FETCH_ASSOC);
+$coordinates1 = get_coordinates('Nispen', 'Antwerpseweg 101', '4709','nl');
+$coordinates2 = get_coordinates($location[gemeente],$location[adress].' '.$location[nummer], $location[postcode],$location[land]);
+if ( !$coordinates1 || !$coordinates2 )
+{
+	echo var_dump($coordinates2);
+   $totprice = '0';
+}
+else
+{
+    $dist = GetDrivingDistance($coordinates1['lat'], $coordinates2['lat'], $coordinates1['long'], $coordinates2['long']);
+	$split_data = explode(' ', $dist[distance]);
+	$dis = $split_data[0];
+	$dis = str_replace(".","",$dis);
+	$dis = explode(',', $dis);
+	if ($dis[0] <= '50'):
+    $totprice = '15';
+	elseif ($dis[0] <= '100'):
+    $totprice = '35';
+	elseif ($dis[0] <= '150'):
+    $totprice = '50';
+	else:
+	$totprice = '0';
+endif;
 	}
-	$pointsupdate = array("punten" => $points);
-	$db->update("gebruikers", $pointsupdate, "id =:id", $getuserid);
-} elseif ($perm->check('user')) {
-
-	$shipvalue = $_POST['ship'] ?? "";
-	$payvalue = $_POST['pay'] ?? "";
-	$rand = $session->get('rand');
-	$user = $session->get('id');
-
-	$split_data = explode(':', $shipvalue);
-	$ship = $split_data[0]; // soort pay:amount
-	$extra = $split_data[1]; //bedrag pay:amount
-
-	$split_datapay = explode(':', $payvalue);
-	$pay = $split_datapay[0]; // soort pay:amount
-	$payam = $split_datapay[1]; // bedrag pay:amount
-
-	$bbes = array(':bestel' => $rand);
-	$result = $db->select('bestelling', 'bestel = :bestel AND status = 0', '', $bbes);
-	$userbind = array(':id' => $user);
-	$userdb = $db->select('gebruikers', 'id = :id', '', $userbind, 'fetch');
-	$totpunt = $userdb['punten'];
-
 ?>
 
-<div class='alert alert-info'> Thank you for ordering , your order number : <font color='red'><?php echo $rand ?></font>
-</div>
+<div class='alert alert-info'> Danku voor uw bestelling Nummer <font color='red'><?php echo $_SESSION[rand] ?></font></div>
 <table class="table table-bordered table-striped table-responsive">
-    <thead>
-        <tr>
-            <th style="width:40%">
-                Product
-            </th>
-            <th style="width:10%">
-                Color
-            </th>
-            <th style="width:10%">
-                Amount
-            </th>
-            <th style="width:20%">
-                Price
-            </th>
-            <th style="width:20%">
-                Points
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-			$prijs = '0';
-			$clouds = '0';
-			foreach ($result as $item) {
-				$bpid = array(':pid' => $item['pid']);
-				$result2 = $db->select('products', 'id = :pid', '', $bpid, 'fetch');
-				$bbon = array(':pid' => $item['pid'], ':tm' => time());
-				$clknop = $db->select('bonus', 'pid = :pid AND datum > :tm', '', $bbon, 'fetch');
-				echo "
+	<thead>
+		<tr>
+			<th style="width:40%">
+				Product
+			</th>
+			<th style="width:10%">
+				Kleur
+			</th>
+			<th style="width:10%">
+				Hoeveelheid
+			</th>
+			<th style="width:20%">
+				Prijs
+			</th>
+			<th style="width:20%">
+				Clouds
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+	$prijs = '0';
+	$clouds = '0';
+	$counter = '1';
+	foreach ($result as $item)
+	{
+$stmt2 = $db->prepare("SELECT * FROM products WHERE id = :pid");
+$stmt2->execute(array(':pid' => $item[pid]));
+$result2 = $stmt2->fetch(PDO::FETCH_ASSOC);	
+$cl = $db->prepare("SELECT * FROM bonus WHERE pid = :pid AND datum > :tm");
+$cl->execute(array(':pid' => $item[pid],':tm' => time(),));
+$clknop = $cl->fetch(PDO::FETCH_ASSOC);	
+		echo"
 				<tr>
 			<td style='width:40%'>
-			{$result2['name']}
+			{$result2[name]}
 			</td>
 			<td style='width:10%'>
-			{$item['kleur']}
+			{$item[kleur]}
 			</td>
 			<td style='width:10%'>
-			{$item['qty']}
+			{$item[qty]}
 			</td>
 			<td style='width:20%'>
-			&euro; {$item['prijs']}
+			&euro; {$item[prijs]}
 			</td>
 			<td style='width:20%'>
-			{$item['clouds']} <i class='material-icons'>3d_rotation</i>
+			{$item[clouds]} <i class='material-icons'>filter_drama</i>
 			</td>
 		</tr>
 		";
-				$bind = array(":pid" => $item['pid'], ':kleur' => $item['kleur']);
-				$stockfind = $db->select('stock', 'pid =:pid AND naam = :kleur', '', $bind, 'fetch');
-				$stockcheck = $stockfind['stock'] - $item['qty'];
-				$update = array("stock" => $stockcheck);
-				$db->update("stock", $update, "pid =:pid AND naam = :kleur AND stock > 0", $bind);
-				$prijs += $item['prijs'];
-				$clouds += $item['clouds'];
-			}
-			?>
-    </tbody>
+	$stmt3 = $db->prepare("UPDATE stock SET stock = stock - :stock WHERE pid = :pid AND naam = :kleur AND stock >'0' " );
+	$stmt3->execute(array(
+	':pid' => $item[pid],
+	':kleur' => $item[kleur],
+	':stock' => $item[stock]));	
+	$prijs += $item['prijs'];
+	$clo += $item['qty'] * $clknop['prijs'];
+	$clouds += $item[clouds];
+	$counter++;
+	}
+	?>
+	</tbody>
 </table>
 <?php
-	//verzending switch
-	switch ($ship) {
-		case 'Afhaal':
-			$shipping = "Thank you for your order , you can now pick it up at our warenhouse";
-			break;
-		case 'DPD':
-			$shipping = "Thank you for ordering , it will be shipped with DPD as soon as possible";
-			break;
-		case 'Support':
-			$shipping = "after shipping calculation will we refund the difference<br>please contact support with order id <br><pre> $rand </pre>.";
-			break;
+//verzending switch
+switch ($ship){
+ case 'Afhaal':
+ $shipping = "Danku voor uw bestelling , u kan uw bestelling nu afhalen";
+ break;
+ case 'Post':
+ $shipping = "Danku voor uw bestelling, Deze bestelling word zo snel mogelijk per post opgestuurt";
+ break;
+ case 'Express':
+	if (date('H') < 14) {
+	$shipping = "Danku voor uw bestelling <font color='yellow'>$_SESSION[rand]</font> , Deze bestelling word vandaag nog geleverd ";
 	}
-	//betaling switch
-	$payupdate = array("status" => '1', 'levering' => $ship, 'betaling' => $pay, 'leverkosten' => $extra, 'betaalkosten' => $payam);
-	$db->update("bestelling", $payupdate, "bestel = :bestel", $bbes);
-	$tp = round($prijs + $extra + $payam, 2);
-	switch ($pay) {
-		case "Cash":
-			$betaling = "Please pay <font color='red'>&euro; $tp </font> at the warenhouse<br>Please take your order number with you<br><pre>$rand</pre>";
-			break;
-		case "Overschrijving":
-			$betaling = "Please wire transfer <font color='red'> &euro; $tp </font> to the following account <br>
+	else
+	{
+	$shipping = "Danku voor uw bestelling <font color='yellow'>$_SESSION[rand]</font> , Deze bestelling word Morgen na 14.00 uur geleverd";
+	}
+ break;
+} 
+//betaling switch
+switch($_POST[pay]){
+	case "Cash":
+	$update = $db->prepare("UPDATE bestelling SET status = '1', levering = '$ship', betaling = 'Cash' WHERE bestel = :bestel ");
+	if ($ship == "Express"){
+	$tp = $prijs + ($extra * 1);
+	$betaling = "u kan <font color='red'>&euro; $tp </font>Contant Betalen bij Levering<br>Gelieven deze nummer door te geven<br><pre>$_SESSION[rand]</pre>";
+	}
+	else
+	{
+	$betaling = "u kan <font color='red'>&euro; $prijs </font>in de winkel betalen met cash geld<br>Gelieven deze nummer mee te nemen<br><pre>$_SESSION[rand]</pre>";
+	}
+	break;
+	case "Overschrijving":
+	$update = $db->prepare("UPDATE bestelling SET status = '1', levering = '$ship', betaling = 'Overschrijving' WHERE bestel = :bestel ");
+	$tp = $prijs + ($extra * 1);
+	$betaling = "Gelieven exact <font color='red'> &euro; $tp </font> over te schrijven naar <br>
 	<pre>
-	IBAN: BE24 9733 8346 0838
-	BIC: ARSPBE22
-	NOTICE: $rand
-	</pre> <br>As soon our bank confirm the wire transfer we ship the products.";
-			break;
-		case 'Paypal':
-			$betaling = "
-			<div id='smart-button-container'>
-      <div style='text-align: center;'>
-        <div id='paypal-button-container'></div>
-      </div>
-    </div>
-  <script>
-    function initPayPalButton() {
-      paypal.Buttons({
-        style: {
-          shape: 'pill',
-          color: 'gold',
-          layout: 'vertical',
-          label: 'pay',
-          
-        },
-
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{'description':'$rand','amount':{'currency_code':'EUR','value':$tp}}]
-          });
-        },
-
-        onApprove: function(data, actions) {
-			return actions.order.capture().then(function(details) {
-            
-            // Full available details
-            //console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-			$.ajax({
-                type: 'POST',
-                url: '../x/bestel',
-                data: 'confirm=paypal&order='+details.purchase_units[0].description,
-                success: function() {
-					//alert(details.purchase_units[0].description);
-            const element = document.getElementById('paypal-button-container');
-            element.innerHTML = '';
-            element.innerHTML = '<h3>Thank you for your payment!<br>Payment is confirmed</h3>';
-                }
-            });
-
-            // Show a success message within this page, e.g.
-            
-
-            // Or go to another URL:  actions.redirect('thank_you.html');
-            
-          });
-        },
-
-        onError: function(err) {
-          console.log(err);
-        }
-      }).render('#paypal-button-container');
-    }
-    initPayPalButton();
-  </script>";
-			break;
-		case 'Points':
-			$cloudbetaling = array("status" => '2', 'levering' => $ship, 'betaling' => $pay, 'leverkosten' => "0", 'betaalkosten' => "0", 'prijs' => $payam);
-			$db->update("bestelling", $cloudbetaling, "bestel = :bestel", $bbes);
-
-			$totpunt -= $payam;
-			$cloudupdate = array("punten" => $totpunt);
-			$db->update("gebruikers", $cloudupdate, "id =:id", $userbind);
-			$betaling = "This product is ordered for  $payam <i class='material-icons'>3d_rotation</i> including shipping.<br><br>in case of pickup please provide following number <pre>$rand</pre>";
-			break;
-	}
-	$mail->send($rand);
-	$mail->send($rand, '1', $userdb['naam']);
-	$session->delete('rand');
-	$session->set('rand', uniqid())
-	?>
-<div class='alert alert-warning text-center'> Total price for this order is &euro;
-    <?php echo ($prijs + $extra + $payam) ?> Where &euro;<?php echo $extra ?> for shipping cost and
-    &euro;<?php echo $payam ?> transaction costs</div>
-<div class="panel-group">
-    <div class="panel panel-primary">
-        <div class="panel-heading"><?php echo $shipping ?></div>
-        <div class="panel-body"><?php echo $betaling ?></div>
-    </div>
-</div>
-<?php
+	IBAN: NL44 INGB 0005 1597 25
+	BIC: INGBNL2A
+	MEDEDELING: $_SESSION[rand]
+	</pre> <br> dit kan een paar dagen duren voordat het bevestigt is";
+	break;
+	case 'Paymentwall':
+	$update = $db->prepare("UPDATE bestelling SET status = '1', levering = '$ship', betaling = 'Paymentwall' WHERE bestel = :bestel ");
+	$tp = $prijs + ($extra * 1);
+	$extra += round((($tp / 100) * 10), 2);
+	$extra += "0.50";
+	$tp += round((($tp / 100) * 5), 2);
+	$tp += "0.50";
+	//paymentwall
+	Paymentwall_Config::getInstance()->set(array(
+    'api_type' => Paymentwall_Config::API_GOODS,
+    'public_key' => '', //PAymentwal Public Key
+    'private_key' => '' //Paymentwall Private Key
+	));
+$widget = new Paymentwall_Widget(
+    $_SESSION[rand],   // id of the end-user who's making the payment
+    'm2_1',        // widget code, e.g. p1; can be picked inside of your merchant account
+    array(         // product details for Flexible Widget Call. To let users select the product on Paymentwall's end, leave this array empty
+        new Paymentwall_Product(
+            $_SESSION[rand],                           // id of the product in your system
+            $tp,                                   // price
+            'EUR',                                  // currency code
+            'Vaporama bestelling '.$_SESSION[rand].'',                      // product name
+            Paymentwall_Product::TYPE_FIXED // this is a time-based product; for one-time products, use Paymentwall_Product::TYPE_FIXED and omit the following 3 array elements
+			// 1,                                      // duration is 1
+            //Paymentwall_Product::PERIOD_TYPE_MONTH, //               month
+            //true                                    // recurring
+        )
+    )
+    //array('email' => 'user@hostname.com')           // additional parameters
+);
+//paymentwall
+	$betaling = "<div class='alert alert-danger'>Paymentwall is aan het laden , Gelieven even te wachten</div>".$widget->getHtmlCode()."";
+	break;
+	case 'Clouds':
+	$update = $db->prepare("UPDATE bestelling SET status = '2', levering = '$ship', betaling = 'Clouds' WHERE bestel = :bestel ");
+	$setclouds = $db->prepare("UPDATE gebruikers SET punten = punten - :clouds WHERE id = :user ");
+	$setclouds->execute(array(':clouds' => $clouds,':user' => $location[id]));
+	$betaling = "Dit product is besteld voor $clouds <i class='material-icons'>filter_drama</i><br><br>Gelieven deze nummer mee te nemen voor het afhalen<br><pre>$_SESSION[rand]</pre>";
+	$clouds = $clo;
+	break;
 }
+$update->execute(array(':bestel' => $_SESSION[rand]));
+if (!filter_var($location[naam], FILTER_VALIDATE_EMAIL) === false) {
+mail_test($_SESSION[rand],'1',$location[naam]);
+}
+mail_test($_SESSION[rand]);
+unset($_SESSION['rand']);
 ?>
+<div class='alert alert-warning text-center'> Totale prijs voor deze bestelling is &euro; <?php echo ($prijs + ($extra * 1)) ?> waarvan &euro;<?php echo ($extra * 1)?> Leverings Kosten</div>
+  <div class="panel-group">
+    <div class="panel panel-primary">
+      <div class="panel-heading"><?php echo $shipping ?></div>
+      <div class="panel-body"><?php echo $betaling ?></div>
+    </div>
+  </div>

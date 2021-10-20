@@ -16,8 +16,6 @@
  * http://valums.com/ajax-upload-changelog/
  */
 
-
-
 (function(){
 	
 var d = document, w = window;
@@ -184,8 +182,7 @@ var getUID = function(){
 }();
 
 function fileFromPath(file){
-	//return file.replace(/.*(\/|\\)/, "");	
-	return file = Date.now();		
+	return file.replace(/.*(\/|\\)/, "");			
 }
 
 function getExt(file){
@@ -220,7 +217,7 @@ Ajax_upload = AjaxUpload = function(button, options){
 					
 	this._settings = {
 		// Location of the server-side upload script
-		action: '../x/upload',			
+		action: 'upload.php',			
 		// File upload name
 		name: 'userfile',
 		// Additional data to send
