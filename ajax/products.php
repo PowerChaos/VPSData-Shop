@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> products.php </#FN>                                                               
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.348 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/07 01:57:35.642 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/21 00:24:55.819 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -69,7 +69,7 @@ switch ($groep) {
                 foreach ($result as $info) {
                     echo "<tr><td class='info' style='width:50%' id='naam:$info[id]' contenteditable='true'>$info[naam]</td>";
                     echo "<td class='success' style='width:20%' id='stock:$info[id]' contenteditable='true'>$info[stock]</td>";
-                    echo "<td class='success' style='width:20%' id='stock:$info[id]' contenteditable='true'>$info[prijs]</td>";
+                    echo "<td class='success' style='width:20%' id='prijs:$info[id]' contenteditable='true'>$info[prijs]</td>";
                     echo "<td class='warning' style='width:10%' id='$info[id]' onclick=\"werkbij(this.id,'stock');\"><i class='material-icons' title='verwijder' aria-hidden='true'>delete_forever</i></td></tr>";
                 }
                 echo "</tbody></table>";
@@ -78,25 +78,27 @@ switch ($groep) {
         $(document).ready(function() {
             //DB edit
             $("td[contenteditable=true]").keypress(function(e) {
-                var message_status = $("#statusstock");
                 if (e.which == 13) {
-                    var field = $(this).attr("id");
-                    var val = $(this).text();
-                    $.ajax({
-                        type: "POST",
-                        url: "../x/edit",
-                        data: 'field=' + field + '&waarde=' + val + '&edit=stock',
-                        success: function(data) {
-                            message_status.show();
-                            message_status.text(data);
-                            //hide the message
-                            //setTimeout(function(){message_status.hide()},5000);
-                        }
-                    });
                     return false;
                 }
             });
 
+            $("td[contenteditable=true]").blur(function(e) {
+                var message_status = $("#statusstock");
+                var field = $(this).attr("id");
+                var val = $(this).text();
+                $.ajax({
+                    type: "POST",
+                    url: "../x/edit",
+                    data: 'field=' + field + '&waarde=' + val + '&edit=stock',
+                    success: function(data) {
+                        message_status.show();
+                        message_status.text(data);
+                        //hide the message
+                        //setTimeout(function(){message_status.hide()},5000);
+                    }
+                });
+            });
         });
 
         function werkbij(val, dat) {

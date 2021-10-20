@@ -97,9 +97,9 @@ $(document).ready(function() {
     let disc = $('#disc').text();
     let free = Math.round(($('#clcheck').val() * dat) * 100) / 100;
     let prijs = Math.round(((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat) * 100) / 100;
-    let clouds = Math.floor((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
-    let bonus = Math.floor((prijs / 100) * disc);
-    let tot = Math.floor(clouds + bonus);
+    let clouds = Math.round((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
+    let bonus = Math.round((prijs / 100) * disc);
+    let tot = Math.round(clouds + bonus);
     $('#clouds').html(clouds);
     $('#bon').html(tot);
     $('#prijs').html(prijs);
@@ -113,9 +113,9 @@ $(document).ready(function() {
         let free = Math.round(($('#clcheck').val() * dat) * 100) / 100;
         let prijs = Math.round(((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat) * 100) /
             100;
-        let clouds = Math.floor((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
-        let bonus = Math.floor((prijs / 100) * disc);
-        let tot = Math.floor(clouds + bonus);
+        let clouds = Math.round((parseFloat($('#check').val()) + parseFloat(prijsje)) * dat);
+        let bonus = Math.round((prijs / 100) * disc);
+        let tot = Math.round(clouds + bonus);
         $('#clouds').html(clouds);
         $('#bon').html(tot);
         $('#prijs').html(prijs);

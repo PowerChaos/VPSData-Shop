@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> product.php </#FN>                                                                
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.367 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/22 01:16:09.929 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/20 23:39:47.371 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -57,11 +57,15 @@ if (isset($_GET['product'])) {
         $getuser = $db->select('gebruikers', 'id = :uid', '', $ubind, 'fetch');
         $dbind = array(':clouds' => $getuser['punten']);
         $disc = $db->select('discount', 'clouds <= :clouds', '1', $dbind, '', '*', '', 'clouds DESC');
-        $korting = floor($prod['prijs'] + $amount[0]['prijs']);
+        if ($amount[0]['prijs'] < 0) {
+            $korting = round($prod['prijs'] - round($amount[0]['prijs'] * -1, 2), 2);
+        } else {
+            $korting = round($prod['prijs'] + $amount[0]['prijs'], 2);
+        }
         $discount = $disc[0]['discount'] ?? "1";
         $bonus = ($korting / 100) * $discount;
         $clouds = " <div class='clearfix'></div><li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i> from this product</li>";
-        $tot = floor($korting + $bonus);
+        $tot = round($korting + $bonus, 0);
         $totbonus = "<li>+ <d id='disc'>$discount</d> % Bonus =  <t id='bon'>$tot</t> <i class='material-icons'>3d_rotation</i></li><div class='clearfix'></div>";
     }
     if ($prod) {
@@ -127,6 +131,8 @@ if (isset($_GET['product'])) {
                             foreach ($amount as $stok) {
                                 if ($stok['prijs'] > '0') {
                                     echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( + € $stok[prijs] )</option>";
+                                } elseif ($stok['prijs'] < '0') {
+                                    echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( € " . sprintf('%.02F', ($stok['prijs'] * -1)) . " discount )</option>";
                                 } else {
                                     echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam]</option>";
                                 }
@@ -160,7 +166,7 @@ if (isset($_GET['product'])) {
                 </div>
                 <div class="single-bottom1">
                     <h6>Product Description</h6>
-                    <p class="prod-desc"><?php echo $prod['over'] ?></p>
+                    <p class="prod-desc"><?php echo $prod['info'] ?></p>
                 </div>
             </div>
             <div class="clearfix"></div>

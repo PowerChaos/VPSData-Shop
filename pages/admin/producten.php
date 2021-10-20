@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> producten.php </#FN>                                                              
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.362 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/24 23:10:19.391 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/20 23:40:04.898 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -110,11 +110,11 @@ Klik op een tabel om te bewerken
                     }
                     $totstar = ($ratingcount > '0') ? ($starcount / $ratingcount) : "0";
                     // Einde Rating		
-                    echo "<tr><td class='warning  no-enter' style='width:10%' id='name:$info[id]' contenteditable='true'>$info[name]</td>";
+                    echo "<tr><td class='warning' style='width:10%' id='name:$info[id]' contenteditable='true'>$info[name]</td>";
                     echo "<td class='success' style='width:10%' id='merk:$info[id]' contenteditable='true'>$info[merk]</td>";
                     echo "<td class='info' style='width:15%' id='cat:$info[id]' contenteditable='true'>$info[cat]</td>";
                     echo "<td class='danger' style='width:10%' id='prijs:$info[id]' contenteditable='true'>$info[prijs]</td>";
-                    echo "<td class='warning' style='width:45%' id='over:$info[id]' contenteditable='true'>$info[over]</td>";
+                    echo "<td class='warning' style='width:45%' id='info:$info[id]' contenteditable='true'>" . htmlentities($info['info']) . "</td>";
                     echo "<td class='info' style='width:15%'><input id='stars' name='stars' class='rating rating-loading' value='" . round($totstar) . "' data-min='0' data-max='5' data-step='1' data-size='ms' data-show-clear='false' data-readonly='true' data-show-caption='false'><p>( $ratingcount Stemmen )</p></input></td>";
                     echo "<td class=active style='width:5%'>id: $info[id] <br>";
 

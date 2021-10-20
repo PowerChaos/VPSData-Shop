@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> home.php </#FN>                                                                   
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.365 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/20 00:46:34.482 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/20 23:41:59.124 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -73,7 +73,7 @@ $defimg = Config::DEFIMG;
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
-                            <p><?php echo $product['over'] ?></p>
+                            <p><?php echo $product['info'] ?></p>
                         </figcaption>
                     </a>
                 </figure>
@@ -92,7 +92,7 @@ $defimg = Config::DEFIMG;
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
-                            <p><?php echo $product['over'] ?></p>
+                            <p><?php echo $product['info'] ?></p>
                         </figcaption>
                     </a>
                 </figure>
