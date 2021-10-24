@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> product.php </#FN>                                                                
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.367 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/20 23:39:47.371 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:21:44.128 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -32,9 +32,10 @@ $defimg = Config::DEFIMG;
 $session = new Session;
 $db = new DB;
 if (isset($_GET['product'])) {
-    $id = str_replace("-", " ", $_GET['product']);
-    $bid = array(':id' => $id);
-    $prod = $db->select('products', 'name = :id', '', $bid, 'fetch');
+    $pid = str_replace("-", " ", $_GET['product']);
+    $mid = str_replace("-", " ", $_GET['merk']);
+    $bid = array(':id' => $pid, ':mid' => $mid);
+    $prod = $db->select('products', 'name = :id AND merk = :mid', '', $bid, 'fetch');
     $bpid = array(':pid' => $prod['id']);
     $rating = $db->select('rating', 'pid = :pid', '', $bpid);
     $ratingcount = $db->select('rating', 'pid = :pid', '', $bpid, 'rowcount');
@@ -85,7 +86,8 @@ if (isset($_GET['product'])) {
                         <?php } else {
                                     foreach ($img as $image) { ?>
                         <li data-thumb="<?php echo $image['img'] ?? $defimg ?>" loading="lazy">
-                            <img src="<?php echo $image['img'] ?? $defimg ?>" loading="lazy" />
+                            <img data-enlargeable width="100" style="cursor: zoom-in"
+                                src="<?php echo $image['img'] ?? $defimg ?>" loading="lazy" />
                         </li>
                         <?php }
                                 } ?>
@@ -98,6 +100,34 @@ if (isset($_GET['product'])) {
                     $('.flexslider').flexslider({
                         animation: "slide",
                         controlNav: "thumbnails"
+                    });
+                    $('img[data-enlargeable]').addClass('img-enlargeable').click(function() {
+                        var src = $(this).attr('src');
+                        var modal;
+
+                        function removeModal() {
+                            modal.remove();
+                            $('body').off('keyup.modal-close');
+                        }
+                        modal = $('<div>').css({
+                            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+                            backgroundSize: 'contain',
+                            width: '100%',
+                            height: '100%',
+                            position: 'fixed',
+                            zIndex: '10000.NaN.0',
+                            top: '0',
+                            left: '0',
+                            cursor: 'zoom-out'
+                        }).click(function() {
+                            removeModal();
+                        }).appendTo('body');
+                        //handling ESC
+                        $('body').on('keyup.modal-close', function(e) {
+                            if (e.key === 'Escape') {
+                                removeModal();
+                            }
+                        });
                     });
                 });
                 </script>
@@ -227,8 +257,8 @@ $(document).ready(function() {
     });
 
     $('#star-rating-value').on('rating.change', function() { //begin Rating Waarde
-        var dat = $('#star-rating-value').val()
-        var prod = "<?php echo $prod['id'] ?>";
+        let dat = $('#star-rating-value').val()
+        let prod = "<?php echo $prod['id'] ?>";
         $.ajax({
             type: "POST",
             url: "../x/voting",
@@ -248,11 +278,12 @@ $(document).ready(function() {
         prod: "<?php echo $prod['id'] ?>",
     });
     $('#kleur').on('change', function() { //begin Rating Waarde
-        var dat = $('#kleur').val();
+        let dat = $('#kleur').val();
+        let prod = "<?php echo $prod['id'] ?>";
         $.ajax({
             type: "POST",
             url: "../x/stock",
-            data: 'kleur=' + dat,
+            data: 'kleur=' + dat + '&prod=' + prod,
             success: function(data) {
                 //alert(data);
                 //alert ("item: " +dat+ " en waarde: " +val+ "en kleur : "+kleur+" en qty : "+qty);

@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> home.php </#FN>                                                                   
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.365 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/20 23:41:59.124 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:18:23.760 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -33,6 +33,7 @@
 
 
 $db = new Db;
+$limit = new Limit;
 $defimg = Config::DEFIMG;
 ?>
 <!---->
@@ -55,13 +56,20 @@ $defimg = Config::DEFIMG;
     <div class="container">
         <!-- start rows -->
         <?php
+        $check = array();
+        $c = 0;
         for ($i = 0; $i < 6; $i++) {
             $product = $db->select('products', '', '', '', 'fetch', '*', '', 'RAND()');
             $prod = array('product' => $product['id']);
             $image = $db->select('images', 'pid = :product', '1', $prod, '', '*', '', 'RAND()');
-            $sp = strtolower(str_replace(" ", "-", $product['name']));
-            $sm = strtolower(str_replace(" ", "-", $product['merk']));
-            if ($i % 2 == 0) {
+            if (in_array($product['id'], $check)) {
+                $i--;
+                $c++;
+                if ($c >= '20') {
+                    $i++;
+                    $sp = strtolower(str_replace(" ", "-", $product['name']));
+                    $sm = strtolower(str_replace(" ", "-", $product['merk']));
+                    if ($i % 2 == 0) {
         ?>
         <div class="col-md-4 bride-grid">
             <div class="content-grid l-grids">
@@ -73,7 +81,7 @@ $defimg = Config::DEFIMG;
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
-                            <p><?php echo $product['info'] ?></p>
+                            <p><?php echo $limit->set_limit($product['info']); ?></p>
                         </figcaption>
                     </a>
                 </figure>
@@ -81,8 +89,8 @@ $defimg = Config::DEFIMG;
                 <h3><?php echo $product['cat'] ?></h3>
             </div>
             <?php
-            } else {
-                ?>
+                    } else {
+                        ?>
             <div class="content-grid l-grids">
                 <!-- row 1-->
                 <figure class="effect-bubba">
@@ -92,7 +100,7 @@ $defimg = Config::DEFIMG;
                         <figcaption>
                             <h4><?php echo $product['merk'] ?></h4>
                             <p><?php echo $product['name'] ?></p>
-                            <p><?php echo $product['info'] ?></p>
+                            <p><?php echo $limit->set_limit($product['info']); ?></p>
                         </figcaption>
                     </a>
                 </figure>
@@ -101,6 +109,53 @@ $defimg = Config::DEFIMG;
             </div>
         </div>
         <?php
+                    }
+                }
+            } else {
+                $sp = strtolower(str_replace(" ", "-", $product['name']));
+                $sm = strtolower(str_replace(" ", "-", $product['merk']));
+                if ($i % 2 == 0) {
+                    ?>
+        <div class="col-md-4 bride-grid">
+            <div class="content-grid l-grids">
+                <!-- row 1-->
+                <figure class="effect-bubba">
+                    <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
+                        <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
+                            alt="<?php echo $product['name'] ?>" loading="lazy" />
+                        <figcaption>
+                            <h4><?php echo $product['merk'] ?></h4>
+                            <p><?php echo $product['name'] ?></p>
+                            <p><?php echo $limit->set_limit($product['info']); ?></p>
+                        </figcaption>
+                    </a>
+                </figure>
+                <div class="clearfix"></div>
+                <h3><?php echo $product['cat'] ?></h3>
+            </div>
+            <?php
+                } else {
+                    ?>
+            <div class="content-grid l-grids">
+                <!-- row 1-->
+                <figure class="effect-bubba">
+                    <a href="<?php echo '../' . $sm . '/' . $sp; ?>.html">
+                        <img src="<?php echo $image[0]['img'] ?? $defimg ?>" height="320"
+                            alt="<?php echo $product['name'] ?>" loading="lazy" />
+                        <figcaption>
+                            <h4><?php echo $product['merk'] ?></h4>
+                            <p><?php echo $product['name'] ?></p>
+                            <p><?php echo $limit->set_limit($product['info']); ?></p>
+                        </figcaption>
+                    </a>
+                </figure>
+                <div class="clearfix"></div>
+                <h3><?php echo $product['cat'] ?></h3>
+            </div>
+        </div>
+        <?php
+                }
+                $check[] = $product['id'];
             }
         }
         ?>

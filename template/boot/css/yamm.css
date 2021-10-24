@@ -1,0 +1,53 @@
+/*
+<!#CR>
+************************************************************************************************************************
+*                                                    Copyrigths ©                                                      *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          Authors Names    > PowerChaos                                                                               *
+*          Company Name     > VPS Data                                                                                 *
+*          Company Email    > info@vpsdata.be                                                                          *
+*          Company Websites > https://vpsdata.be                                                                       *
+*                             https://vpsdata.shop                                                                     *
+*          Company Socials  > https://facebook.com/vpsdata                                                             *
+*                             https://twitter.com/powerchaos                                                           *
+*                             https://instagram.com/vpsdata                                                            *
+* -------------------------------------------------------------------------------------------------------------------- *
+*                                           File and License Informations                                              *
+* -------------------------------------------------------------------------------------------------------------------- *
+*          File Name        > <!#FN> yamm.css </#FN>                                                                   
+*          File Birth       > <!#FB> 2021/10/23 17:17:12.289 </#FB>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:25:54.068 </#FT>                                                    *
+*          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
+*                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
+*                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
+*                                                                                                                      *
+</#CR>
+*/
+
+
+/*!
+ * Yamm!3 - Yet another megamenu for Bootstrap 3
+ * http://geedmo.github.com/yamm3
+ *
+ * @geedmo - Licensed under the MIT license
+ */
+.yamm .nav,
+.yamm .collapse,
+.yamm .dropup,
+.yamm .dropdown {
+  position: static;
+}
+.yamm .container {
+  position: relative;
+}
+.yamm .dropdown-menu {
+  left: auto;
+}
+.yamm .yamm-content {
+  padding: 20px 30px;
+}
+.yamm .dropdown.yamm-fw .dropdown-menu {
+  left: 0;
+  right: 0;
+}

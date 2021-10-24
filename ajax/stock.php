@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> stock.php </#FN>                                                                  
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.349 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/02 00:27:59.554 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:24:49.138 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -40,13 +40,8 @@ $tijd = strtotime("-1 hour", time());
 $clean = array(':time' => $tijd);
 $db->delete("bestelling", "datum <= :time AND status < 1", $clean);
 if ($kleur) {
-	if ($prod) {
-		$bprod = array(':pid' => $prod);
-		$amount = $db->select('stock', 'pid=:pid', '', $bprod, 'fetch', '*', '', 'naam ASC');
-	} else {
-		$bkleur = array(':kleur' => $kleur);
-		$amount = $db->select('stock', 'naam=:kleur', '', $bkleur, 'fetch', '*', '', 'naam ASC');
-	}
+	$bprod = array(':pid' => $prod, ':kleur' => $kleur);
+	$amount = $db->select('stock', 'pid=:pid AND naam=:kleur', '', $bprod, 'fetch', '*', '', 'naam ASC');
 	$tot = $amount['stock'] ?? "-1";
 	switch ($tot) {
 		case "0":

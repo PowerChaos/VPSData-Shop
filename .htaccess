@@ -48,7 +48,7 @@ RewriteRule ^reset/([a-zA-Z0-9_-]{12,18})$ index.php?file=reset&code=$1
 RewriteRule ^x/([a-zA-Z0-9_-]+)$ index.php?perm=ajax&file=$1
 #seo rewrite
 RewriteRule ^([a-zA-Z0-9_-]+).html$ index.php?file=merk&merk=$1
-RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+).html$ index.php?file=product&product=$2
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+).html$ index.php?file=product&merk=$1&product=$2
 #base rewrite
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

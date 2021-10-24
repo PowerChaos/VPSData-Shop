@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> header.php </#FN>                                                                 
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.379 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/20 23:39:40.429 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:25:31.663 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -113,7 +113,7 @@ $merk = $_GET['merk'] ?? null;
         href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-star-rating/4.0.1/css/star-rating.min.css">
 
     <!-- box dropdown -->
-    <link rel="stylesheet" href="../template/boot/css/dropdown.min.css">
+    <link rel="stylesheet" href="../template/boot/css/yamm.css">
 
     <!-- Fonts -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
