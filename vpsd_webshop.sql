@@ -80,6 +80,12 @@ CREATE TABLE `discount` (
   `clouds` decimal(11,0) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `gebruikers`
+--
+INSERT INTO `discount` (`id`, `discount`, `clouds`) VALUES
+(1, '0', '0');
+
 -- --------------------------------------------------------
 
 --
@@ -147,7 +153,7 @@ CREATE TABLE `products` (
   `name` text NOT NULL,
   `merk` text NOT NULL,
   `cat` text NOT NULL,
-  `over` text NOT NULL,
+  `info` text NOT NULL,
   `prijs` decimal(10,2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -155,7 +161,7 @@ CREATE TABLE `products` (
 -- Gegevens worden geëxporteerd voor tabel `products`
 --
 
-INSERT INTO `products` (`id`, `name`, `merk`, `cat`, `over`, `prijs`) VALUES
+INSERT INTO `products` (`id`, `name`, `merk`, `cat`, `info`, `prijs`) VALUES
 (1, 'placeholder', 'placeholder', 'placeholder', 'placeholder', '0.00');
 
 -- --------------------------------------------------------

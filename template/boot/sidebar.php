@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> sidebar.php </#FN>                                                                
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.382 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/18 03:47:40.931 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:25:38.556 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -30,6 +30,7 @@
 $db = new Db;
 $perm = new Gebruikers;
 $session = new Session;
+$divider = '6';
 ?>
 <!-- fixed top navbar -->
 <nav class="navbar navbar-inverse" role="navigation">
@@ -48,7 +49,7 @@ $session = new Session;
         <!--navbar menu options: shown on desktop only -->
         <div class="navbar-collapse collapse" id="navigatie">
             <ul class="nav yamm navbar-nav">
-                <li class="dropdown">
+                <li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">category<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li>
@@ -58,9 +59,16 @@ $session = new Session;
                                     $category = $db->select('products', '', '', '', '', 'cat', 'cat', 'cat ASC');
                                     $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
                                     $count = $count ?? '1';
-                                    $div = ceil(12 / $count);
-                                    $div = ($div % 2 != "0") ?? $div + 1;
+                                    if ($count <= $divider) {
+                                        $div = ceil($divider / $count);
+                                    } else {
+                                        $div = $divider;
+                                    }
+                                    $new = '1';
                                     foreach ($category as $cat) {
+                                        if ($new % $divider == 0) {
+                                            echo "<div class='row'>";
+                                        }
                                         echo "<ul class='col-md-$div list-unstyled'>";
                                         $naam = $cat['cat'];
                                         //echo cats
@@ -79,6 +87,10 @@ $session = new Session;
 														";
                                         }
                                         echo "</ul>";
+                                        if ($new % $divider == 0) {
+                                            echo "</div>";
+                                        }
+                                        $new++;
                                     }
                                     ?>
                                 </div>
@@ -87,19 +99,26 @@ $session = new Session;
                     </ul>
                 </li>
 
-                <li class="dropdown">
+                <li class="dropdown yamm-fw">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Products<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu ">
                         <li>
                             <div class="yamm-content">
                                 <div class="row">
                                     <?php
-                                    $category = $db->select('products', '', '', '', 'fetchall', '*', 'cat', 'cat ASC');
-                                    $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'cat', 'cat ASC');
+                                    $category = $db->select('products', '', '', '', 'fetchall', '*', 'merk', 'cat ASC');
+                                    $count = $db->select('products', '', '', '', 'rowcount', 'cat', 'merk', 'cat ASC');
                                     $count = $count ?? '1';
-                                    $div = ceil(12 / $count);
-                                    $div = ($div % 2 != "0") ?? $div + 1;
+                                    if ($count <= $divider) {
+                                        $div = ceil($divider / $count);
+                                    } else {
+                                        $div = "12";
+                                    }
+                                    $new = '1';
                                     foreach ($category as $cat) {
+                                        if ($new % $divider == 0) {
+                                            echo "<div class='row'>";
+                                        }
                                         echo "<ul class='col-md-$div list-unstyled'>";
                                         $naam = $cat['merk'];
                                         //echo cats
@@ -119,6 +138,10 @@ $session = new Session;
 														";
                                         }
                                         echo "</ul>";
+                                        if ($new % $divider == 0) {
+                                            echo "</div>";
+                                        }
+                                        $new++;
                                     }
                                     ?>
                                 </div>

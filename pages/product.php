@@ -18,11 +18,11 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> product.php </#FN>                                                                
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.367 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/09/22 01:16:09.929 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:21:44.128 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.0 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
@@ -32,9 +32,10 @@ $defimg = Config::DEFIMG;
 $session = new Session;
 $db = new DB;
 if (isset($_GET['product'])) {
-    $id = str_replace("-", " ", $_GET['product']);
-    $bid = array(':id' => $id);
-    $prod = $db->select('products', 'name = :id', '', $bid, 'fetch');
+    $pid = str_replace("-", " ", $_GET['product']);
+    $mid = str_replace("-", " ", $_GET['merk']);
+    $bid = array(':id' => $pid, ':mid' => $mid);
+    $prod = $db->select('products', 'name = :id AND merk = :mid', '', $bid, 'fetch');
     $bpid = array(':pid' => $prod['id']);
     $rating = $db->select('rating', 'pid = :pid', '', $bpid);
     $ratingcount = $db->select('rating', 'pid = :pid', '', $bpid, 'rowcount');
@@ -57,11 +58,15 @@ if (isset($_GET['product'])) {
         $getuser = $db->select('gebruikers', 'id = :uid', '', $ubind, 'fetch');
         $dbind = array(':clouds' => $getuser['punten']);
         $disc = $db->select('discount', 'clouds <= :clouds', '1', $dbind, '', '*', '', 'clouds DESC');
-        $korting = floor($prod['prijs'] + $amount[0]['prijs']);
+        if ($amount[0]['prijs'] < 0) {
+            $korting = round($prod['prijs'] - round($amount[0]['prijs'] * -1, 2), 2);
+        } else {
+            $korting = round($prod['prijs'] + $amount[0]['prijs'], 2);
+        }
         $discount = $disc[0]['discount'] ?? "1";
         $bonus = ($korting / 100) * $discount;
         $clouds = " <div class='clearfix'></div><li class='active'>earn <clouds id='clouds'>" . $korting . "</clouds> <i class='material-icons'>3d_rotation</i> from this product</li>";
-        $tot = floor($korting + $bonus);
+        $tot = round($korting + $bonus, 0);
         $totbonus = "<li>+ <d id='disc'>$discount</d> % Bonus =  <t id='bon'>$tot</t> <i class='material-icons'>3d_rotation</i></li><div class='clearfix'></div>";
     }
     if ($prod) {
@@ -81,7 +86,8 @@ if (isset($_GET['product'])) {
                         <?php } else {
                                     foreach ($img as $image) { ?>
                         <li data-thumb="<?php echo $image['img'] ?? $defimg ?>" loading="lazy">
-                            <img src="<?php echo $image['img'] ?? $defimg ?>" loading="lazy" />
+                            <img data-enlargeable width="100" style="cursor: zoom-in"
+                                src="<?php echo $image['img'] ?? $defimg ?>" loading="lazy" />
                         </li>
                         <?php }
                                 } ?>
@@ -94,6 +100,34 @@ if (isset($_GET['product'])) {
                     $('.flexslider').flexslider({
                         animation: "slide",
                         controlNav: "thumbnails"
+                    });
+                    $('img[data-enlargeable]').addClass('img-enlargeable').click(function() {
+                        var src = $(this).attr('src');
+                        var modal;
+
+                        function removeModal() {
+                            modal.remove();
+                            $('body').off('keyup.modal-close');
+                        }
+                        modal = $('<div>').css({
+                            background: 'RGBA(0,0,0,.5) url(' + src + ') no-repeat center',
+                            backgroundSize: 'contain',
+                            width: '100%',
+                            height: '100%',
+                            position: 'fixed',
+                            zIndex: '10000.NaN.0',
+                            top: '0',
+                            left: '0',
+                            cursor: 'zoom-out'
+                        }).click(function() {
+                            removeModal();
+                        }).appendTo('body');
+                        //handling ESC
+                        $('body').on('keyup.modal-close', function(e) {
+                            if (e.key === 'Escape') {
+                                removeModal();
+                            }
+                        });
                     });
                 });
                 </script>
@@ -127,6 +161,8 @@ if (isset($_GET['product'])) {
                             foreach ($amount as $stok) {
                                 if ($stok['prijs'] > '0') {
                                     echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( + € $stok[prijs] )</option>";
+                                } elseif ($stok['prijs'] < '0') {
+                                    echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam] ( € " . sprintf('%.02F', ($stok['prijs'] * -1)) . " discount )</option>";
                                 } else {
                                     echo "<option value='$stok[prijs]:$stok[naam]'>$stok[naam]</option>";
                                 }
@@ -160,7 +196,7 @@ if (isset($_GET['product'])) {
                 </div>
                 <div class="single-bottom1">
                     <h6>Product Description</h6>
-                    <p class="prod-desc"><?php echo $prod['over'] ?></p>
+                    <p class="prod-desc"><?php echo $prod['info'] ?></p>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -221,8 +257,8 @@ $(document).ready(function() {
     });
 
     $('#star-rating-value').on('rating.change', function() { //begin Rating Waarde
-        var dat = $('#star-rating-value').val()
-        var prod = "<?php echo $prod['id'] ?>";
+        let dat = $('#star-rating-value').val()
+        let prod = "<?php echo $prod['id'] ?>";
         $.ajax({
             type: "POST",
             url: "../x/voting",
@@ -242,11 +278,12 @@ $(document).ready(function() {
         prod: "<?php echo $prod['id'] ?>",
     });
     $('#kleur').on('change', function() { //begin Rating Waarde
-        var dat = $('#kleur').val();
+        let dat = $('#kleur').val();
+        let prod = "<?php echo $prod['id'] ?>";
         $.ajax({
             type: "POST",
             url: "../x/stock",
-            data: 'kleur=' + dat,
+            data: 'kleur=' + dat + '&prod=' + prod,
             success: function(data) {
                 //alert(data);
                 //alert ("item: " +dat+ " en waarde: " +val+ "en kleur : "+kleur+" en qty : "+qty);

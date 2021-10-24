@@ -18,19 +18,18 @@
 * -------------------------------------------------------------------------------------------------------------------- *
 *          File Name        > <!#FN> versie.php </#FN>                                                                 
 *          File Birth       > <!#FB> 2021/09/18 00:38:17.363 </#FB>                                                    *
-*          File Mod         > <!#FT> 2021/10/20 23:08:15.259 </#FT>                                                    *
+*          File Mod         > <!#FT> 2021/10/24 03:25:21.187 </#FT>                                                    *
 *          License          > <!#LT> CC-BY-NC-ND-4.0 </#LT>                                                            
 *                             <!#LU> https://spdx.org/licenses/CC-BY-NC-ND-4.0.html </#LU>                             
 *                             <!#LD> This file may not be redistributed in whole or significant part. </#LD>           
-*          File Version     > <!#FV> 2.0.1 </#FV>                                                                      
+*          File Version     > <!#FV> 2.1.0 </#FV>                                                                      
 *                                                                                                                      *
 </#CR>
 */
 
 
 
-$versie = "2.0.1";
-
+$versie = "2.1.0";
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.2; WOW64; rv:17.0) Gecko/20100101 Firefox/17.0');
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
