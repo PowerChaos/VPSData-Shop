@@ -222,7 +222,7 @@ if (isset($_GET['product'])) {
                 <div class="product-grid love-grid">
                     <div class="more-product"><span> </span></div>
                     <div class="product-img b-link-stripe b-animate-go  thickbox">
-                        <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280"
+                        <img src="<?php echo $img[0]['img'] ?? $defimg ?>" height="280" width="280"
                             alt="<?php echo $related2['name'] ?>" loading="lazy" />
                     </div>
                     <div class="product-info">
