@@ -199,6 +199,9 @@ if ($order == 'paypal') {
 			$db->update("gebruikers", $cloudupdate, "id =:id", $userbind);
 			$betaling = "This product is ordered for  $payam <i class='material-icons'>3d_rotation</i> including shipping.<br><br>in case of pickup please provide following number <pre>$rand</pre>";
 			break;
+		case "Billing":
+			$betaling = "Please register on https://cp.vpsdata.be and contact info@vpsdata.be with your order number<br><pre>$rand</pre><br>so we can create you a invoice with differend payment options including bitcoin.";
+			break;
 	}
 	$mail->send($rand);
 	$mail->send($rand, '1', $userdb['naam']);

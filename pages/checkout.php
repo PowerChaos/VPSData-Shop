@@ -40,8 +40,7 @@ $land = $db->select('gebruikers', 'id = :id', '', $bid, 'fetch');
 
 if ($perm->check('user')) {
     if ($land['vat']) {
-        echo "<div class='alert alert-warning text-center'>Please register on <a href='https://cp.vpsdata.be'> our billing system </a> and contact our support with your order number to get a valid invoice.<br>
-        The webshop is only for non business accounts, prices always include tax and only a payment confirmation will be send ( no invoice ) </div>";
+        echo "<div class='alert alert-warning text-center'>Please choose 'bitcoin/others' as payment to so we can recalculate the price and make a invoice.<br>Webshop will always show tax included and does not generate a invoice (only payment confirmation).</div>";
     }
 ?>
 <div class="container" id="success">
@@ -136,6 +135,8 @@ if ($perm->check('user')) {
                 <option value='Overschrijving:0'>Wire Transfer</option>
                 <option value='Paypal:<?php echo $paypalfee ?>'>Paypal ( + &euro;<?php echo $paypalfee ?> )</option>
                 <?php echo (($t == "1") and ($land['punten'] >= $clouds) and ($clouds > '1')) ? "<option value='Points:{$clouds}' style='background-color: silver'>Pay {$clouds} 3D Points</option>" : ""; ?>
+                <option value='Billing:<?php echo $paypalfee ?>'>Bitcoin/others ( + &euro;<?php echo $paypalfee ?> )
+                </option>
             </select>
         </div>
     </div>

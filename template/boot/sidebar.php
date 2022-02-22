@@ -150,6 +150,112 @@ $divider = '6';
                     </ul>
                 </li>
 
+                <!-- //bondtech -->
+                <li class="dropdown yamm-fw">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">BondTech<b class="caret"></b></a>
+                    <ul class="dropdown-menu ">
+                        <li>
+                            <div class="yamm-content">
+                                <div class="row">
+                                    <?php
+                                    $bond = array(":cat" => 'BondTech');
+                                    $category = $db->select('products', 'merk = :cat', '', $bond, 'fetchall', '*', 'cat', 'cat ASC');
+                                    $count = $db->select('products', 'merk = :cat', '', $bond, 'rowcount', 'cat', '', 'cat ASC');
+                                    $count = $count ?? '1';
+                                    if ($count <= $divider) {
+                                        $div = ceil($divider / $count);
+                                    } else {
+                                        $div = "12";
+                                    }
+                                    $new = '1';
+                                    foreach ($category as $cat) {
+                                        if ($new % $divider == 0) {
+                                            echo "<div class='row'>";
+                                        }
+                                        echo "<ul class='col-md-$div list-unstyled'>";
+                                        $naam = $cat['cat'];
+                                        $sorting = array(':cat' => $cat['cat'], ':merk' => $cat['merk']);
+                                        //echo cats
+                                        echo "
+                                                                                        <li><h4>$naam</h4></li>
+                                                                                        <li class='divider'></li>
+                                                                                        ";
+                                        //echo subcats
+                                        //subcats query en count
+                                        $subcat = $db->select('products', 'cat = :cat && merk = :merk', '', $sorting, 'fetchall', '*', '', 'merk ASC');
+                                        foreach ($subcat as $sub) {
+                                            $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
+                                            $seomerk = str_replace(" ", "-", strtolower($sub['merk']));
+                                            echo "
+															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
+														";
+                                        }
+                                        echo "</ul>";
+                                        if ($new % $divider == 0) {
+                                            echo "</div>";
+                                        }
+                                        $new++;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- //BigTricky -->
+                <li class="dropdown yamm-fw">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">BigTricky<b class="caret"></b></a>
+                    <ul class="dropdown-menu ">
+                        <li>
+                            <div class="yamm-content">
+                                <div class="row">
+                                    <?php
+                                    $bond = array(":cat" => 'BigTricky');
+                                    $category = $db->select('products', 'merk = :cat', '', $bond, 'fetchall', '*', 'cat', 'cat ASC');
+                                    $count = $db->select('products', 'merk = :cat', '', $bond, 'rowcount', 'cat', '', 'cat ASC');
+                                    $count = $count ?? '1';
+                                    if ($count <= $divider) {
+                                        $div = ceil($divider / $count);
+                                    } else {
+                                        $div = "12";
+                                    }
+                                    $new = '1';
+                                    foreach ($category as $cat) {
+                                        if ($new % $divider == 0) {
+                                            echo "<div class='row'>";
+                                        }
+                                        echo "<ul class='col-md-$div list-unstyled'>";
+                                        $naam = $cat['cat'];
+                                        $sorting = array(':cat' => $cat['cat'], ':merk' => $cat['merk']);
+                                        //echo cats
+                                        echo "
+                                                                                        <li><h4>$naam</h4></li>
+                                                                                        <li class='divider'></li>
+                                                                                        ";
+                                        //echo subcats
+                                        //subcats query en count
+                                        $subcat = $db->select('products', 'cat = :cat && merk = :merk', '', $sorting, 'fetchall', '*', '', 'merk ASC');
+                                        foreach ($subcat as $sub) {
+                                            $seoproduct = str_replace(" ", "-", strtolower($sub['name']));
+                                            $seomerk = str_replace(" ", "-", strtolower($sub['merk']));
+                                            echo "
+															<li><a href='../{$seomerk}/{$seoproduct}.html'>{$sub['name']}</a></li>
+														";
+                                        }
+                                        echo "</ul>";
+                                        if ($new % $divider == 0) {
+                                            echo "</div>";
+                                        }
+                                        $new++;
+                                    }
+                                    ?>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
             </ul> <!-- Einde NavBar -->
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="../bonus"><i class='material-icons'>3d_rotation</i> Shop</a></li>
